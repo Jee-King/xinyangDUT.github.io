@@ -203,7 +203,7 @@
       6.0pt;margin-left:0in;text-align:justify;text-justify:inter-ideograph;
       line-height:normal;text-autospace:none"><b><span style="font-family:&quot;Times New Roman&quot;,serif">Input-Output:
       </span></b><span style="font-family:&quot;Times New Roman&quot;,serif">Given an input
-      RGB image, our network directly produces a Alpha Matte without any auxilary information.</span></p>
+      RGB image, our network directly produces an Alpha Matte without any auxilary information.</span></p>
       <p class="MsoNormal" style="margin-top:6.0pt;margin-right:0in;margin-bottom:
       6.0pt;margin-left:0in;text-align:justify;text-justify:inter-ideograph;
       line-height:normal;text-autospace:none"><b><span style="font-family:&quot;Times New Roman&quot;,serif">Abstract.</span></b><span style="font-family:&quot;Times New Roman&quot;,serif"> Existing deep learning based matting algorithms primarily resort to high-level semantic features to improve the overall structure of alpha mattes. However, we argue that advanced semantics extracted from CNNs contribute unequally for 
@@ -277,7 +277,7 @@
       6.0pt;margin-left:0in;text-align:justify;text-justify:inter-ideograph;
       line-height:normal;text-autospace:none"><b><span style="font-family:&quot;Times New Roman&quot;,serif">Input-Output:
       </span></b><span style="font-family:&quot;Times New Roman&quot;,serif">Given an input
-      RGB image, our network directly produces a Alpha Matte with only a handful of scribbles.</span></p>
+      RGB image, our network directly produces an Alpha Matte with only a few scribbles.</span></p>
       <p class="MsoNormal" style="margin-top:6.0pt;margin-right:0in;margin-bottom:
       6.0pt;margin-left:0in;text-align:justify;text-justify:inter-ideograph;
       line-height:normal;text-autospace:none"><b><span style="font-family:&quot;Times New Roman&quot;,serif">Abstract.</span></b><span style="font-family:&quot;Times New Roman&quot;,serif"> Image matting is an ill-posed problem that usually requires additional user input, such as trimaps or scribbles. Drawing a fine trimap requires a large amount of user effort, while using scribbles can hardly obtain satisfactory alpha mattes for non-professional users. Some recent deep learning based matting networks rely on large-scale composite datasets for training to improve performance, resulting in the occasional appearance of obvious artifacts when processing natural images. In this paper, we explore the intrinsic relationship between user input and alpha mattes, and strike a balance between user effort and the quality of alpha mattes. In particular, we propose an interactive framework, referred to as smart scribbles, to guide users to draw few scribbles on the input images to produce high-quality alpha mattes. It first infers the most informative regions of an image for drawing scribbles to indicate different categories (foreground, background or unknown), then spreads these scribbles (i.e., the category labels) to the rest of the image via our well-designed two-phase propagation. Both neighboring low-level affinities and high-level semantic features are considered during the propagation process. Our method can be optimized without large-scale matting datasets, and exhibits more universality in real situations. Extensive experiments demonstrate that smart scribbles can produce more accurate alpha mattes with reduced additional input, compared to the state-of-the-art matting methods.</span></p>
@@ -348,7 +348,7 @@
       6.0pt;margin-left:0in;text-align:justify;text-justify:inter-ideograph;
       line-height:normal;text-autospace:none"><b><span style="font-family:&quot;Times New Roman&quot;,serif">Input-Output:
       </span></b><span style="font-family:&quot;Times New Roman&quot;,serif">Given an input
-      RGB image, our network directly produces a Alpha Matte with only a handful of points.</span></p>
+      RGB image, our network directly produces an Alpha Matte with only a few points.</span></p>
       <p class="MsoNormal" style="margin-top:6.0pt;margin-right:0in;margin-bottom:
       6.0pt;margin-left:0in;text-align:justify;text-justify:inter-ideograph;
       line-height:normal;text-autospace:none"><b><span style="font-family:&quot;Times New Roman&quot;,serif">Abstract.</span></b><span style="font-family:&quot;Times New Roman&quot;,serif"> Image matting is an ill-posed problem. It requires a user input trimap or some
