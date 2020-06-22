@@ -1,352 +1,556 @@
+<html>
+<title>Single Image Super-Resolution (SISR)</title>
 
+<head>
+  <link rel="shortcut icon" href="../favicon.ico" type="image/x-icon" />
+  <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css" />
+  <script src="https://unpkg.com/vue/dist/vue.js"></script>
+  <script src="https://unpkg.com/element-ui/lib/index.js"></script>
+  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+  <style>
+    <!--
+    /* Font Definitions */
+    @font-face {
+      font-family: Wingdings;
+      panose-1: 5 0 0 0 0 0 0 0 0 0;
+    }
 
-<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    @font-face {
+      font-family: SimSun;
+      panose-1: 2 1 6 0 3 1 1 1 1 1;
+    }
 
-<meta name="Generator" content="Microsoft Word 15 (filtered)">
-<style>
-<!--
- /* Font Definitions */
- @font-face
-	{font-family:Wingdings;
-	panose-1:5 0 0 0 0 0 0 0 0 0;}
-@font-face
-	{font-family:SimSun;
-	panose-1:2 1 6 0 3 1 1 1 1 1;}
-@font-face
-	{font-family:"Cambria Math";
-	panose-1:2 4 5 3 5 4 6 3 2 4;}
-@font-face
-	{font-family:Calibri;
-	panose-1:2 15 5 2 2 2 4 3 2 4;}
-@font-face
-	{font-family:Tahoma;
-	panose-1:2 11 6 4 3 5 4 4 2 4;}
-@font-face
-	{font-family:"\@SimSun";
-	panose-1:2 1 6 0 3 1 1 1 1 1;}
- /* Style Definitions */
- p.MsoNormal, li.MsoNormal, div.MsoNormal
-	{margin-top:0in;
-	margin-right:0in;
-	margin-bottom:10.0pt;
-	margin-left:0in;
-	line-height:115%;
-	font-size:11.0pt;
-	font-family:"Calibri",sans-serif;}
-a:link, span.MsoHyperlink
-	{color:blue;
-	text-decoration:underline;}
-a:visited, span.MsoHyperlinkFollowed
-	{color:purple;
-	text-decoration:underline;}
-p.MsoAcetate, li.MsoAcetate, div.MsoAcetate
-	{mso-style-link:"Balloon Text Char";
-	margin:0in;
-	margin-bottom:.0001pt;
-	font-size:8.0pt;
-	font-family:"Tahoma",sans-serif;}
-p.MsoListParagraph, li.MsoListParagraph, div.MsoListParagraph
-	{margin-top:0in;
-	margin-right:0in;
-	margin-bottom:10.0pt;
-	margin-left:.5in;
-	line-height:115%;
-	font-size:11.0pt;
-	font-family:"Calibri",sans-serif;}
-p.MsoListParagraphCxSpFirst, li.MsoListParagraphCxSpFirst, div.MsoListParagraphCxSpFirst
-	{margin-top:0in;
-	margin-right:0in;
-	margin-bottom:0in;
-	margin-left:.5in;
-	margin-bottom:.0001pt;
-	line-height:115%;
-	font-size:11.0pt;
-	font-family:"Calibri",sans-serif;}
-p.MsoListParagraphCxSpMiddle, li.MsoListParagraphCxSpMiddle, div.MsoListParagraphCxSpMiddle
-	{margin-top:0in;
-	margin-right:0in;
-	margin-bottom:0in;
-	margin-left:.5in;
-	margin-bottom:.0001pt;
-	line-height:115%;
-	font-size:11.0pt;
-	font-family:"Calibri",sans-serif;}
-p.MsoListParagraphCxSpLast, li.MsoListParagraphCxSpLast, div.MsoListParagraphCxSpLast
-	{margin-top:0in;
-	margin-right:0in;
-	margin-bottom:10.0pt;
-	margin-left:.5in;
-	line-height:115%;
-	font-size:11.0pt;
-	font-family:"Calibri",sans-serif;}
-span.BalloonTextChar
-	{mso-style-name:"Balloon Text Char";
-	mso-style-link:"Balloon Text";
-	font-family:"Tahoma",sans-serif;}
-.MsoChpDefault
-	{font-family:"Calibri",sans-serif;}
-.MsoPapDefault
-	{margin-bottom:10.0pt;
-	line-height:115%;}
- /* Page Definitions */
- @page WordSection1
-	{size:11.0in 17.0in;
-	margin:1.0in 1.0in 1.0in 1.0in;}
-div.WordSection1
-	{page:WordSection1;}
- /* List Definitions */
- ol
-	{margin-bottom:0in;}
-ul
-	{margin-bottom:0in;}
--->
-</style>
+    @font-face {
+      font-family: "Cambria Math";
+      panose-1: 2 4 5 3 5 4 6 3 2 4;
+    }
 
-<style type="text/css">@media print{div[id*="composai"] *{display:none !important}}
-</style><style data-styled="" data-styled-version="4.3.2"></style></head>
+    @font-face {
+      font-family: Calibri;
+      panose-1: 2 15 5 2 2 2 4 3 2 4;
+    }
+
+    @font-face {
+      font-family: Tahoma;
+      panose-1: 2 11 6 4 3 5 4 4 2 4;
+    }
+
+    @font-face {
+      font-family: "\@SimSun";
+      panose-1: 2 1 6 0 3 1 1 1 1 1;
+    }
+
+    /* Style Definitions */
+    p.MsoNormal,
+    li.MsoNormal,
+    div.MsoNormal {
+      margin-top: 0in;
+      margin-right: 0in;
+      margin-bottom: 10.0pt;
+      margin-left: 0in;
+      line-height: 115%;
+      font-size: 11.0pt;
+      font-family: "Calibri", sans-serif;
+    }
+
+    a:link,
+    span.MsoHyperlink {
+      color: blue;
+      text-decoration: underline;
+    }
+
+    a:visited,
+    span.MsoHyperlinkFollowed {
+      color: purple;
+      text-decoration: underline;
+    }
+
+    p.MsoAcetate,
+    li.MsoAcetate,
+    div.MsoAcetate {
+      mso-style-link: "Balloon Text Char";
+      margin: 0in;
+      margin-bottom: .0001pt;
+      font-size: 8.0pt;
+      font-family: "Tahoma", sans-serif;
+    }
+
+    p.MsoListParagraph,
+    li.MsoListParagraph,
+    div.MsoListParagraph {
+      margin-top: 0in;
+      margin-right: 0in;
+      margin-bottom: 10.0pt;
+      margin-left: .5in;
+      line-height: 115%;
+      font-size: 11.0pt;
+      font-family: "Calibri", sans-serif;
+    }
+
+    p.MsoListParagraphCxSpFirst,
+    li.MsoListParagraphCxSpFirst,
+    div.MsoListParagraphCxSpFirst {
+      margin-top: 0in;
+      margin-right: 0in;
+      margin-bottom: 0in;
+      margin-left: .5in;
+      margin-bottom: .0001pt;
+      line-height: 115%;
+      font-size: 11.0pt;
+      font-family: "Calibri", sans-serif;
+    }
+
+    p.MsoListParagraphCxSpMiddle,
+    li.MsoListParagraphCxSpMiddle,
+    div.MsoListParagraphCxSpMiddle {
+      margin-top: 0in;
+      margin-right: 0in;
+      margin-bottom: 0in;
+      margin-left: .5in;
+      margin-bottom: .0001pt;
+      line-height: 115%;
+      font-size: 11.0pt;
+      font-family: "Calibri", sans-serif;
+    }
+
+    p.MsoListParagraphCxSpLast,
+    li.MsoListParagraphCxSpLast,
+    div.MsoListParagraphCxSpLast {
+      margin-top: 0in;
+      margin-right: 0in;
+      margin-bottom: 10.0pt;
+      margin-left: .5in;
+      line-height: 115%;
+      font-size: 11.0pt;
+      font-family: "Calibri", sans-serif;
+    }
+
+    span.BalloonTextChar {
+      mso-style-name: "Balloon Text Char";
+      mso-style-link: "Balloon Text";
+      font-family: "Tahoma", sans-serif;
+    }
+
+    .MsoChpDefault {
+      font-family: "Calibri", sans-serif;
+    }
+
+    .MsoPapDefault {
+      margin-bottom: 10.0pt;
+      line-height: 115%;
+    }
+
+    /* Page Definitions */
+    @page WordSection1 {
+      size: 11.0in 17.0in;
+      margin: 1.0in 1.0in 1.0in 1.0in;
+    }
+
+    div.WordSection1 {
+      page: WordSection1;
+    }
+
+    /* List Definitions */
+    ol {
+      margin-bottom: 0in;
+    }
+
+    ul {
+      margin-bottom: 0in;
+    }
+    -->
+  </style>
+
+  <style type="text/css">
+    @media print {
+      div[id*="composai"] * {
+        display: none !important
+      }
+    }
+  </style>
+  <style data-styled="" data-styled-version="4.3.2"></style>
+</head>
 
 <body lang="EN-US" link="blue" vlink="purple" data-gr-c-s-loaded="true">
 
-<div class="WordSection1">
-
-<div align="center">
-
-<table class="MsoTableGrid" border="1" cellspacing="0" cellpadding="0" width="100%" style="width:100.0%;border-collapse:collapse;border:none">
- <tbody><tr>
-  <td width="100%" valign="top" style="width:100.0%;border:none;border-bottom:
-  solid windowtext 1.5pt;padding:0in 5.4pt 0in 5.4pt">
-  <p class="MsoNormal" align="center" style="margin-top:6.0pt;margin-right:0in;
-  margin-bottom:12.0pt;margin-left:0in;text-align:center;line-height:normal"><b><span style="font-size:18.0pt;font-family:&quot;Times New Roman&quot;,serif">Single Image Super-Resolution (SISR)
-  </span></b></p>
-  </td>
- </tr>
- <tr>
-  <td width="100%" valign="top" style="width:100.0%;border:none;border-bottom:
-  solid windowtext 1.5pt;padding:0in 5.4pt 0in 5.4pt">
-  <p class="MsoNormal" style="margin-bottom:0in;margin-bottom:.0001pt;line-height:
-  normal"><span style="font-size:12.0pt;font-family:&quot;Times New Roman&quot;,serif">&nbsp;</span></p>
-  <p class="MsoNormal" style="margin-bottom:10.0pt;text-align:justify;text-justify:
-  inter-ideograph;line-height:115%"><span style="font-size:12.0pt;line-height:
-  115%;font-family:&quot;Times New Roman&quot;,serif">Single-image super-resolution (SISR) is a computer vision task that reconstructs a high-resolution (HR) image from a low-resolution (LR) image. It could be used in a variety of applications such as medical imaging, security, and surveillance imaging. The quality of the reconstructed HR image depends on how to extract and use the information from LR image. Since there are multiple HR images that can be downsampled to the same LR image and this is a one-to-many mapping relation to recover HR images from a LR image, SISR is an ill-posed and still challenging problem in the community.</span></p>
-  <p class="MsoNormal" style="margin-bottom:10.0pt;text-align:justify;text-justify:
-  inter-ideograph;line-height:115%"><span style="font-size:12.0pt;line-height:
-  115%;font-family:&quot;Times New Roman&quot;,serif">In this project, we are developing techniques to reconstruct the HR image from the LR image. Our research is to address this problem from three directions. The first is to consider how to balance the reconstruction quality and time cost. The second is to investigate how to fuse multi-frequency information for HR image reconstruction. The third is to consider how simultaneously distill features in LR and HR space for SISR.</span></p>
-  </td>
- </tr>
- <tr>
-  <td width="100%" valign="top" style="width:100.0%;border:none;border-bottom:
-  solid windowtext 1.5pt;padding:0in 5.4pt 0in 5.4pt">
-  <table class="MsoTableGrid" border="0" cellspacing="0" cellpadding="0" width="100%" style="width:100.0%;border-collapse:collapse;border:none">
-   <tbody><tr>
-    <td width="100%" valign="top" style="width:100.0%;padding:0in 5.4pt 0in 5.4pt">
-    <p class="MsoNormal" style="margin-top:6.0pt;margin-right:0in;margin-bottom:
-    0in;margin-left:0in;margin-bottom:.0001pt;line-height:normal"><b><span style="font-family:&quot;Times New Roman&quot;,serif">Multi-Context And Enhanced Reconstruction Network For Single Image Super Resolution</span></b><span style="font-family:
-    &quot;Times New Roman&quot;,serif"> </span><span style="font-size:10.0pt;font-family:
-    &quot;Times New Roman&quot;,serif">[</span><a href="https://github.com/xinyangDUT/xinyangDUT.github.io/blob/master/SR/icme_sisr.pdf"><span style="font-size:10.0pt;
-    font-family:&quot;Times New Roman&quot;,serif">paper</span></a><span style="font-size:10.0pt;font-family:&quot;Times New Roman&quot;,serif">] 
-    [<a href="">supply</a>][<a href="">code</a>]
-    </span></p>
-    <p class="MsoNormal" style="margin-bottom:0in;margin-bottom:.0001pt;
-    line-height:normal"><span style="font-size:10.0pt;font-family:&quot;Times New Roman&quot;,serif">Jiqing Zhang, Chengjiang Long, Yuxin Wang, Xin Yang*, Haiyang Mei, and Baocai Yin  </span></p>
-    <p class="MsoNormal" style="margin-bottom:6.0pt;line-height:normal"><b><i><span style="font-family:&quot;Times New Roman&quot;,serif;color:#C00000">IEEE ICME</span></i></b><span style="font-family:&quot;Times New Roman&quot;,serif">&nbsp;&nbsp;&nbsp;&nbsp; July 2020</span></p>
-    </td>
-   </tr>
-   <tr>
-    <td width="100%" valign="top" style="width:100.0%;padding:0in 5.4pt 0in 5.4pt">
+  <div id="app" class="WordSection1">
+    <el-page-header @back="goBack" title="Back"> </el-page-header>
     <div align="center">
-    <table class="MsoTableGrid" border="0" cellspacing="0" cellpadding="0" style="border-collapse:collapse;border:none">
-     <tbody><tr style="height:142.8pt">
-      <td width="751" valign="top" style="width:513.45pt;padding:0in 5.4pt 0in 5.4pt;
-      height:142.8pt">
-      <p class="MsoNormal" align="center" style="margin-bottom:0in;margin-bottom:
-      .0001pt;text-align:center;line-height:normal"><img border="0" width="737" height="130" src="figures/mcern_pipeline.png" title="" style="outline: red dashed 1px;"></p>
-      <p class="MsoNormal" style="margin-top:0in;margin-right:-2.9pt;margin-bottom:
-      0in;margin-left:0in;margin-bottom:0.001px;text-align:justify;text-justify:
-      inter-ideograph;line-height:normal; padding-left: 40%;"><span style="font-size:9.0pt;
-      font-family:&quot;Times New Roman&quot;,serif">Overview of proposed framework.</span></p>
-      </td>
-     </tr>
 
-     <tr style="height:142.8pt">
-        <td width="751" valign="top" style="width:513.45pt;padding:0in 5.4pt 0in 5.4pt;
-        height:142.8pt">
-        <p class="MsoNormal" align="center" style="margin-bottom:0in;margin-bottom:
-        .0001pt;text-align:center;line-height:normal"><img border="0" width="737" height="220" src="figures/mcern_results.png" title="" style="outline: red dashed 1px;"></p>
-        <p class="MsoNormal" style="margin-top:0in;margin-right:-2.9pt;margin-bottom:
-        0in;margin-left:0in;margin-bottom:.0001pt;text-align:justify;text-justify:
-        inter-ideograph;line-height:normal;padding-left: 20%;"><span style="font-size:9.0pt;
-        font-family:&quot;Times New Roman&quot;,serif">Visual comparison of our results
-        with those of the state-of-the-art methods. Please zoom in to see the details. </span></p>
-        </td>
-       </tr>
-    </tbody></table>
+      <table class="MsoTableGrid" border="1" cellspacing="0" cellpadding="0" width="100%"
+        style="width: 100%;border-collapse:collapse;border:none">
+        <tbody>
+          <tr>
+            <td width="100%" valign="top"
+              style="width: 100%;border:none;border-bottom: solid windowtext 1.5pt;padding:0in 5.4pt 0in 5.4pt">
+              <p class="MsoNormal" align="center"
+                style="margin-top:6.0pt;margin-right:0in; margin-bottom:12.0pt;margin-left:0in;text-align:center;line-height:normal">
+                <b><span style="font-size:18.0pt;font-family: Times New Roman ,serif">Single Image
+                    Super-Resolution (SISR)
+                  </span></b></p>
+            </td>
+          </tr>
+          <tr>
+            <td width="100%" valign="top"
+              style="width: 100%;border:none;border-bottom: solid windowtext 1.5pt;padding:0in 5.4pt 0in 5.4pt">
+              <p class="MsoNormal" style="margin-bottom:0in;margin-bottom:.0001pt;line-height: normal"><span
+                  style="font-size:12.0pt;font-family: Times New Roman ,serif">&nbsp;</span></p>
+              <p class="MsoNormal"
+                style="margin-bottom:10.0pt;text-align:justify;text-justify: inter-ideograph;line-height:115%"><span
+                  style="font-size:12.0pt;line-height: 115%;font-family: Times New Roman ,serif">Single-image
+                  super-resolution (SISR) is a computer vision task
+                  that reconstructs a high-resolution (HR) image from a low-resolution (LR) image. It could be
+                  used in a variety of applications such as medical imaging, security, and surveillance
+                  imaging. The quality of the reconstructed HR image depends on how to extract and use the
+                  information from LR image. Since there are multiple HR images that can be downsampled to the
+                  same LR image and this is a one-to-many mapping relation to recover HR images from a LR
+                  image, SISR is an ill-posed and still challenging problem in the community.</span></p>
+              <p class="MsoNormal"
+                style="margin-bottom:10.0pt;text-align:justify;text-justify: inter-ideograph;line-height:115%"><span
+                  style="font-size:12.0pt;line-height: 115%;font-family: Times New Roman ,serif">In this project, we
+                  are developing techniques to reconstruct the
+                  HR image from the LR image. Our research is to address this problem from three directions.
+                  The first is to consider how to balance the reconstruction quality and time cost. The second
+                  is to investigate how to fuse multi-frequency information for HR image reconstruction. The
+                  third is to consider how simultaneously distill features in LR and HR space for SISR.</span>
+              </p>
+            </td>
+          </tr>
+          <tr>
+            <td width="100%" valign="top"
+              style="width: 100%;border:none;border-bottom: solid windowtext 1.5pt;padding:0in 5.4pt 0in 5.4pt">
+              <table class="MsoTableGrid" border="0" cellspacing="0" cellpadding="0" width="100%"
+                style="width: 100%;border-collapse:collapse;border:none">
+                <tbody>
+                  <tr>
+                    <td width="100%" valign="top" style="width: 100%;padding:0in 5.4pt 0in 5.4pt">
+                      <p class="MsoNormal"
+                        style="margin-top:6.0pt;margin-right:0in;margin-bottom:  0in;margin-left:0in;margin-bottom:.0001pt;line-height:normal">
+                        <b><span style="font-family: Times New Roman ,serif">Multi-Context And
+                            Enhanced Reconstruction Network For Single Image Super
+                            Resolution</span></b><span style="font-family:   Times New Roman ,serif"> </span><span
+                          style="font-size:10.0pt;font-family:   Times New Roman ,serif">[</span><a
+                          href="https://github.com/xinyangDUT/xinyangDUT.github.io/blob/master/SR/icme_sisr.pdf"><span
+                            style="font-size:10.0pt;  font-family: Times New Roman ,serif">paper</span></a><span
+                          style="font-size:10.0pt;font-family: Times New Roman ,serif">]
+                          [<a href="">supply</a>][<a href="">code</a>]
+                        </span></p>
+                      <p class="MsoNormal" style="margin-bottom:0in;margin-bottom:.0001pt;  line-height:normal"><span
+                          style="font-size:10.0pt;font-family: Times New Roman ,serif">Jiqing Zhang,
+                          Chengjiang Long, Yuxin Wang, Xin Yang*, Haiyang Mei, and Baocai Yin </span></p>
+                      <p class="MsoNormal" style="margin-bottom:6.0pt;line-height:normal"><b><i><span
+                              style="font-family: Times New Roman ,serif;color:#C00000">IEEE
+                              ICME</span></i></b><span
+                          style="font-family: Times New Roman ,serif">&nbsp;&nbsp;&nbsp;&nbsp;
+                          July 2020</span></p>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td width="100%" valign="top" style="width: 100%;padding:0in 5.4pt 0in 5.4pt">
+                      <div align="center">
+                        <table class="MsoTableGrid" border="0" cellspacing="0" cellpadding="0"
+                          style="border-collapse:collapse;border:none">
+                          <tbody>
+                            <tr style="height:142.8pt">
+                              <td width="751" valign="top"
+                                style="width:513.45pt;padding:0in 5.4pt 0in 5.4pt; height:142.8pt">
+                                <p class="MsoNormal" align="center"
+                                  style="margin-bottom:0in;margin-bottom: .0001pt;text-align:center;line-height:normal">
+                                  <img border="0" width="737" height="130" src="figures/mcern_pipeline.png" title=""
+                                    style="outline: red dashed 1px;"></p>
+                                <p class="MsoNormal"
+                                  style="margin-top:0in;margin-right:-2.9pt;margin-bottom: 0in;margin-left:0in;margin-bottom:0.001px;text-align:justify;text-justify: inter-ideograph;line-height:normal; padding-left: 40%;">
+                                  <span style="font-size:9.0pt; font-family: Times New Roman ,serif">Overview of
+                                    proposed framework.</span></p>
+                              </td>
+                            </tr>
+
+                            <tr style="height:142.8pt">
+                              <td width="751" valign="top"
+                                style="width:513.45pt;padding:0in 5.4pt 0in 5.4pt; height:142.8pt">
+                                <p class="MsoNormal" align="center"
+                                  style="margin-bottom:0in;margin-bottom: .0001pt;text-align:center;line-height:normal">
+                                  <img border="0" width="737" height="220" src="figures/mcern_results.png" title=""
+                                    style="outline: red dashed 1px;"></p>
+                                <p class="MsoNormal"
+                                  style="margin-top:0in;margin-right:-2.9pt;margin-bottom: 0in;margin-left:0in;margin-bottom:.0001pt;text-align:justify;text-justify: inter-ideograph;line-height:normal;padding-left: 20%;">
+                                  <span style="font-size:9.0pt; font-family: Times New Roman ,serif">Visual comparison
+                                    of our results
+                                    with those of the state-of-the-art methods. Please zoom in to see
+                                    the details. </span></p>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <p class="MsoNormal"
+                        style="margin-bottom:0in;margin-bottom:.0001pt;  line-height:normal;text-autospace:none"></p>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td width="100%" valign="top" style="width: 100%;padding:0in 5.4pt 0in 5.4pt">
+                      <p class="MsoNormal"
+                        style="margin-top:6.0pt;margin-right:0in;margin-bottom:  6.0pt;margin-left:0in;text-align:justify;text-justify:inter-ideograph;  line-height:normal;text-autospace:none">
+                        <b><span style="font-family: Times New Roman ,serif">Input-Output:
+                          </span></b><span style="font-family: Times New Roman ,serif">Given an
+                          input LR image, our network recovers a visually pleasing HR image in a
+                          coarse-to-fine fashion.</span></p>
+                      <p class="MsoNormal"
+                        style="margin-top:6.0pt;margin-right:0in;margin-bottom:  6.0pt;margin-left:0in;text-align:justify;text-justify:inter-ideograph;  line-height:normal;text-autospace:none">
+                        <b><span style="font-family: Times New Roman ,serif">Abstract.</span></b><span
+                          style="font-family: Times New Roman ,serif"> Most existing single image
+                          super-resolution (SISR) methods continually increase the depth or width of
+                          networks, without adequately exploring contextual features which are essential
+                          for reconstruction. Moreover, such existing methods pay little attention to the
+                          final high-resolution(HR) image reconstruction step and therefore hinder the
+                          desired SR performance. In this paper, we propose a multi-context and enhanced
+                          reconstruction network (MCERN) for SISR. Specifically, a novel model named
+                          Multi-Context Block (MCB) which extracts more image contextual features with
+                          multibranch dilated convolution. Applying multiple MCBs with residual and dense
+                          connections, we can effectively extract contextual and hierarchical features for
+                          obtaining the coarse super-resolution result. Then an enhanced reconstruction
+                          block (ERB) is followed to extract essential spatial features on the
+                          high-resolution image to refine the coarse result to a better result. Extensive
+                          benchmark evaluations demonstrate the efficacy of our proposed MCERN in terms of
+                          metric accuracy and visual effects.
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+              <p class="MsoNormal" style="margin-bottom:0in;margin-bottom:.0001pt;line-height: normal"></p>
+            </td>
+          </tr>
+          <!-- another paper -->
+          <tr>
+            <td width="100%" valign="top"
+              style="width: 100%;border:none;border-bottom: solid windowtext 1.5pt;padding:0in 5.4pt 0in 5.4pt">
+              <table class="MsoTableGrid" border="0" cellspacing="0" cellpadding="0" width="100%"
+                style="width: 100%;border-collapse:collapse;border:none">
+                <tbody>
+                  <tr>
+                    <td width="100%" valign="top" style="width: 100%;padding:0in 5.4pt 0in 5.4pt">
+                      <p class="MsoNormal"
+                        style="margin-top:6.0pt;margin-right:0in;margin-bottom:  0in;margin-left:0in;margin-bottom:.0001pt;line-height:normal">
+                        <b><span style="font-family: Times New Roman ,serif">DRFN: Deep Recurrent
+                            Fusion Network for Single Image Super-Resolution with Large
+                            Factors</span></b><span style="font-family:   Times New Roman ,serif"> </span><span
+                          style="font-size:10.0pt;font-family:   Times New Roman ,serif">[</span><a
+                          href="https://arxiv.org/pdf/1908.08837.pdf"><span
+                            style="font-size:10.0pt;  font-family: Times New Roman ,serif">paper</span></a><span
+                          style="font-size:10.0pt;font-family: Times New Roman ,serif">]
+                          [<a href="">supply</a>][<a href="https://github.com/Mhaiyang/TMM2018_DRFN">code</a>]
+                        </span></p>
+                      <p class="MsoNormal" style="margin-bottom:0in;margin-bottom:.0001pt;  line-height:normal"><span
+                          style="font-size:10.0pt;font-family: Times New Roman ,serif">Xin Yang, Haiyang
+                          Mei, Jiqing Zhang, Ke Xu, Baocai Yin, Qiang Zhang, and Xiaopeng Wei </span></p>
+                      <p class="MsoNormal" style="margin-bottom:6.0pt;line-height:normal"><b><i><span
+                              style="font-family: Times New Roman ,serif;color:#C00000">IEEE
+                              TRANSACTIONS ON MULTIMEDIA</span></i></b><span
+                          style="font-family: Times New Roman ,serif">&nbsp;&nbsp;&nbsp;&nbsp;
+                          August 2018</span></p>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td width="100%" valign="top" style="width: 100%;padding:0in 5.4pt 0in 5.4pt">
+                      <div align="center">
+                        <table class="MsoTableGrid" border="0" cellspacing="0" cellpadding="0"
+                          style="border-collapse:collapse;border:none">
+                          <tbody>
+                            <tr style="height:142.8pt">
+                              <td width="751" valign="top"
+                                style="width:513.45pt;padding:0in 5.4pt 0in 5.4pt; height:142.8pt">
+                                <p class="MsoNormal" align="center"
+                                  style="margin-bottom:0in;margin-bottom: .0001pt;text-align:center;line-height:normal">
+                                  <img border="0" width="737" height="320" src="figures/drfn_pipeline.png" title=""
+                                    style="outline: red dashed 1px;"></p>
+                                <p class="MsoNormal"
+                                  style="margin-top:0in;margin-right:-2.9pt;margin-bottom: 0in;margin-left:0in;margin-bottom:.0001pt;text-align:justify;text-justify: inter-ideograph;line-height:normal; padding-left: 40%;">
+                                  <span style="font-size:9.0pt; font-family: Times New Roman ,serif">Overview of
+                                    proposed framework.</span></p><br />
+                              </td>
+                            </tr>
+                            <tr style="height:142.8pt">
+                              <td width="751" valign="top"
+                                style="width:513.45pt;padding:0in 5.4pt 0in 5.4pt; height:142.8pt">
+                                <p class="MsoNormal" align="center"
+                                  style="margin-bottom:0in;margin-bottom: .0001pt;text-align:center;line-height:normal">
+                                  <img border="0" width="737" height="260" src="figures/drfn_results.png" title=""
+                                    style="outline: red dashed 1px;"></p>
+                                <p class="MsoNormal"
+                                  style="margin-top:0in;margin-right:-2.9pt;margin-bottom: 0in;margin-left:0in;margin-bottom:.0001pt;text-align:justify;text-justify: inter-ideograph;line-height:normal;padding-left: 20%;">
+                                  <span style="font-size:9.0pt; font-family: Times New Roman ,serif">Visual
+                                    comparison of our results
+                                    with those of the state-of-the-art methods. Please zoom in to see
+                                    the details. </span></p>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <p class="MsoNormal"
+                        style="margin-bottom:0in;margin-bottom:.0001pt;  line-height:normal;text-autospace:none">
+                      </p>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td width="100%" valign="top" style="width: 100%;padding:0in 5.4pt 0in 5.4pt">
+                      <p class="MsoNormal"
+                        style="margin-top:6.0pt;margin-right:0in;margin-bottom:  6.0pt;margin-left:0in;text-align:justify;text-justify:inter-ideograph;  line-height:normal;text-autospace:none">
+                        <b><span style="font-family: Times New Roman ,serif">Input-Output:
+                          </span></b><span style="font-family: Times New Roman ,serif">Given an
+                          input LR image, our network reconstructs a HR image with more texture details and
+                          better visual performance, especially for large-scale images.</span></p>
+                      <p class="MsoNormal"
+                        style="margin-top:6.0pt;margin-right:0in;margin-bottom:  6.0pt;margin-left:0in;text-align:justify;text-justify:inter-ideograph;  line-height:normal;text-autospace:none">
+                        <b><span style="font-family: Times New Roman ,serif">Abstract.</span></b><span
+                          style="font-family: Times New Roman ,serif"> Recently, single-image
+                          super-resolution has made great progress owing to the development of deep
+                          convolutional neural networks (CNNs). The vast majority of CNN-based models use a
+                          pre-defined upsampling operator, such as bicubic interpolation, to upscale input
+                          low-resolution images to the desired size and learn non-linear mapping between
+                          the interpolated image and ground truth high-resolution (HR) image. However,
+                          interpolation processing can lead to visual artifacts as details are
+                          over-smoothed, particularly when the super-resolution factor is high. In this
+                          paper, we propose a Deep Recurrent Fusion Network (DRFN), which utilizes
+                          transposed convolution instead of bicubic interpolation for upsampling and
+                          integrates different-level features extracted from recurrent residual blocks to
+                          reconstruct the final HR images. We adopt a deep recurrence learning strategy and
+                          thus have a larger receptive field, which is conducive to reconstructing an image
+                          more accurately. Furthermore, we show that the multi-level fusion structure is
+                          suitable for dealing with image super-resolution problems. Extensive benchmark
+                          evaluations demonstrate that the proposed DRFN performs better than most current
+                          deep learning methods in terms of accuracy and visual effects, especially for
+                          large-scale images, while using fewer parameters.
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+              <p class="MsoNormal" style="margin-bottom:0in;margin-bottom:.0001pt;line-height: normal"></p>
+            </td>
+          </tr>
+          <!-- another paper -->
+          <tr>
+            <td width="100%" valign="top"
+              style="width: 100%;border:none;border-bottom: solid windowtext 1.5pt;padding:0in 5.4pt 0in 5.4pt">
+              <table class="MsoTableGrid" border="0" cellspacing="0" cellpadding="0" width="100%"
+                style="width: 100%;border-collapse:collapse;border:none">
+                <tbody>
+                  <tr>
+                    <td width="100%" valign="top" style="width: 100%;padding:0in 5.4pt 0in 5.4pt">
+                      <p class="MsoNormal"
+                        style="margin-top:6.0pt;margin-right:0in;margin-bottom:  0in;margin-left:0in;margin-bottom:.0001pt;line-height:normal">
+                        <b><span style="font-family: Times New Roman ,serif">Efficient Image Super
+                            Resolution Integration</span></b><span style="font-family:   Times New Roman ,serif">
+                        </span><span style="font-size:10.0pt;font-family:   Times New Roman ,serif">[</span><a
+                          href="https://www.cs.cityu.edu.hk/~rynson/papers/cgi18.pdf"><span
+                            style="font-size:10.0pt;  font-family: Times New Roman ,serif">paper</span></a><span
+                          style="font-size:10.0pt;font-family: Times New Roman ,serif">]
+                          [<a href="">supply</a>][<a href="">code</a>]
+                        </span></p>
+                      <p class="MsoNormal" style="margin-bottom:0in;margin-bottom:.0001pt;  line-height:normal"><span
+                          style="font-size:10.0pt;font-family: Times New Roman ,serif">Ke Xu, Xin Wang,
+                          Xin Yang*, Shengfeng He, Qiang Zhang, Baocai Yin, Xiaopeng Wei, and Rynson W.H.
+                          Lau </span></p>
+                      <p class="MsoNormal" style="margin-bottom:6.0pt;line-height:normal"><b><i><span
+                              style="font-family: Times New Roman ,serif;color:#C00000">The
+                              Visual Computer (Proc. CGI)</span></i></b><span
+                          style="font-family: Times New Roman ,serif">&nbsp;&nbsp;&nbsp;&nbsp;
+                          June 2018</span></p>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td width="100%" valign="top" style="width: 100%;padding:0in 5.4pt 0in 5.4pt">
+                      <div align="center">
+                        <table class="MsoTableGrid" border="0" cellspacing="0" cellpadding="0"
+                          style="border-collapse:collapse;border:none">
+                          <tbody>
+                            <tr style="height:142.8pt">
+                              <td width="751" valign="top"
+                                style="width:513.45pt;padding:0in 5.4pt 0in 5.4pt; height:142.8pt">
+                                <p class="MsoNormal" align="center"
+                                  style="margin-bottom:0in;margin-bottom: .0001pt;text-align:center;line-height:normal">
+                                  <img border="0" width="737" height="300" src="figures/cgi_pipeline.png" title=""
+                                    style="outline: red dashed 1px;"></p>
+                                <p class="MsoNormal"
+                                  style="margin-top:0in;margin-right:-2.9pt;margin-bottom: 0in;margin-left:0in;margin-bottom:.0001pt;text-align:justify;text-justify: inter-ideograph;line-height:normal; padding-left: 40%;">
+                                  <span style="font-size:9.0pt; font-family: Times New Roman ,serif">Overview
+                                    of proposed framework.</span></p><br />
+                              </td>
+                            </tr>
+
+                            <tr style="height:142.8pt">
+                              <td width="751" valign="top"
+                                style="width:513.45pt;padding:0in 5.4pt 0in 5.4pt; height:142.8pt">
+                                <p class="MsoNormal" align="center"
+                                  style="margin-bottom:0in;margin-bottom: .0001pt;text-align:center;line-height:normal">
+                                  <img border="0" width="737" height="380" src="figures/cgi_results.png" title=""
+                                    style="outline: red dashed 1px;"></p>
+                                <p class="MsoNormal"
+                                  style="margin-top:0in;margin-right:-2.9pt;margin-bottom: 0in;margin-left:0in;margin-bottom:.0001pt;text-align:justify;text-justify: inter-ideograph;line-height:normal;padding-left: 20%;">
+                                  <span style="font-size:9.0pt; font-family: Times New Roman ,serif">Visual
+                                    comparison of our results
+                                    with those of the state-of-the-art methods. Please zoom in to see
+                                    the details. </span></p>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <p class="MsoNormal"
+                        style="margin-bottom:0in;margin-bottom:.0001pt; line-height:normal;text-autospace:none">
+                      </p>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td width="100%" valign="top" style="width: 100%;padding:0in 5.4pt 0in 5.4pt">
+                      <p class="MsoNormal"
+                        style="margin-top:6.0pt;margin-right:0in;margin-bottom: 6.0pt;margin-left:0in;text-align:justify;text-justify:inter-ideograph;  line-height:normal;text-autospace:none">
+                        <b><span style="font-family: Times New Roman ,serif">Input-Output:
+                          </span></b><span style="font-family: Times New Roman ,serif">Given an
+                          input LR image, our framework integrates the patch-based and the deep
+                          learning-based SR methods to produce a HR image.</span></p>
+                      <p class="MsoNormal"
+                        style="margin-top:6.0pt;margin-right:0in;margin-bottom: 6.0pt;margin-left:0in;text-align:justify;text-justify:inter-ideograph;  line-height:normal;text-autospace:none">
+                        <b><span style="font-family: Times New Roman ,serif">Abstract.</span></b><span
+                          style="font-family: Times New Roman ,serif"> The Super Resolution (SR)
+                          problem is challenging due to the diversity of image types with little shared
+                          properties as well as the speed required by online applications, e.g., target
+                          identification. In this paper, we explore the merits and demerits of recent deep
+                          learning based and conventional patch-based SR methods, and show that they can be
+                          integrated in a complementary manner, while balancing the reconstruction quality
+                          and time cost. Motivated by this, we further propose an integration framework to
+                          take the results from FSRCNN and A+ methods as inputs, and directly learn a
+                          pixelwise mapping between the inputs and the reconstructed results using the
+                          Gaussian Conditional Random Fields (GCRFs). The learned pixel-wise integration
+                          mapping is flexible to accommodate different upscaling factors. Experimental
+                          results show that the proposed framework can achieve superior SR performance
+                          compared with the state-of-the-arts while being efficient.
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+              <p class="MsoNormal" style="margin-bottom:0in;margin-bottom:.0001pt;line-height: normal"></p>
+            </td>
+          </tr>
+
+        </tbody>
+      </table>
     </div>
-    <p class="MsoNormal" style="margin-bottom:0in;margin-bottom:.0001pt;
-    line-height:normal;text-autospace:none"></p>
-    </td>
-   </tr>
-   <tr>
-    <td width="100%" valign="top" style="width:100.0%;padding:0in 5.4pt 0in 5.4pt">
-    <p class="MsoNormal" style="margin-top:6.0pt;margin-right:0in;margin-bottom:
-    6.0pt;margin-left:0in;text-align:justify;text-justify:inter-ideograph;
-    line-height:normal;text-autospace:none"><b><span style="font-family:&quot;Times New Roman&quot;,serif">Input-Output:
-    </span></b><span style="font-family:&quot;Times New Roman&quot;,serif">Given an input LR image, our network recovers a visually pleasing HR image in a coarse-to-fine fashion.</span></p>
-    <p class="MsoNormal" style="margin-top:6.0pt;margin-right:0in;margin-bottom:
-    6.0pt;margin-left:0in;text-align:justify;text-justify:inter-ideograph;
-    line-height:normal;text-autospace:none"><b><span style="font-family:&quot;Times New Roman&quot;,serif">Abstract.</span></b><span style="font-family:&quot;Times New Roman&quot;,serif"> Most existing single image super-resolution (SISR) methods continually increase the depth or width of networks, without adequately exploring contextual features which are essential for reconstruction. Moreover, such existing methods pay little attention to the final high-resolution(HR) image reconstruction step and therefore hinder the desired SR performance. In this paper, we propose a multi-context and enhanced reconstruction network (MCERN) for SISR. Specifically, a novel model named Multi-Context Block (MCB) which extracts more image contextual features with multibranch dilated convolution. Applying multiple MCBs with residual and dense connections, we can effectively extract contextual and hierarchical features for obtaining the coarse super-resolution result. Then an enhanced reconstruction block (ERB) is followed to extract essential spatial features on the high-resolution image to refine the coarse result to a better result. Extensive benchmark evaluations demonstrate the efficacy of our proposed MCERN in terms of metric accuracy and visual effects.  </td>
-   </tr>
-  </tbody></table>
-  <p class="MsoNormal" style="margin-bottom:0in;margin-bottom:.0001pt;line-height:
-  normal"></p>
-  </td>
- </tr>
- <!-- another paper -->
- <tr>
-  <td width="100%" valign="top" style="width:100.0%;border:none;border-bottom:
-  solid windowtext 1.5pt;padding:0in 5.4pt 0in 5.4pt">
-  <table class="MsoTableGrid" border="0" cellspacing="0" cellpadding="0" width="100%" style="width:100.0%;border-collapse:collapse;border:none">
-   <tbody><tr>
-    <td width="100%" valign="top" style="width:100.0%;padding:0in 5.4pt 0in 5.4pt">
-    <p class="MsoNormal" style="margin-top:6.0pt;margin-right:0in;margin-bottom:
-    0in;margin-left:0in;margin-bottom:.0001pt;line-height:normal"><b><span style="font-family:&quot;Times New Roman&quot;,serif">DRFN: Deep Recurrent Fusion Network for Single Image Super-Resolution with Large Factors</span></b><span style="font-family:
-    &quot;Times New Roman&quot;,serif"> </span><span style="font-size:10.0pt;font-family:
-    &quot;Times New Roman&quot;,serif">[</span><a href="https://arxiv.org/pdf/1908.08837.pdf"><span style="font-size:10.0pt;
-    font-family:&quot;Times New Roman&quot;,serif">paper</span></a><span style="font-size:10.0pt;font-family:&quot;Times New Roman&quot;,serif">] 
-    [<a href="">supply</a>][<a href="https://github.com/Mhaiyang/TMM2018_DRFN">code</a>]
-    </span></p>
-    <p class="MsoNormal" style="margin-bottom:0in;margin-bottom:.0001pt;
-    line-height:normal"><span style="font-size:10.0pt;font-family:&quot;Times New Roman&quot;,serif">Xin Yang, Haiyang Mei, Jiqing Zhang, Ke Xu, Baocai Yin, Qiang Zhang, and Xiaopeng Wei  </span></p>
-    <p class="MsoNormal" style="margin-bottom:6.0pt;line-height:normal"><b><i><span style="font-family:&quot;Times New Roman&quot;,serif;color:#C00000">IEEE TRANSACTIONS ON MULTIMEDIA</span></i></b><span style="font-family:&quot;Times New Roman&quot;,serif">&nbsp;&nbsp;&nbsp;&nbsp; August 2018</span></p>
-    </td>
-   </tr>
-   <tr>
-    <td width="100%" valign="top" style="width:100.0%;padding:0in 5.4pt 0in 5.4pt">
-    <div align="center">
-    <table class="MsoTableGrid" border="0" cellspacing="0" cellpadding="0" style="border-collapse:collapse;border:none">
-     <tbody><tr style="height:142.8pt">
-      <td width="751" valign="top" style="width:513.45pt;padding:0in 5.4pt 0in 5.4pt;
-      height:142.8pt">
-      <p class="MsoNormal" align="center" style="margin-bottom:0in;margin-bottom:
-      .0001pt;text-align:center;line-height:normal"><img border="0" width="737" height="320" src="figures/drfn_pipeline.png" title="" style="outline: red dashed 1px;"></p>
-      <p class="MsoNormal" style="margin-top:0in;margin-right:-2.9pt;margin-bottom:
-      0in;margin-left:0in;margin-bottom:.0001pt;text-align:justify;text-justify:
-      inter-ideograph;line-height:normal; padding-left: 40%;"><span style="font-size:9.0pt;
-      font-family:&quot;Times New Roman&quot;,serif">Overview of proposed framework.</span></p><br/>
-      </td>
-     </tr>
-     <tr style="height:142.8pt">
-        <td width="751" valign="top" style="width:513.45pt;padding:0in 5.4pt 0in 5.4pt;
-        height:142.8pt">
-        <p class="MsoNormal" align="center" style="margin-bottom:0in;margin-bottom:
-        .0001pt;text-align:center;line-height:normal"><img border="0" width="737" height="260" src="figures/drfn_results.png" title="" style="outline: red dashed 1px;"></p>
-        <p class="MsoNormal" style="margin-top:0in;margin-right:-2.9pt;margin-bottom:
-        0in;margin-left:0in;margin-bottom:.0001pt;text-align:justify;text-justify:
-        inter-ideograph;line-height:normal;padding-left: 20%;"><span style="font-size:9.0pt;
-        font-family:&quot;Times New Roman&quot;,serif">Visual comparison of our results
-        with those of the state-of-the-art methods. Please zoom in to see the details. </span></p>
-        </td>
-       </tr>
-    </tbody></table>
-    </div>
-    <p class="MsoNormal" style="margin-bottom:0in;margin-bottom:.0001pt;
-    line-height:normal;text-autospace:none"></p>
-    </td>
-   </tr>
-   <tr>
-    <td width="100%" valign="top" style="width:100.0%;padding:0in 5.4pt 0in 5.4pt">
-    <p class="MsoNormal" style="margin-top:6.0pt;margin-right:0in;margin-bottom:
-    6.0pt;margin-left:0in;text-align:justify;text-justify:inter-ideograph;
-    line-height:normal;text-autospace:none"><b><span style="font-family:&quot;Times New Roman&quot;,serif">Input-Output:
-    </span></b><span style="font-family:&quot;Times New Roman&quot;,serif">Given an input LR image, our network reconstructs a HR image with more texture details and better visual performance, especially for large-scale images.</span></p>
-    <p class="MsoNormal" style="margin-top:6.0pt;margin-right:0in;margin-bottom:
-    6.0pt;margin-left:0in;text-align:justify;text-justify:inter-ideograph;
-    line-height:normal;text-autospace:none"><b><span style="font-family:&quot;Times New Roman&quot;,serif">Abstract.</span></b><span style="font-family:&quot;Times New Roman&quot;,serif"> Recently, single-image super-resolution has made great progress owing to the development of deep convolutional neural networks (CNNs). The vast majority of CNN-based models use a pre-defined upsampling operator, such as bicubic interpolation, to upscale input low-resolution images to the desired size and learn non-linear mapping between the interpolated image and ground truth high-resolution (HR) image. However, interpolation processing can lead to visual artifacts as details are over-smoothed, particularly when the super-resolution factor is high. In this paper, we propose a Deep Recurrent Fusion Network (DRFN), which utilizes transposed convolution instead of bicubic interpolation for upsampling and integrates different-level features extracted from recurrent residual blocks to reconstruct the final HR images. We adopt a deep recurrence learning strategy and thus have a larger receptive field, which is conducive to reconstructing an image more accurately. Furthermore, we show that the multi-level fusion structure is suitable for dealing with image super-resolution problems. Extensive benchmark evaluations demonstrate that the proposed DRFN performs better than most current deep learning methods in terms of accuracy and visual effects, especially for large-scale images, while using fewer parameters.  </td>
-   </tr>
-  </tbody></table>
-  <p class="MsoNormal" style="margin-bottom:0in;margin-bottom:.0001pt;line-height:
-  normal"></p>
-  </td>
- </tr>
- <!-- another paper -->
- <tr>
-  <td width="100%" valign="top" style="width:100.0%;border:none;border-bottom:
-  solid windowtext 1.5pt;padding:0in 5.4pt 0in 5.4pt">
-  <table class="MsoTableGrid" border="0" cellspacing="0" cellpadding="0" width="100%" style="width:100.0%;border-collapse:collapse;border:none">
-   <tbody><tr>
-    <td width="100%" valign="top" style="width:100.0%;padding:0in 5.4pt 0in 5.4pt">
-    <p class="MsoNormal" style="margin-top:6.0pt;margin-right:0in;margin-bottom:
-    0in;margin-left:0in;margin-bottom:.0001pt;line-height:normal"><b><span style="font-family:&quot;Times New Roman&quot;,serif">Efficient Image Super Resolution Integration</span></b><span style="font-family:
-    &quot;Times New Roman&quot;,serif"> </span><span style="font-size:10.0pt;font-family:
-    &quot;Times New Roman&quot;,serif">[</span><a href="https://www.cs.cityu.edu.hk/~rynson/papers/cgi18.pdf"><span style="font-size:10.0pt;
-    font-family:&quot;Times New Roman&quot;,serif">paper</span></a><span style="font-size:10.0pt;font-family:&quot;Times New Roman&quot;,serif">] 
-    [<a href="">supply</a>][<a href="">code</a>]
-    </span></p>
-    <p class="MsoNormal" style="margin-bottom:0in;margin-bottom:.0001pt;
-    line-height:normal"><span style="font-size:10.0pt;font-family:&quot;Times New Roman&quot;,serif">Ke Xu, Xin Wang, Xin Yang*, Shengfeng He, Qiang Zhang, Baocai Yin, Xiaopeng Wei, and Rynson W.H. Lau  </span></p>
-    <p class="MsoNormal" style="margin-bottom:6.0pt;line-height:normal"><b><i><span style="font-family:&quot;Times New Roman&quot;,serif;color:#C00000">The Visual Computer (Proc. CGI)</span></i></b><span style="font-family:&quot;Times New Roman&quot;,serif">&nbsp;&nbsp;&nbsp;&nbsp; June 2018</span></p>
-    </td>
-   </tr>
-   <tr>
-    <td width="100%" valign="top" style="width:100.0%;padding:0in 5.4pt 0in 5.4pt">
-    <div align="center">
-    <table class="MsoTableGrid" border="0" cellspacing="0" cellpadding="0" style="border-collapse:collapse;border:none">
-     <tbody><tr style="height:142.8pt">
-      <td width="751" valign="top" style="width:513.45pt;padding:0in 5.4pt 0in 5.4pt;
-      height:142.8pt">
-      <p class="MsoNormal" align="center" style="margin-bottom:0in;margin-bottom:
-      .0001pt;text-align:center;line-height:normal"><img border="0" width="737" height="300" src="figures/cgi_pipeline.png" title="" style="outline: red dashed 1px;"></p>
-      <p class="MsoNormal" style="margin-top:0in;margin-right:-2.9pt;margin-bottom:
-      0in;margin-left:0in;margin-bottom:.0001pt;text-align:justify;text-justify:
-      inter-ideograph;line-height:normal; padding-left: 40%;"><span style="font-size:9.0pt;
-      font-family:&quot;Times New Roman&quot;,serif">Overview of proposed framework.</span></p><br/>
-      </td>
-     </tr>
+    <p class="MsoNormal"
+      style="margin-top:6.0pt;margin-right:0in;margin-bottom:0in;margin-left:0in;margin-bottom:.0001pt"><i><span
+          style="font-size:9.0pt;line-height:115%;font-family: Times New Roman ,serif">Last updated in June
+          2020</span></i></p>
+  </div>
+</body>
+<script>
+  new Vue({
+    el: "#app",
+    methods: {
+      goBack() {
+        window.location.href = "../index.html#Research Projects";
+      },
+    },
+  });
+</script>
 
-     <tr style="height:142.8pt">
-        <td width="751" valign="top" style="width:513.45pt;padding:0in 5.4pt 0in 5.4pt;
-        height:142.8pt">
-        <p class="MsoNormal" align="center" style="margin-bottom:0in;margin-bottom:
-        .0001pt;text-align:center;line-height:normal"><img border="0" width="737" height="380" src="figures/cgi_results.png" title="" style="outline: red dashed 1px;"></p>
-        <p class="MsoNormal" style="margin-top:0in;margin-right:-2.9pt;margin-bottom:
-        0in;margin-left:0in;margin-bottom:.0001pt;text-align:justify;text-justify:
-        inter-ideograph;line-height:normal;padding-left: 20%;"><span style="font-size:9.0pt;
-        font-family:&quot;Times New Roman&quot;,serif">Visual comparison of our results
-        with those of the state-of-the-art methods. Please zoom in to see the details. </span></p>
-        </td>
-       </tr>
-    </tbody></table>
-    </div>
-    <p class="MsoNormal" style="margin-bottom:0in;margin-bottom:.0001pt;
-    line-height:normal;text-autospace:none"></p>
-    </td>
-   </tr>
-   <tr>
-    <td width="100%" valign="top" style="width:100.0%;padding:0in 5.4pt 0in 5.4pt">
-    <p class="MsoNormal" style="margin-top:6.0pt;margin-right:0in;margin-bottom:
-    6.0pt;margin-left:0in;text-align:justify;text-justify:inter-ideograph;
-    line-height:normal;text-autospace:none"><b><span style="font-family:&quot;Times New Roman&quot;,serif">Input-Output:
-    </span></b><span style="font-family:&quot;Times New Roman&quot;,serif">Given an input LR image, our framework integrates the patch-based and the deep learning-based SR methods to produce a HR image.</span></p>
-    <p class="MsoNormal" style="margin-top:6.0pt;margin-right:0in;margin-bottom:
-    6.0pt;margin-left:0in;text-align:justify;text-justify:inter-ideograph;
-    line-height:normal;text-autospace:none"><b><span style="font-family:&quot;Times New Roman&quot;,serif">Abstract.</span></b><span style="font-family:&quot;Times New Roman&quot;,serif"> The Super Resolution (SR) problem is challenging due to the diversity of image types with little shared properties as well as the speed required by online applications, e.g., target identification. In this paper, we explore the merits and demerits of recent deep learning based and conventional patch-based SR methods, and show that they can be integrated in a complementary manner, while balancing the reconstruction quality and time cost. Motivated by this, we further propose an integration framework to take the results from FSRCNN and A+ methods as inputs, and directly learn a pixelwise mapping between the inputs and the reconstructed results using the Gaussian Conditional Random Fields (GCRFs). The learned pixel-wise integration mapping is flexible to accommodate different upscaling factors. Experimental results show that the proposed framework can achieve superior SR performance compared with the state-of-the-arts while being efficient.  </td>
-   </tr>
-  </tbody></table>
-  <p class="MsoNormal" style="margin-bottom:0in;margin-bottom:.0001pt;line-height:
-  normal"></p>
-  </td>
- </tr>
- 
-</tbody>
-</table>
-</div>
-<p class="MsoNormal" style="margin-top:6.0pt;margin-right:0in;margin-bottom:0in;
-margin-left:0in;margin-bottom:.0001pt"><i><span style="font-size:9.0pt;
-line-height:115%;font-family:&quot;Times New Roman&quot;,serif">Last updated in June
-2020</span></i></p>
-
-</div>
-
-
-
-
-<div id="composai-root"><div id="composai-app"></div></div><div id="ycce-container" style="font-family: -apple-system,system-ui,BlinkMacSystemFont,&#39;Segoe UI&#39;,Roboto,&#39;Helvetica Neue&#39;,Arial,sans-serif;font-size: 14px;font-weight: 400;line-height: 1.5;color: #292b2c;background-color: #fff;margin: 0;"></div></body><div id="composai-cards" style="position: absolute; top: 0px; left: 0px;"></div></html>
+</html>

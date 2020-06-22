@@ -3,8 +3,10 @@
 
 <head>
   <link rel="shortcut icon" href="../favicon.ico" type="image/x-icon" />
-  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-  <meta name="Generator" content="Microsoft Word 15 (filtered)">
+  <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css" />
+  <script src="https://unpkg.com/vue/dist/vue.js"></script>
+  <script src="https://unpkg.com/element-ui/lib/index.js"></script>
+  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
   <style>
     <!--
     /* Font Definitions */
@@ -170,32 +172,31 @@
 </head>
 
 <body lang="EN-US" link="blue" vlink="purple" data-gr-c-s-loaded="true">
-
-  <div class="WordSection1">
-
+  <div id="app" class="WordSection1">
+    <el-page-header @back="goBack" title="Back"> </el-page-header>
     <div align="center">
-
       <table class="MsoTableGrid" border="1" cellspacing="0" cellpadding="0" width="100%"
-        style="width:100.0%;border-collapse:collapse;border:none">
+        style="width:100%;border-collapse:collapse;border:none">
         <tbody>
           <tr>
-            <td width="100%" valign="top" style="width:100.0%;border:none;border-bottom:
-  solid windowtext 1.5pt;padding:0in 5.4pt 0in 5.4pt">
+            <td width="100%" valign="top"
+              style="width:100%;border:none;border-bottom:solid windowtext 1.5pt;padding:0in 5.4pt 0in 5.4pt">
               <p class="MsoNormal" align="center"
                 style="margin-top:6.0pt;margin-right:0in;margin-bottom:12.0pt;margin-left:0in;text-align:center;line-height:normal">
-                <b><span style="font-size:18.0pt;font-family:&quot;Times New Roman&quot;,serif">Image-based 3D
+                <b><span style="font-size:18.0pt;font-family: Times New Roman ,serif">Image-based 3D
                     Indoor Scene Modeling
                   </span></b></p>
             </td>
           </tr>
           <tr>
-            <td width="100%" valign="top" style="width:100.0%;border:none;border-bottom:
-  solid windowtext 1.5pt;padding:0in 5.4pt 0in 5.4pt">
-              <p class="MsoNormal" style="margin-bottom:0in;margin-bottom:.0001pt;line-height:
-  normal"><span style="font-size:12.0pt;font-family:&quot;Times New Roman&quot;,serif">&nbsp;</span></p>
-              <p class="MsoNormal" style="margin-bottom:10.0pt;text-align:justify;text-justify:
-  inter-ideograph;line-height:115%"><span style="font-size:12.0pt;line-height:
-  115%;font-family:&quot;Times New Roman&quot;,serif">Image-based 3D indoor scene reconstruction is widely used in
+            <td width="100%" valign="top"
+              style="width:100%;border:none;border-bottom:solid windowtext 1.5pt;padding:0in 5.4pt 0in 5.4pt">
+              <p class="MsoNormal" style="margin-bottom:0in;margin-bottom:.0001pt;line-height:  normal"><span
+                  style="font-size:12.0pt;font-family: Times New Roman ,serif">&nbsp;</span></p>
+              <p class="MsoNormal"
+                style="margin-bottom:10.0pt;text-align:justify;text-justify:  inter-ideograph;line-height:115%"><span
+                  style="font-size:12.0pt;line-height:  115%;font-family: Times New Roman ,serif">Image-based 3D indoor
+                  scene reconstruction is widely used in
                   different areas, such as robotic navigation, virtual reality and interior design. The goal of
                   this task is to use as little as possible images as input and output high-quality 3D indoor
                   scene models, expressed as voxel grid, point cloud or triangle mesh. In particular for object
@@ -205,9 +206,10 @@
                   what is needed for 3D scene modeling tasks because of the huge gap between 2D domain to 3D
                   domain. Thus traditional methods always use multi-view images as input to solve this problem.
                 </span></p>
-              <p class="MsoNormal" style="margin-bottom:10.0pt;text-align:justify;text-justify:
-  inter-ideograph;line-height:115%"><span style="font-size:12.0pt;line-height:
-  115%;font-family:&quot;Times New Roman&quot;,serif">In this project, we are developing techniques to tackle this
+              <p class="MsoNormal"
+                style="margin-bottom:10.0pt;text-align:justify;text-justify:inter-ideograph;line-height:115%"><span
+                  style="font-size:12.0pt;line-height:115%;font-family: Times New Roman ,serif">In this project, we are
+                  developing techniques to tackle this
                   problem by dividing it into different related sub-problems. A whole indoor scene can be
                   composed of a series of local scenes, and a local scene can be composed of a series of
                   objects. Based on the above observations, we first address the object reconstruction problem
@@ -217,70 +219,71 @@
             </td>
           </tr>
           <tr>
-            <td width="100%" valign="top" style="width:100.0%;border:none;border-bottom:
-  solid windowtext 1.5pt;padding:0in 5.4pt 0in 5.4pt">
+            <td width="100%" valign="top"
+              style="width:100%;border:none;border-bottom:solid windowtext 1.5pt;padding:0in 5.4pt 0in 5.4pt">
               <table class="MsoTableGrid" border="0" cellspacing="0" cellpadding="0" width="100%"
-                style="width:100.0%;border-collapse:collapse;border:none">
+                style="width:100%;border-collapse:collapse;border:none">
                 <tbody>
                   <tr>
-                    <td width="100%" valign="top" style="width:100.0%;padding:0in 5.4pt 0in 5.4pt">
-                      <p class="MsoNormal" style="margin-top:6.0pt;margin-right:0in;margin-bottom:
-    0in;margin-left:0in;margin-bottom:.0001pt;line-height:normal"><b><span
-                            style="font-family:&quot;Times New Roman&quot;,serif">Deep Reinforcement
+                    <td width="100%" valign="top" style="width:100%;padding:0in 5.4pt 0in 5.4pt">
+                      <p class="MsoNormal"
+                        style="margin-top:6.0pt;margin-right:0in;margin-bottom:    0in;margin-left:0in;margin-bottom:.0001pt;line-height:normal">
+                        <b><span style="font-family: Times New Roman ,serif">Deep Reinforcement
                             Learning of Volume-guided Progressive View Inpainting for 3D Point Scene
-                            Completion from a Single Depth Image</span></b><span style="font-family:
-    &quot;Times New Roman&quot;,serif"> </span><span style="font-size:10.0pt;font-family:
-    &quot;Times New Roman&quot;,serif">[</span><a
+                            Completion from a Single Depth Image</span></b><span
+                          style="font-family:     Times New Roman ,serif"> </span><span
+                          style="font-size:10.0pt;font-family:     Times New Roman ,serif">[</span><a
                           href="http://openaccess.thecvf.com/content_CVPR_2019/papers/Han_Deep_Reinforcement_Learning_of_Volume-Guided_Progressive_View_Inpainting_for_3D_CVPR_2019_paper.pdf"><span
-                            style="font-size:10.0pt;
-    font-family:&quot;Times New Roman&quot;,serif">paper</span></a><span
-                          style="font-size:10.0pt;font-family:&quot;Times New Roman&quot;,serif"></a><span
-                            style="font-size:10.0pt;font-family:&quot;Times New Roman&quot;,serif">]
+                            style="font-size:10.0pt;    font-family: Times New Roman ,serif">paper</span></a><span
+                          style="font-size:10.0pt;font-family: Times New Roman ,serif"></a><span
+                            style="font-size:10.0pt;font-family: Times New Roman ,serif">]
                             [suppl] [code]
                             [dataset]
                           </span></p>
-                      <p class="MsoNormal" style="margin-bottom:0in;margin-bottom:.0001pt;
-    line-height:normal"><span style="font-size:10.0pt;font-family:&quot;Times New Roman&quot;,serif">Xiaoguang Han,
+                      <p class="MsoNormal" style="margin-bottom:0in;margin-bottom:.0001pt;    line-height:normal"><span
+                          style="font-size:10.0pt;font-family: Times New Roman ,serif">Xiaoguang Han,
                           Zhaoxuan Zhang, Dong Du, Mingdai Yang, Jingming Yu, Pan Pan, Xin Yang, Ligang
                           Liu, Zixiang Xiong and Shuguang Cui </span></p>
                       <p class="MsoNormal" style="margin-bottom:6.0pt;line-height:normal"><b><i><span
-                              style="font-family:&quot;Times New Roman&quot;,serif;color:#C00000">Proc.
-                              IEEE CVPR (Oral, CCF A)</span></i></b><span
-                          style="font-family:&quot;Times New Roman&quot;,serif">, June 2019</span></p>
+                              style="font-family: Times New Roman ,serif;color:#C00000">Proc.
+                              IEEE CVPR (Oral, CCF A)</span></i></b><span style="font-family: Times New Roman ,serif">,
+                          June 2019</span></p>
                     </td>
                   </tr>
                   <tr>
-                    <td width="100%" valign="top" style="width:100.0%;padding:0in 5.4pt 0in 5.4pt">
+                    <td width="100%" valign="top" style="width:100%;padding:0in 5.4pt 0in 5.4pt">
                       <table class="MsoTableGrid" border="0" cellspacing="0" cellpadding="0"
                         style="border-collapse:collapse;border:none;" align="center">
                         <tbody>
                           <tr style="height:142.8pt">
-                            <td width="751" valign="top" style="width:513.45pt;padding:0in 5.4pt 0in 5.4pt;
-      height:142.8pt">
+                            <td width="751" valign="top"
+                              style="width:513.45pt;padding:0in 5.4pt 0in 5.4pt;      height:142.8pt">
                               <p>
                               <div align="center">
                                 <img border="0" width="737" src="figures/20200621135332(2).gif" alt="t"
                                   style="outline: red dashed 1px;" /><br /></p>
-                                <p class="MsoNormal" align="center" style="margin-bottom:0in;margin-bottom:
-      .0001pt;text-align:center;line-height:normal"><img border="0" width="737" src="figures/cvpr19_oral_pipeline.png"
-                                    title="" style="outline: red dashed 1px;"></p>
-                                <p class="MsoNormal" style="margin-top:0in;margin-right:-2.9pt;margin-bottom:
-      0in;margin-left:0in;margin-bottom:.0001pt;text-align:justify;text-justify:
-      inter-ideograph;line-height:normal; padding-left: 40%;"><span style="font-size:9.0pt;
-      font-family:&quot;Times New Roman&quot;,serif">The pipeline of our method.</span></p><br />
+                                <p class="MsoNormal" align="center"
+                                  style="margin-bottom:0in;margin-bottom:      .0001pt;text-align:center;line-height:normal">
+                                  <img border="0" width="737" src="figures/cvpr19_oral_pipeline.png" title=""
+                                    style="outline: red dashed 1px;"></p>
+                                <p class="MsoNormal"
+                                  style="margin-top:0in;margin-right:-2.9pt;margin-bottom:      0in;margin-left:0in;margin-bottom:.0001pt;text-align:justify;text-justify:      inter-ideograph;line-height:normal; padding-left: 40%;">
+                                  <span style="font-size:9.0pt;      font-family: Times New Roman ,serif">The pipeline
+                                    of our method.</span></p><br />
                             </td>
                           </tr>
 
                           <tr style="height:142.8pt">
-                            <td width="751" valign="top" style="width:513.45pt;padding:0in 5.4pt 0in 5.4pt;
-        height:142.8pt">
-                              <p class="MsoNormal" align="center" style="margin-bottom:0in;margin-bottom:
-        .0001pt;text-align:center;line-height:normal"><img border="0" width="737" src="figures/cvpr19_oral_results.png"
-                                  title="" style="outline: red dashed 1px;"></p>
-                              <p class="MsoNormal" style="margin-top:0in;margin-right:-2.9pt;margin-bottom:
-        0in;margin-left:0in;margin-bottom:.0001pt;text-align:justify;text-justify:
-        inter-ideograph;line-height:normal;"><span style="font-size:9.0pt;
-        font-family:&quot;Times New Roman&quot;,serif">Comparisons against the state-of-the-arts. Given different
+                            <td width="751" valign="top"
+                              style="width:513.45pt;padding:0in 5.4pt 0in 5.4pt; height:142.8pt">
+                              <p class="MsoNormal" align="center"
+                                style="margin-bottom:0in;margin-bottom: .0001pt;text-align:center;line-height:normal">
+                                <img border="0" width="737" src="figures/cvpr19_oral_results.png" title=""
+                                  style="outline: red dashed 1px;"></p>
+                              <p class="MsoNormal"
+                                style="margin-top:0in;margin-right:-2.9pt;margin-bottom: 0in;margin-left:0in;margin-bottom:.0001pt;text-align:justify;text-justify: inter-ideograph;line-height:normal;">
+                                <span style="font-size:9.0pt; font-family: Times New Roman ,serif">Comparisons
+                                  against the state-of-the-arts. Given different
                                   inputs and the referenced groundtruth, we show the completion results
                                   of three methods, with the corresponding point cloud error maps
                                   below, and zoom-in areas beside. More blue more accurate. </span></p>
@@ -289,24 +292,21 @@
                         </tbody>
                       </table>
     </div>
-    <p class="MsoNormal" style="margin-bottom:0in;margin-bottom:.0001pt;
-    line-height:normal;text-autospace:none"></p>
+    <p class="MsoNormal" style="margin-bottom:0in;margin-bottom:.0001pt;    line-height:normal;text-autospace:none"></p>
     </td>
     </tr>
     <tr>
-      <td width="100%" valign="top" style="width:100.0%;padding:0in 5.4pt 0in 5.4pt">
-        <p class="MsoNormal" style="margin-top:6.0pt;margin-right:0in;margin-bottom:
-    6.0pt;margin-left:0in;text-align:justify;text-justify:inter-ideograph;
-    line-height:normal;text-autospace:none"><b><span
-              style="font-family:&quot;Times New Roman&quot;,serif">Input-Output:
-            </span></b><span style="font-family:&quot;Times New Roman&quot;,serif">Given an single depth image,
+      <td width="100%" valign="top" style="width:100%;padding:0in 5.4pt 0in 5.4pt">
+        <p class="MsoNormal"
+          style="margin-top:6.0pt;margin-right:0in;margin-bottom:    6.0pt;margin-left:0in;text-align:justify;text-justify:inter-ideograph;    line-height:normal;text-autospace:none">
+          <b><span style="font-family: Times New Roman ,serif">Input-Output:
+            </span></b><span style="font-family: Times New Roman ,serif">Given an single depth image,
             our method progressively generate the missing points of the initial point cloud corresponding to the
             input depth map under the optimal sequence of viewpoints.</span></p>
-        <p class="MsoNormal" style="margin-top:6.0pt;margin-right:0in;margin-bottom:
-    6.0pt;margin-left:0in;text-align:justify;text-justify:inter-ideograph;
-    line-height:normal;text-autospace:none"><b><span
-              style="font-family:&quot;Times New Roman&quot;,serif">Abstract.</span></b><span
-            style="font-family:&quot;Times New Roman&quot;,serif"> We present a deep reinforcement learning method
+        <p class="MsoNormal"
+          style="margin-top:6.0pt;margin-right:0in;margin-bottom:    6.0pt;margin-left:0in;text-align:justify;text-justify:inter-ideograph;    line-height:normal;text-autospace:none">
+          <b><span style="font-family: Times New Roman ,serif">Abstract.</span></b><span
+            style="font-family: Times New Roman ,serif"> We present a deep reinforcement learning method
             of progressive view inpainting for 3D point scene completion under volume guidance, achieving
             high-quality scene reconstruction from only a single depth image with severe occlusion. Our approach
             is end-to-end, consisting of three modules: 3D scene volume reconstruction, 2D depth map inpainting,
@@ -329,35 +329,35 @@
     </tr>
     <!-- another paper -->
     <tr>
-      <td width="100%" valign="top" style="width:100.0%;border:none;border-bottom:
-  solid windowtext 1.5pt;padding:0in 5.4pt 0in 5.4pt">
+      <td width="100%" valign="top"
+        style="width:100%;border:none;border-bottom:solid windowtext 1.5pt;padding:0in 5.4pt 0in 5.4pt">
         <table class="MsoTableGrid" border="0" cellspacing="0" cellpadding="0" width="100%"
-          style="width:100.0%;border-collapse:collapse;border:none">
+          style="width:100%;border-collapse:collapse;border:none">
           <tbody>
             <tr>
-              <td width="100%" valign="top" style="width:100.0%;padding:0in 5.4pt 0in 5.4pt">
+              <td width="100%" valign="top" style="width:100%;padding:0in 5.4pt 0in 5.4pt">
                 <p class="MsoNormal" style="margin-top:6.0pt;margin-right:0in;margin-bottom:
     0in;margin-left:0in;margin-bottom:.0001pt;line-height:normal"><b><span
-                      style="font-family:&quot;Times New Roman&quot;,serif">Active Object Reconstruction
+                      style="font-family: Times New Roman ,serif">Active Object Reconstruction
                       Using a Guided View Planner</span></b><span style="font-family:
-    &quot;Times New Roman&quot;,serif"> </span><span style="font-size:10.0pt;font-family:
-    &quot;Times New Roman&quot;,serif">[</span><a href="https://arxiv.org/pdf/1805.03081.pdf"><span style="font-size:10.0pt;
-    font-family:&quot;Times New Roman&quot;,serif">paper</span></a><span
-                    style="font-size:10.0pt;font-family:&quot;Times New Roman&quot;,serif"></a><span
-                      style="font-size:10.0pt;font-family:&quot;Times New Roman&quot;,serif">] [suppl] [code]
+     Times New Roman ,serif"> </span><span style="font-size:10.0pt;font-family:
+     Times New Roman ,serif">[</span><a href="https://arxiv.org/pdf/1805.03081.pdf"><span style="font-size:10.0pt;
+    font-family: Times New Roman ,serif">paper</span></a><span
+                    style="font-size:10.0pt;font-family: Times New Roman ,serif"></a><span
+                      style="font-size:10.0pt;font-family: Times New Roman ,serif">] [suppl] [code]
                       [dataset]
                     </span></p>
                 <p class="MsoNormal" style="margin-bottom:0in;margin-bottom:.0001pt;
-    line-height:normal"><span style="font-size:10.0pt;font-family:&quot;Times New Roman&quot;,serif">Xin Yang, Yuanbo
+    line-height:normal"><span style="font-size:10.0pt;font-family: Times New Roman ,serif">Xin Yang, Yuanbo
                     Wang, Yaru Wang, Bacai Yin, Qian Zhang, Xiaopeng Wei and Hongbo Fu </span></p>
                 <p class="MsoNormal" style="margin-bottom:6.0pt;line-height:normal"><b><i><span
-                        style="font-family:&quot;Times New Roman&quot;,serif;color:#C00000">Proc.IJCAI (CCF
-                        A)</span></i></b><span style="font-family:&quot;Times New Roman&quot;,serif">, July
+                        style="font-family: Times New Roman ,serif;color:#C00000">Proc.IJCAI (CCF
+                        A)</span></i></b><span style="font-family: Times New Roman ,serif">, July
                     2018</span></p>
               </td>
             </tr>
             <tr>
-              <td width="100%" valign="top" style="width:100.0%;padding:0in 5.4pt 0in 5.4pt">
+              <td width="100%" valign="top" style="width:100%;padding:0in 5.4pt 0in 5.4pt">
                 <div align="center">
 
                   <table class="MsoTableGrid" border="0" cellspacing="0" cellpadding="0"
@@ -374,7 +374,7 @@
                           <p class="MsoNormal" style="margin-top:0in;margin-right:-2.9pt;margin-bottom:
       0in;margin-left:0in;margin-bottom:.0001pt;text-align:justify;text-justify:
       inter-ideograph;line-height:normal; "><span style="font-size:9.0pt;
-      font-family:&quot;Times New Roman&quot;,serif">Illustration of network architecture. Our entire network consists
+      font-family: Times New Roman ,serif">Illustration of network architecture. Our entire network consists
                               of four components: a Recurrent 2D Encoder, a Recurrent 3D Decoder,
                               Perspective Transformer and a View Planner.</span></p><br />
                         </td>
@@ -382,14 +382,14 @@
 
                       <tr style="height:142.8pt">
                         <td width="751" valign="top" style="width:513.45pt;padding:0in 5.4pt 0in 5.4pt;
-        height:142.8pt">
+ height:142.8pt">
                           <p class="MsoNormal" align="center" style="margin-bottom:0in;margin-bottom:
-        .0001pt;text-align:center;line-height:normal"><img border="0" width="737" src="figures/ijcai18_results.png"
-                              title="" style="outline: red dashed 1px;"></p>
+ .0001pt;text-align:center;line-height:normal"><img border="0" width="737" src="figures/ijcai18_results.png" title=""
+                              style="outline: red dashed 1px;"></p>
                           <p class="MsoNormal" style="margin-top:0in;margin-right:-2.9pt;margin-bottom:
-        0in;margin-left:0in;margin-bottom:.0001pt;text-align:justify;text-justify:
-        inter-ideograph;line-height:normal;"><span style="font-size:9.0pt;
-        font-family:&quot;Times New Roman&quot;,serif">Qualitative results of reconstruction samples for example view
+ 0in;margin-left:0in;margin-bottom:.0001pt;text-align:justify;text-justify:
+ inter-ideograph;line-height:normal;"><span style="font-size:9.0pt;
+ font-family: Times New Roman ,serif">Qualitative results of reconstruction samples for example view
                               sequences. 3D-R2N2 generally fails in the categories with much higer
                               variation (eg. the lamp in the bottom right corner) while our model does
                               better in feature extraction and view aggregation, leading to a more
@@ -404,19 +404,18 @@
               </td>
             </tr>
             <tr>
-              <td width="100%" valign="top" style="width:100.0%;padding:0in 5.4pt 0in 5.4pt">
+              <td width="100%" valign="top" style="width:100%;padding:0in 5.4pt 0in 5.4pt">
                 <p class="MsoNormal" style="margin-top:6.0pt;margin-right:0in;margin-bottom:
     6.0pt;margin-left:0in;text-align:justify;text-justify:inter-ideograph;
-    line-height:normal;text-autospace:none"><b><span
-                      style="font-family:&quot;Times New Roman&quot;,serif">Input-Output:
-                    </span></b><span style="font-family:&quot;Times New Roman&quot;,serif">Given a random view
+    line-height:normal;text-autospace:none"><b><span style="font-family: Times New Roman ,serif">Input-Output:
+                    </span></b><span style="font-family: Times New Roman ,serif">Given a random view
                     image of the target object, our network reconstruct the 3D volume of the object and decide
                     the next best view according to the current reconstruction quality.</span></p>
                 <p class="MsoNormal" style="margin-top:6.0pt;margin-right:0in;margin-bottom:
     6.0pt;margin-left:0in;text-align:justify;text-justify:inter-ideograph;
     line-height:normal;text-autospace:none"><b><span
-                      style="font-family:&quot;Times New Roman&quot;,serif">Abstract.</span></b><span
-                    style="font-family:&quot;Times New Roman&quot;,serif"> Inspired by the recent advance of
+                      style="font-family: Times New Roman ,serif">Abstract.</span></b><span
+                    style="font-family: Times New Roman ,serif"> Inspired by the recent advance of
                     image-based object reconstruction using deep learning, we present an active reconstruction
                     model using a guided view planner. We aim to reconstruct a 3D model using images observed
                     from a planned sequence of informative and discriminative views. But where are such
@@ -441,9 +440,19 @@
   </div>
   <p class="MsoNormal" style="margin-top:6.0pt;margin-right:0in;margin-bottom:0in;
 margin-left:0in;margin-bottom:.0001pt"><i><span style="font-size:9.0pt;
-line-height:115%;font-family:&quot;Times New Roman&quot;,serif">Last updated in June
+line-height:115%;font-family: Times New Roman ,serif">Last updated in June
         2020</span></i></p>
   </div>
 </body>
+<script>
+  new Vue({
+    el: "#app",
+    methods: {
+      goBack() {
+        window.location.href = "../index.html#Research Projects";
+      },
+    },
+  });
+</script>
 
 </html>
