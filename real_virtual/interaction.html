@@ -33,11 +33,33 @@
           <img :src="'figures/'+img+'.png'" :alt="img" class="figure_img" />
           <div><i>{{img}}</i></div>
         </div>
+        <div style="text-align: center;">
+          <img
+            src="figures/Interactive simulation traffic flow.gif"
+            alt="Interactive simulation traffic flow.gif"
+            class="figure_img"
+          />
+        </div>
         <el-divider></el-divider>
-        <p v-for="project,index in projects">
-          <span>{{index+1}})&nbsp;</span>
-          <span v-html="textBold(project)"></span>
-        </p>
+        <div v-for="project,index in projects">
+          <p style="background-color: rgb(242, 244, 225);">
+            <span
+              v-html="textBold(project.authors)"
+              style="font-size: 14px;"
+            ></span>
+            <b style="font-size: 18px;">{{project.title}}</b>
+            <b style="color: #006699; font-size: 16px;">{{project.tag[0]}}</b
+            ><span style="font-size: 14px;">{{project.tag[1]}}</span>
+            <b style="color: #006699; font-size: 16px;">{{project.tag[2]}}</b>
+            <span v-for="link in project.links"
+              >[<b
+                ><a style="color: #006699; font-size: 18px;" :href="link.link"
+                  >{{link.name}}</a
+                ></b
+              ><span>]&nbsp;</span></span
+            >
+          </p>
+        </div>
       </div>
     </div>
   </body>
@@ -52,10 +74,43 @@
             "Interactive simulation traffic flow",
           ],
           projects: [
-            "Xin Yang, Yuliang Wang, Shuai Li, Xinglin Piao, Baocai Yin, Qiang Zhang, Dongsheng Zhou, Xiaopeng Wei. Real-Virtual Consistent Traffic Flow Interaction. Graphical Model. 106, 2019. (CCF B)",
-            "Xin Yang, Shuai Li, Baocai Yin, Qiang Zhang, Guozhen Tan, Dongsheng Zhou, Xiaopeng Wei. Vehicle Behaviors Simulation Technology Based on Neural Network. (Eds. Cai, Yiyu, Van Joolingen, Walker, Zachary) VR, Simulations and Serious Games for Education. Springer, 2018, pp 67-84. (Chapter)",
-            "Xin Yang, Shuai Li, Yong Zhang, Wanchao Su, Mingyue Zhang, Guozhen Tan, Qiang Zhang, Dongsheng Zhou, Xiaopeng Wei. Interactive Traffic Simulation Model with Learned Local Parameters. Multimedia Tools and Applications, 2017, 76(7): 9503-9516. (SCI)",
-            "Yang Xin, Su Wanchao, Deng Jian, Pan Zhigeng. Real Traffic Data-Driven Animation Simulation. ACM SIGGRAPH VRCAI, Kobe, Japan, 93-99, 2015. (Best Paper)",
+            {
+              authors:
+                "Xin Yang, Yuliang Wang, Shuai Li, Xinglin Piao, Baocai Yin, Qiang Zhang, Dongsheng Zhou, Xiaopeng Wei.",
+              title: "Real-Virtual Consistent Traffic Flow Interaction.",
+              tag: ["Graphical Model.", " 106, 2019.", "(CCF B)"],
+            },
+            {
+              authors:
+                "Xin Yang, Shuai Li, Baocai Yin, Qiang Zhang, Guozhen Tan, Dongsheng Zhou, Xiaopeng Wei.",
+              title:
+                "Vehicle Behaviors Simulation Technology Based on Neural Network.",
+              tag: [
+                "(Eds. Cai, Yiyu, Van Joolingen, Walker, Zachary) VR, Simulations and Serious Games for Education.",
+                " Springer, 2018, pp 67-84.",
+                "(Chapter)",
+              ],
+            },
+            {
+              authors:
+                "Xin Yang, Shuai Li, Yong Zhang, Wanchao Su, Mingyue Zhang, Guozhen Tan, Qiang Zhang, Dongsheng Zhou, Xiaopeng Wei.",
+              title:
+                "Interactive Traffic Simulation Model with Learned Local Parameters.",
+              tag: [
+                "Multimedia Tools and Applications",
+                ", 2017, 76(7): 9503-9516.",
+                "(SCI)",
+              ],
+            },
+            {
+              authors: "Yang Xin, Su Wanchao, Deng Jian, Pan Zhigeng.",
+              title: "Real Traffic Data-Driven Animation Simulation.",
+              tag: [
+                "ACM SIGGRAPH VRCAI",
+                ", Kobe, Japan, 93-99, 2015.",
+                "(Best Paper)",
+              ],
+            },
           ],
         };
       },
