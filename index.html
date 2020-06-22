@@ -92,57 +92,6 @@
               <p>{{project}}</p>
             </li>
           </ul>
-          <el-divider></el-divider>
-          <!-- Real-Virtual Consistent Traffic Flow Interaction -->
-          <div>
-            <h3>
-              Real-Virtual Consistent Traffic Flow Interaction
-            </h3>
-            <p>
-              Traffic simulation has become an efficient tool, with the
-              assistance of computer visualizing techniques, to solve traffic
-              issues such as traffic congestion, network design, and similar
-              problems. Properly controlling simulated traffic flow and modeling
-              each vehicle’s irregular behaviors are key issues in the traffic
-              simulation field. In this project, we introduce real vehicle
-              trajectories as a data-driven factor in simulated traffic
-              situations to drive behaviors of other simulated vehicles.
-            </p>
-            <div v-for="img in project3.imgs" style="text-align: center;">
-              <img :src="'figures/'+img+'.png'" :alt="img" class="figure_img" />
-              <div><i>{{img}}</i></div>
-            </div>
-            <p v-for="project,index in project3.projects">
-              <span>{{index+1}})&nbsp;</span>
-              <span v-html="textBold(project)"></span>
-            </p>
-            <el-divider></el-divider>
-          </div>
-          <!-- Other Research -->
-          <div>
-            <h3>
-              Other Research
-            </h3>
-            <div v-for="otherResearch,index in otherResearches">
-              <p>
-                <span>{{index+1}})&nbsp;</span>
-                <span v-html="textBold(otherResearch.authors)"></span>
-                <b>&nbsp;{{otherResearch.title}}</b>
-                <span>&nbsp;{{otherResearch.tag}}</span>
-                <span v-for="link in otherResearch.links"
-                  >[<a :href="link.link">{{link.name}}</a
-                  ><span>]&nbsp;</span></span
-                >
-              </p>
-
-              <div
-                v-for="img in otherResearch.imgs"
-                style="text-align: center;"
-              >
-                <img :src="'figures/'+img" :alt="img" class="figure_img" />
-              </div>
-            </div>
-          </div>
         </div>
       </div>
     </div>
@@ -178,6 +127,14 @@
               title: "Image Matting",
               href: "matting/Matting.html",
             },
+            {
+              title: "Real-Virtual Consistent Traffic Flow Interaction",
+              href: "real_virtual/interaction.html",
+            },
+            {
+              title: "Other Research",
+              href: "other_research/OtherResearch.html",
+            },
           ],
           projects1: [
             "国家863项目：作为网络化和云计算终端的机器人技术",
@@ -205,161 +162,6 @@
             "国家自然科学基金重大研究计划培育项目：健康服务管理与决策大数据融合方法与实时分析研究",
             "国家自然科学基金项目：面向多媒体大数据的PDE学习理论与算法",
             "海信公司项目：城市级交通仿真三维可视化展示平台",
-          ],
-          project3: {
-            imgs: [
-              "The real-virtual interaction framework",
-              "Interactive simulation traffic flow",
-            ],
-            projects: [
-              "Xin Yang, Yuliang Wang, Shuai Li, Xinglin Piao, Baocai Yin, Qiang Zhang, Dongsheng Zhou, Xiaopeng Wei. Real-Virtual Consistent Traffic Flow Interaction. Graphical Model. 106, 2019. (CCF B)",
-              "Xin Yang, Shuai Li, Baocai Yin, Qiang Zhang, Guozhen Tan, Dongsheng Zhou, Xiaopeng Wei. Vehicle Behaviors Simulation Technology Based on Neural Network. (Eds. Cai, Yiyu, Van Joolingen, Walker, Zachary) VR, Simulations and Serious Games for Education. Springer, 2018, pp 67-84. (Chapter)",
-              "Xin Yang, Shuai Li, Yong Zhang, Wanchao Su, Mingyue Zhang, Guozhen Tan, Qiang Zhang, Dongsheng Zhou, Xiaopeng Wei. Interactive Traffic Simulation Model with Learned Local Parameters. Multimedia Tools and Applications, 2017, 76(7): 9503-9516. (SCI)",
-              "Yang Xin, Su Wanchao, Deng Jian, Pan Zhigeng. Real Traffic Data-Driven Animation Simulation. ACM SIGGRAPH VRCAI, Kobe, Japan, 93-99, 2015. (Best Paper)",
-            ],
-          },
-          otherResearches: [
-            {
-              authors:
-                "Xiaoheng Jiang, Li Zhang, Mingliang Xu, Tianzhu Zhang, Pei Lv, Bing Zhou, Xin Yang, Yanwei Pang.",
-              title: "Attention Scaling for Crowd Counting.",
-              tag: "CVPR 2020, Seattle, USA. (CCF A)",
-              links: [
-                {
-                  name: "paper",
-                  link:
-                    "http://openaccess.thecvf.com/content_CVPR_2020/papers/Jiang_Attention_Scaling_for_Crowd_Counting_CVPR_2020_paper.pdf",
-                },
-                { name: "code", link: "https://github.com/laridzhang/ASNet" },
-              ],
-              imgs: ["Attention Scaling for Crowd Counting"],
-            },
-            {
-              authors:
-                "Xinglin Piao, Yongli Hu, Junbin Gao, Yanfeng Sun, Xin Yang, Baocai Yin, Wenwu Zhu and Ge Li.",
-              title:
-                "Kernel Clustering on Symmetric Positive Definite Manifolds via Double Approximated Low Rank Representation.",
-              tag: "ICME 2020, London, UK. (CCF B)",
-              links: [
-                {
-                  name: "paper",
-                  link: "https://ieeexplore.ieee.org/document/9102821",
-                },
-              ],
-              imgs: [
-                "Kernel Clustering on Symmetric Positive Definite Manifolds via Double Approximated Low Rank Representation.png",
-              ],
-            },
-            {
-              authors:
-                "Tianyu Wang*, Xin Yang*, Ke Xu, Shaozhe Chen, Qiang Zhang, and Rynson Lau.",
-              title:
-                "Spatial Attentive Single-Image Deraining with a High Quality Real Rain Dataset.",
-              tag: "CVPR 2019, Long Beach, USA. (CCF A)",
-              links: [
-                {
-                  name: "paper",
-                  link: "https://arxiv.org/abs/1904.01538",
-                },
-                {
-                  name: "suppl",
-                  link:
-                    "http://www.cs.cityu.edu.hk/~rynson/papers/demos/cvpr19c-supp.pdf",
-                },
-                {
-                  name: "code",
-                  link: "https://github.com/stevewongv/SPANet",
-                },
-                {
-                  name: "training-set (key:4fwo)",
-                  link: "https://pan.baidu.com/s/1lPn3MWckHxh1uBYYucoWVQ",
-                },
-                {
-                  name: "test-set",
-                  link:
-                    "http://www.cs.cityu.edu.hk/~rynson/papers/demos/derain_testset_1000.rar",
-                },
-              ],
-            },
-            {
-              authors:
-                "Xin Yang, Wenbo Hu, Dawei Wang, Lijing Zhao, Baocai Yin, Qiang Zhang, Xiaopeng Wei, Hongbo Fu.",
-              title:
-                "DEMC: A Deep Dual-Encoder Network for Denoising Monte Carlo Rendering.",
-              tag:
-                "Journal of Computer Science and Technology 2019 (Special Issue of CVM), 34(5): 1123-1135. (CCF B)",
-              links: [
-                {
-                  name: "paper",
-                  link: "https://arxiv.org/pdf/1905.03908.pdf",
-                },
-                {
-                  name: "suppl",
-                  link: "https://sites.google.com/view/dutdemc",
-                },
-                {
-                  name: "code",
-                  link: "https://github.com/wbhu/DEMC",
-                },
-                {
-                  name: "dataset",
-                  link: "https://github.com/wbhu/DEMC",
-                },
-              ],
-            },
-            {
-              authors: "Wanchao Su, Dong Du, Xin Yang, Shizhe Zhou, Hongbo Fu.",
-              title:
-                "Interactive Sketch-Based Normal Map Generation with Deep Neural Networks.",
-              tag:
-                "ACM SIGGRAPH Symposium on Interactive 3D Graphics and Games (I3D), 2018. (CCF B)",
-              links: [
-                {
-                  name: "paper",
-                  link:
-                    "http://sweb.cityu.edu.hk/hongbofu/doc/sketch2normal_i3D2018.pdf",
-                },
-                {
-                  name: "video",
-                  link: "https://youtu.be/-Fl3Yav5FFI",
-                },
-                {
-                  name: "code",
-                  link: "https://github.com/Ansire/sketch2normal",
-                },
-                {
-                  name: "data",
-                  link:
-                    "http://sweb.cityu.edu.hk/hongbofu/data/datasets.tar.gz",
-                },
-                {
-                  name: "media: Seamless",
-                  link: "https://shiropen.com/seamless-3dcg-interactive-sketch",
-                },
-              ],
-            },
-            {
-              authors:
-                "Yang Xin, Liu Qi, Yin Baocai, Zhang Qiang, Wei Xiaopeng.",
-              title: "A K-D Tree Construction Designed for Motion Blur.",
-              tag:
-                "28th Eurographics Symposium on Rendering (EGSR), Helsinki, Finland, 2017, 113-119. (CCF B)",
-              imgs: ["A K-D Tree Construction Designed for Motion Blur.gif"],
-            },
-            {
-              authors:
-                "Yang Xin, Liu Qi, Zhang Pengfei, Xin Lutong, Zhou Dongsheng, Wang Yuxin, Zhang Qiang, Wei Xiaopeng.",
-              title: "DKD: A Fast KD-Tree Update Design for Dynamic Scenes.",
-              tag:
-                "Journal of Computer Animation and Virtual Worlds (Special Issue of CASA'2016, Geneva, Switzerland), 2016, 27(4): 340-350. (SCI)",
-              imgs: ["DKD A Fast KD-Tree Update Design for Dynamic Scenes.gif"],
-            },
-            {
-              authors: "杨鑫, 王大维, 王宇新, 白鑫, 葛宏伟, 夏浩.",
-              title: "互补MOOC的主动式课堂建设方法探究.",
-              tag: "《现代教育技术》. 2017, 27(1)：31-37. (CSSCI收录)",
-              imgs: ["互补MOOC的主动式课堂建设方法探究.png"],
-            },
           ],
         };
       },
@@ -409,7 +211,7 @@
     .content {
       position: fixed;
       min-width: 300px;
-      padding: 40px;
+      padding: 10px 40px 10px 40px;
       left: 300px;
       right: 0;
       overflow-y: auto;

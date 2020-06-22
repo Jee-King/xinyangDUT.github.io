@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+  <title>xinyangDUT</title>
+  <head>
+    <meta charset="UTF-8" />
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/element-ui/lib/theme-chalk/index.css"
+    />
+    <script src="https://unpkg.com/vue/dist/vue.js"></script>
+    <script src="https://unpkg.com/element-ui/lib/index.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+  </head>
+  <body>
+    <div id="app">
+      <!-- Real-Virtual Consistent Traffic Flow Interaction -->
+      <div>
+        <h1>
+          Real-Virtual Consistent Traffic Flow Interaction
+        </h1>
+        <el-divider></el-divider>
+        <p>
+          Traffic simulation has become an efficient tool, with the assistance
+          of computer visualizing techniques, to solve traffic issues such as
+          traffic congestion, network design, and similar problems. Properly
+          controlling simulated traffic flow and modeling each vehicle’s
+          irregular behaviors are key issues in the traffic simulation field. In
+          this project, we introduce real vehicle trajectories as a data-driven
+          factor in simulated traffic situations to drive behaviors of other
+          simulated vehicles.
+        </p>
+        <div v-for="img in imgs" style="text-align: center;">
+          <img :src="'figures/'+img+'.png'" :alt="img" class="figure_img" />
+          <div><i>{{img}}</i></div>
+        </div>
+        <el-divider></el-divider>
+        <p v-for="project,index in projects">
+          <span>{{index+1}})&nbsp;</span>
+          <span v-html="textBold(project)"></span>
+        </p>
+      </div>
+    </div>
+  </body>
+  <script>
+    new Vue({
+      el: "#app",
+      data: function () {
+        return {
+          ks: ["Xin Yang", "Yang Xin", "杨鑫"],
+          imgs: [
+            "The real-virtual interaction framework",
+            "Interactive simulation traffic flow",
+          ],
+          projects: [
+            "Xin Yang, Yuliang Wang, Shuai Li, Xinglin Piao, Baocai Yin, Qiang Zhang, Dongsheng Zhou, Xiaopeng Wei. Real-Virtual Consistent Traffic Flow Interaction. Graphical Model. 106, 2019. (CCF B)",
+            "Xin Yang, Shuai Li, Baocai Yin, Qiang Zhang, Guozhen Tan, Dongsheng Zhou, Xiaopeng Wei. Vehicle Behaviors Simulation Technology Based on Neural Network. (Eds. Cai, Yiyu, Van Joolingen, Walker, Zachary) VR, Simulations and Serious Games for Education. Springer, 2018, pp 67-84. (Chapter)",
+            "Xin Yang, Shuai Li, Yong Zhang, Wanchao Su, Mingyue Zhang, Guozhen Tan, Qiang Zhang, Dongsheng Zhou, Xiaopeng Wei. Interactive Traffic Simulation Model with Learned Local Parameters. Multimedia Tools and Applications, 2017, 76(7): 9503-9516. (SCI)",
+            "Yang Xin, Su Wanchao, Deng Jian, Pan Zhigeng. Real Traffic Data-Driven Animation Simulation. ACM SIGGRAPH VRCAI, Kobe, Japan, 93-99, 2015. (Best Paper)",
+          ],
+        };
+      },
+      methods: {
+        textBold(s) {
+          for (var i = 0; i < this.ks.length; ++i) {
+            const k = this.ks[i];
+            if (s.indexOf(k) != -1) return s.replace(k, "<b>" + k + "</b>");
+          }
+          return s;
+        },
+      },
+    });
+  </script>
+  <style>
+    body {
+      margin: 0;
+      padding: 10px 40px 10px 40px;
+    }
+    p {
+      line-height: 30px;
+    }
+    h1 {
+      text-align: center;
+    }
+    i {
+      font-size: 14px;
+      clear: left;
+    }
+    .figure_img {
+      max-width: 80%;
+    }
+  </style>
+</html>
