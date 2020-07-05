@@ -1,392 +1,541 @@
 <html>
-<title>Image Matting</title>
+  <title>Image Matting</title>
 
-<head>
-  <link rel="shortcut icon" href="../favicon.ico" type="image/x-icon" />
-  <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css" />
-  <script src="https://unpkg.com/vue/dist/vue.js"></script>
-  <script src="https://unpkg.com/element-ui/lib/index.js"></script>
-  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-  <style>
-    <!--
-    /* Font Definitions */
-    @font-face {
-      font-family: Wingdings;
-      panose-1: 5 0 0 0 0 0 0 0 0 0;
-    }
-
-    @font-face {
-      font-family: SimSun;
-      panose-1: 2 1 6 0 3 1 1 1 1 1;
-    }
-
-    @font-face {
-      font-family: "Cambria Math";
-      panose-1: 2 4 5 3 5 4 6 3 2 4;
-    }
-
-    @font-face {
-      font-family: Calibri;
-      panose-1: 2 15 5 2 2 2 4 3 2 4;
-    }
-
-    @font-face {
-      font-family: Tahoma;
-      panose-1: 2 11 6 4 3 5 4 4 2 4;
-    }
-
-    @font-face {
-      font-family: "\@SimSun";
-      panose-1: 2 1 6 0 3 1 1 1 1 1;
-    }
-
-    /* Style Definitions */
-    p.MsoNormal,
-    li.MsoNormal,
-    div.MsoNormal {
-      margin-top: 0in;
-      margin-right: 0in;
-      margin-bottom: 10.0pt;
-      margin-left: 0in;
-      line-height: 115%;
-      font-size: 11.0pt;
-      font-family: "Calibri", sans-serif;
-    }
-
-    a:link,
-    span.MsoHyperlink {
-      color: blue;
-      text-decoration: underline;
-    }
-
-    a:visited,
-    span.MsoHyperlinkFollowed {
-      color: purple;
-      text-decoration: underline;
-    }
-
-    p.MsoAcetate,
-    li.MsoAcetate,
-    div.MsoAcetate {
-      mso-style-link: "Balloon Text Char";
-      margin: 0in;
-      margin-bottom: .0001pt;
-      font-size: 8.0pt;
-      font-family: "Tahoma", sans-serif;
-    }
-
-    p.MsoListParagraph,
-    li.MsoListParagraph,
-    div.MsoListParagraph {
-      margin-top: 0in;
-      margin-right: 0in;
-      margin-bottom: 10.0pt;
-      margin-left: .5in;
-      line-height: 115%;
-      font-size: 11.0pt;
-      font-family: "Calibri", sans-serif;
-    }
-
-    p.MsoListParagraphCxSpFirst,
-    li.MsoListParagraphCxSpFirst,
-    div.MsoListParagraphCxSpFirst {
-      margin-top: 0in;
-      margin-right: 0in;
-      margin-bottom: 0in;
-      margin-left: .5in;
-      margin-bottom: .0001pt;
-      line-height: 115%;
-      font-size: 11.0pt;
-      font-family: "Calibri", sans-serif;
-    }
-
-    p.MsoListParagraphCxSpMiddle,
-    li.MsoListParagraphCxSpMiddle,
-    div.MsoListParagraphCxSpMiddle {
-      margin-top: 0in;
-      margin-right: 0in;
-      margin-bottom: 0in;
-      margin-left: .5in;
-      margin-bottom: .0001pt;
-      line-height: 115%;
-      font-size: 11.0pt;
-      font-family: "Calibri", sans-serif;
-    }
-
-    p.MsoListParagraphCxSpLast,
-    li.MsoListParagraphCxSpLast,
-    div.MsoListParagraphCxSpLast {
-      margin-top: 0in;
-      margin-right: 0in;
-      margin-bottom: 10.0pt;
-      margin-left: .5in;
-      line-height: 115%;
-      font-size: 11.0pt;
-      font-family: "Calibri", sans-serif;
-    }
-
-    span.BalloonTextChar {
-      mso-style-name: "Balloon Text Char";
-      mso-style-link: "Balloon Text";
-      font-family: "Tahoma", sans-serif;
-    }
-
-    .MsoChpDefault {
-      font-family: "Calibri", sans-serif;
-    }
-
-    .MsoPapDefault {
-      margin-bottom: 10.0pt;
-      line-height: 115%;
-    }
-
-    /* Page Definitions */
-    @page WordSection1 {
-      size: 11.0in 17.0in;
-      margin: 1.0in 1.0in 1.0in 1.0in;
-    }
-
-    div.WordSection1 {
-      page: WordSection1;
-    }
-
-    /* List Definitions */
-    ol {
-      margin-bottom: 0in;
-    }
-
-    ul {
-      margin-bottom: 0in;
-    }
-    -->
-  </style>
-  <style type="text/css">
-    @media print {
-      div[id*="composai"] * {
-        display: none !important;
+  <head>
+    <link rel="shortcut icon" href="../favicon.ico" type="image/x-icon" />
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/element-ui/lib/theme-chalk/index.css"
+    />
+    <script src="https://unpkg.com/vue/dist/vue.js"></script>
+    <script src="https://unpkg.com/element-ui/lib/index.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <style>
+      <!--
+      /* Font Definitions */
+      @font-face {
+        font-family: Wingdings;
+        panose-1: 5 0 0 0 0 0 0 0 0 0;
       }
-    }
-  </style>
-  <style data-styled="" data-styled-version="4.3.2"></style>
-</head>
 
-<body lang="EN-US" link="blue" vlink="purple" data-gr-c-s-loaded="true">
-  <div id="app" class="WordSection1">
-    <el-page-header @back="goBack" title="Back"> </el-page-header>
-    <div align="center">
-      <table class="MsoTableGrid" border="1" cellspacing="0" cellpadding="0" width="100%"
-        style="width: 100%; border-collapse: collapse; border: none;">
-        <tbody>
-          <tr>
-            <td width="100%" valign="top" style="
+      @font-face {
+        font-family: SimSun;
+        panose-1: 2 1 6 0 3 1 1 1 1 1;
+      }
+
+      @font-face {
+        font-family: "Cambria Math";
+        panose-1: 2 4 5 3 5 4 6 3 2 4;
+      }
+
+      @font-face {
+        font-family: Calibri;
+        panose-1: 2 15 5 2 2 2 4 3 2 4;
+      }
+
+      @font-face {
+        font-family: Tahoma;
+        panose-1: 2 11 6 4 3 5 4 4 2 4;
+      }
+
+      @font-face {
+        font-family: "\@SimSun";
+        panose-1: 2 1 6 0 3 1 1 1 1 1;
+      }
+
+      /* Style Definitions */
+      p.MsoNormal,
+      li.MsoNormal,
+      div.MsoNormal {
+        margin-top: 0in;
+        margin-right: 0in;
+        margin-bottom: 10.0pt;
+        margin-left: 0in;
+        line-height: 115%;
+        font-size: 11.0pt;
+        font-family: "Calibri", sans-serif;
+      }
+
+      a:link,
+      span.MsoHyperlink {
+        color: blue;
+        text-decoration: underline;
+      }
+
+      a:visited,
+      span.MsoHyperlinkFollowed {
+        color: purple;
+        text-decoration: underline;
+      }
+
+      p.MsoAcetate,
+      li.MsoAcetate,
+      div.MsoAcetate {
+        mso-style-link: "Balloon Text Char";
+        margin: 0in;
+        margin-bottom: .0001pt;
+        font-size: 8.0pt;
+        font-family: "Tahoma", sans-serif;
+      }
+
+      p.MsoListParagraph,
+      li.MsoListParagraph,
+      div.MsoListParagraph {
+        margin-top: 0in;
+        margin-right: 0in;
+        margin-bottom: 10.0pt;
+        margin-left: .5in;
+        line-height: 115%;
+        font-size: 11.0pt;
+        font-family: "Calibri", sans-serif;
+      }
+
+      p.MsoListParagraphCxSpFirst,
+      li.MsoListParagraphCxSpFirst,
+      div.MsoListParagraphCxSpFirst {
+        margin-top: 0in;
+        margin-right: 0in;
+        margin-bottom: 0in;
+        margin-left: .5in;
+        margin-bottom: .0001pt;
+        line-height: 115%;
+        font-size: 11.0pt;
+        font-family: "Calibri", sans-serif;
+      }
+
+      p.MsoListParagraphCxSpMiddle,
+      li.MsoListParagraphCxSpMiddle,
+      div.MsoListParagraphCxSpMiddle {
+        margin-top: 0in;
+        margin-right: 0in;
+        margin-bottom: 0in;
+        margin-left: .5in;
+        margin-bottom: .0001pt;
+        line-height: 115%;
+        font-size: 11.0pt;
+        font-family: "Calibri", sans-serif;
+      }
+
+      p.MsoListParagraphCxSpLast,
+      li.MsoListParagraphCxSpLast,
+      div.MsoListParagraphCxSpLast {
+        margin-top: 0in;
+        margin-right: 0in;
+        margin-bottom: 10.0pt;
+        margin-left: .5in;
+        line-height: 115%;
+        font-size: 11.0pt;
+        font-family: "Calibri", sans-serif;
+      }
+
+      span.BalloonTextChar {
+        mso-style-name: "Balloon Text Char";
+        mso-style-link: "Balloon Text";
+        font-family: "Tahoma", sans-serif;
+      }
+
+      .MsoChpDefault {
+        font-family: "Calibri", sans-serif;
+      }
+
+      .MsoPapDefault {
+        margin-bottom: 10.0pt;
+        line-height: 115%;
+      }
+
+      /* Page Definitions */
+      @page WordSection1 {
+        size: 11.0in 17.0in;
+        margin: 1.0in 1.0in 1.0in 1.0in;
+      }
+
+      div.WordSection1 {
+        page: WordSection1;
+      }
+
+      /* List Definitions */
+      ol {
+        margin-bottom: 0in;
+      }
+
+      ul {
+        margin-bottom: 0in;
+      }
+      -->
+    </style>
+    <style type="text/css">
+      @media print {
+        div[id*="composai"] * {
+          display: none !important;
+        }
+      }
+    </style>
+    <style data-styled="" data-styled-version="4.3.2"></style>
+  </head>
+
+  <body lang="EN-US" link="blue" vlink="purple" data-gr-c-s-loaded="true">
+    <div id="app" class="WordSection1">
+      <el-page-header @back="goBack" title="Back"> </el-page-header>
+      <div align="center">
+        <table
+          class="MsoTableGrid"
+          border="1"
+          cellspacing="0"
+          cellpadding="0"
+          width="100%"
+          style="width: 100%; border-collapse: collapse; border: none;"
+        >
+          <tbody>
+            <tr>
+              <td
+                width="100%"
+                valign="top"
+                style="
                   width: 100%;
                   border: none;
                   border-bottom: solid windowtext 1.5pt;
                   padding: 0in 5.4pt 0in 5.4pt;
-                ">
-              <p class="MsoNormal" align="center" style="
+                "
+              >
+                <p
+                  class="MsoNormal"
+                  align="center"
+                  style="
                     margin-top: 6pt;
                     margin-right: 0in;
                     margin-bottom: 12pt;
                     margin-left: 0in;
                     text-align: center;
                     line-height: normal;
-                  ">
-                <b><span style="
+                  "
+                >
+                  <b
+                    ><span
+                      style="
                         font-size: 18pt;
                         font-family: 'Times New Roman', serif;
-                      ">Image Matting
-                  </span></b>
-              </p>
-            </td>
-          </tr>
-          <tr>
-            <td width="100%" valign="top" style="
+                      "
+                      >Image Matting
+                    </span></b
+                  >
+                </p>
+              </td>
+            </tr>
+            <tr>
+              <td
+                width="100%"
+                valign="top"
+                style="
                   width: 100%;
                   border: none;
                   border-bottom: solid windowtext 1.5pt;
                   padding: 0in 5.4pt 0in 5.4pt;
-                ">
-              <p class="MsoNormal" style="
+                "
+              >
+                <p
+                  class="MsoNormal"
+                  style="
                     margin-bottom: 0in;
                     margin-bottom: 0.0001pt;
                     line-height: normal;
-                  ">
-                <span style="
+                  "
+                >
+                  <span
+                    style="
                       font-size: 12pt;
                       font-family: 'Times New Roman', serif;
-                    ">&nbsp;</span>
-              </p>
-              <p class="MsoNormal" style="
+                    "
+                    >&nbsp;</span
+                  >
+                </p>
+                <p
+                  class="MsoNormal"
+                  style="
                     margin-bottom: 10pt;
                     text-align: justify;
                     text-justify: inter-ideograph;
                     line-height: 115%;
-                  ">
-                <span style="
+                  "
+                >
+                  <span
+                    style="
                       font-size: 12pt;
                       line-height: 115%;
                       font-family: 'Times New Roman', serif;
-                    ">Matting refers to the process of extracting foreground
-                  object from an image. Matting is an important task in image
-                  and video editing. Matting tasks usually produces a "matte"
-                  that can be used to separate foreground from the background
-                  in a given image. Matte can also used to combine a given
-                  foreground on a different background to produce new
-                  plausible image. Image matting is a practical and heavily
-                  applied technique in image recognition, useful both on its
-                  own and as an intermediate stage in image and video
-                  processing.</span>
-              </p>
-              <p class="MsoNormal" style="
+                    "
+                    >Matting refers to the process of extracting foreground
+                    object from an image. Matting is an important task in image
+                    and video editing. Matting tasks usually produces a "matte"
+                    that can be used to separate foreground from the background
+                    in a given image. Matte can also used to combine a given
+                    foreground on a different background to produce new
+                    plausible image. Image matting is a practical and heavily
+                    applied technique in image recognition, useful both on its
+                    own and as an intermediate stage in image and video
+                    processing.</span
+                  >
+                </p>
+                <p
+                  class="MsoNormal"
+                  style="
                     margin-bottom: 10pt;
                     text-align: justify;
                     text-justify: inter-ideograph;
                     line-height: 115%;
-                  ">
-                <span style="
+                  "
+                >
+                  <span
+                    style="
                       font-size: 12pt;
                       line-height: 115%;
                       font-family: 'Times New Roman', serif;
-                    ">In this project, we are developing techniques to process
-                  Image Matting problems. Our research is to address this
-                  problem from two directions. The first is to consider how to
-                  solve the alpha matte form user-interactive manners. The
-                  second is to investigate how to extract accuract Alpha Matte
-                  in an end to end fashion while do not use any other auxilary
-                  information, such as trimap、scribble. etc.</span>
-              </p>
-            </td>
-          </tr>
-          <tr>
-            <td width="100%" valign="top" style="
+                    "
+                    >In this project, we are developing techniques to process
+                    Image Matting problems. Our research is to address this
+                    problem from two directions. The first is to consider how to
+                    solve the alpha matte form user-interactive manners. The
+                    second is to investigate how to extract accuract Alpha Matte
+                    in an end to end fashion while do not use any other auxilary
+                    information, such as trimap、scribble. etc.</span
+                  >
+                </p>
+              </td>
+            </tr>
+            <tr>
+              <td
+                width="100%"
+                valign="top"
+                style="
                   width: 100%;
                   border: none;
                   border-bottom: solid windowtext 1.5pt;
                   padding: 0in 5.4pt 0in 5.4pt;
-                ">
-              <table class="MsoTableGrid" border="0" cellspacing="0" cellpadding="0" width="100%"
-                style="width: 100%; border-collapse: collapse; border: none;">
-                <tbody>
-                  <tr>
-                    <td width="100%" valign="top" style="width: 100%; padding: 0in 5.4pt 0in 5.4pt;">
-                      <p class="MsoNormal" style="
+                "
+              >
+                <table
+                  class="MsoTableGrid"
+                  border="0"
+                  cellspacing="0"
+                  cellpadding="0"
+                  width="100%"
+                  style="width: 100%; border-collapse: collapse; border: none;"
+                >
+                  <tbody>
+                    <tr>
+                      <td
+                        width="100%"
+                        valign="top"
+                        style="width: 100%; padding: 0in 5.4pt 0in 5.4pt;"
+                      >
+                        <p
+                          class="MsoNormal"
+                          style="
                             margin-top: 6pt;
                             margin-right: 0in;
                             margin-bottom: 0in;
                             margin-left: 0in;
                             margin-bottom: 0.0001pt;
                             line-height: normal;
-                          ">
-                        <b><span style="font-family: 'Times New Roman', serif;">Attention-Guided Hierarchical Structure
-                            Aggregation for Image Matting</span></b><span
-                          style="font-family: 'Times New Roman', serif;">
-                        </span><span style="
-                              font-size: 10pt;
-                              font-family: 'Times New Roman', serif;
-                            ">[</span><a
-                          href="http://openaccess.thecvf.com/content_CVPR_2020/papers/Qiao_Attention-Guided_Hierarchical_Structure_Aggregation_for_Image_Matting_CVPR_2020_paper.pdf"><span
+                          "
+                        >
+                          <b
+                            ><span
+                              style="font-family: 'Times New Roman', serif;"
+                              >Attention-Guided Hierarchical Structure
+                              Aggregation for Image Matting</span
+                            ></b
+                          ><span style="font-family: 'Times New Roman', serif;">
+                          </span
+                          ><span
                             style="
-                                font-size: 10pt;
-                                font-family: 'Times New Roman', serif;
-                              ">paper</span></a><span style="
                               font-size: 10pt;
                               font-family: 'Times New Roman', serif;
-                            ">] [<a
-                            href="http://openaccess.thecvf.com/content_CVPR_2020/supplemental/Qiao_Attention-Guided_Hierarchical_Structure_CVPR_2020_supplemental.pdf">suppl</a>][<a
-                            href="https://github.com/wukaoliu/CVPR2020-HAttMatting">code</a>][<a
-                            href="../data_application/DataApplication.html">dataset</a>]
-                        </span>
-                      </p>
-                      <p class="MsoNormal" style="
+                            "
+                            >[</span
+                          ><a
+                            href="http://openaccess.thecvf.com/content_CVPR_2020/papers/Qiao_Attention-Guided_Hierarchical_Structure_Aggregation_for_Image_Matting_CVPR_2020_paper.pdf"
+                            ><span
+                              style="
+                                font-size: 10pt;
+                                font-family: 'Times New Roman', serif;
+                              "
+                              >paper</span
+                            ></a
+                          ><span
+                            style="
+                              font-size: 10pt;
+                              font-family: 'Times New Roman', serif;
+                            "
+                            >] [<a
+                              href="http://openaccess.thecvf.com/content_CVPR_2020/supplemental/Qiao_Attention-Guided_Hierarchical_Structure_CVPR_2020_supplemental.pdf"
+                              >suppl</a
+                            >][<a
+                              href="https://github.com/wukaoliu/CVPR2020-HAttMatting"
+                              >code</a
+                            >][<a
+                              href="../data_application/DataApplication.html"
+                              >dataset</a
+                            >]
+                          </span>
+                        </p>
+                        <p
+                          class="MsoNormal"
+                          style="
                             margin-bottom: 0in;
                             margin-bottom: 0.0001pt;
                             line-height: normal;
-                          ">
-                        <span style="
+                          "
+                        >
+                          <span
+                            style="
                               font-size: 10pt;
                               font-family: 'Times New Roman', serif;
-                            ">Yu Qiao<sup>*</sup> , Yuhao Liu<sup>*</sup>, Xin
-                          Yang<sup>†</sup>, Dongsheng Zhou, Mingliang Xu,
-                          Qiang Zhang, Xiaopeng Wei
-                        </span>
-                      </p>
-                      <p class="MsoNormal" style="margin-bottom: 6pt; line-height: normal;">
-                        <b><i><span style="
+                            "
+                            >Yu Qiao<sup>*</sup> , Yuhao Liu<sup>*</sup>, Xin
+                            Yang<sup>†</sup>, Dongsheng Zhou, Mingliang Xu,
+                            Qiang Zhang, Xiaopeng Wei
+                          </span>
+                        </p>
+                        <p
+                          class="MsoNormal"
+                          style="margin-bottom: 6pt; line-height: normal;"
+                        >
+                          <b
+                            ><i
+                              ><span
+                                style="
                                   font-family: 'Times New Roman', serif;
                                   color: #c00000;
-                                ">Proc. IEEE CVPR (CCF A)</span></i></b><span
-                          style="font-family: 'Times New Roman', serif;">, June 2020</span>
-                      </p>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td width="100%" valign="top" style="width: 100%; padding: 0in 5.4pt 0in 5.4pt;">
-                      <div align="center">
-                        <table class="MsoTableGrid" border="0" cellspacing="0" cellpadding="0"
-                          style="border-collapse: collapse; border: none;">
-                          <tbody>
-                            <tr style="height: 142.8pt;">
-                              <td width="751" valign="top" style="
+                                "
+                                >Proc. IEEE CVPR (CCF A)</span
+                              ></i
+                            ></b
+                          ><span style="font-family: 'Times New Roman', serif;"
+                            >, June 2020</span
+                          >
+                        </p>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td
+                        width="100%"
+                        valign="top"
+                        style="width: 100%; padding: 0in 5.4pt 0in 5.4pt;"
+                      >
+                        <div align="center">
+                          <table
+                            class="MsoTableGrid"
+                            border="0"
+                            cellspacing="0"
+                            cellpadding="0"
+                            style="border-collapse: collapse; border: none;"
+                          >
+                            <tbody>
+                              <tr style="height: 142.8pt;">
+                                <td
+                                  width="751"
+                                  valign="top"
+                                  style="
                                     width: 513.45pt;
                                     padding: 0in 5.4pt 0in 5.4pt;
                                     height: 142.8pt;
-                                  ">
-                                <p class="MsoNormal" align="center" style="
+                                  "
+                                >
+                                  <p
+                                    class="MsoNormal"
+                                    align="center"
+                                    style="
                                       margin-bottom: 0in;
                                       margin-bottom: 0.0001pt;
                                       text-align: center;
                                       line-height: normal;
-                                    ">
-                                  <img border="0" width="737" src="figures/20200621135332.gif" title=""
-                                    style="outline: red dashed 1px;" />
+                                    "
+                                  >
+                                    <img
+                                      border="0"
+                                      width="737"
+                                      src="figures/20200621135332.gif"
+                                      title=""
+                                      style="outline: red dashed 1px;"
+                                    />
+                                    <br />
+                                  </p>
+                                  <p
+                                    class="MsoNormal"
+                                    align="center"
+                                    style="
+                                      margin-bottom: 0in;
+                                      margin-bottom: 0.0001pt;
+                                      text-align: center;
+                                      line-height: normal;
+                                    "
+                                  >
+                                    <img
+                                      border="0"
+                                      width="737"
+                                      src="figures/hattmatting_pipeline.png"
+                                      title=""
+                                      style="outline: red dashed 1px;"
+                                    />
+                                  </p>
+                                  <p
+                                    class="MsoNormal"
+                                    style="
+                                      margin-top: 0in;
+                                      margin-right: -2.9pt;
+                                      margin-bottom: 0in;
+                                      margin-left: 0in;
+                                      margin-bottom: 0.0001pt;
+                                      text-align: justify;
+                                      text-justify: inter-ideograph;
+                                      line-height: normal;
+                                      padding-left: 40%;
+                                    "
+                                  >
+                                    <span
+                                      style="
+                                        font-size: 9pt;
+                                        font-family: 'Times New Roman', serif;
+                                      "
+                                      >Overview of proposed framework.</span
+                                    >
+                                  </p>
                                   <br />
-                                </p>
-                                <p class="MsoNormal" align="center" style="
-                                      margin-bottom: 0in;
-                                      margin-bottom: 0.0001pt;
-                                      text-align: center;
-                                      line-height: normal;
-                                    ">
-                                  <img border="0" width="737" src="figures/hattmatting_pipeline.png" title=""
-                                    style="outline: red dashed 1px;" />
-                                </p>
-                                <p class="MsoNormal" style="
-                                      margin-top: 0in;
-                                      margin-right: -2.9pt;
-                                      margin-bottom: 0in;
-                                      margin-left: 0in;
-                                      margin-bottom: 0.0001pt;
-                                      text-align: justify;
-                                      text-justify: inter-ideograph;
-                                      line-height: normal;
-                                      padding-left: 40%;
-                                    ">
-                                  <span style="
-                                        font-size: 9pt;
-                                        font-family: 'Times New Roman', serif;
-                                      ">Overview of proposed framework.</span>
-                                </p>
-                                <br />
-                              </td>
-                            </tr>
+                                </td>
+                              </tr>
 
-                            <tr style="height: 142.8pt;">
-                              <td width="751" valign="top" style="
+                              <tr style="height: 142.8pt;">
+                                <td
+                                  width="751"
+                                  valign="top"
+                                  style="
                                     width: 513.45pt;
                                     padding: 0in 5.4pt 0in 5.4pt;
                                     height: 142.8pt;
-                                  ">
-                                <p class="MsoNormal" align="center" style="
+                                  "
+                                >
+                                  <p
+                                    class="MsoNormal"
+                                    align="center"
+                                    style="
                                       margin-bottom: 0in;
                                       margin-bottom: 0.0001pt;
                                       text-align: center;
                                       line-height: normal;
-                                    ">
-                                  <img border="0" width="737" height="578" src="figures/hattmatting_results.png"
-                                    title="" style="outline: red dashed 1px;" />
-                                </p>
-                                <p class="MsoNormal" style="
+                                    "
+                                  >
+                                    <img
+                                      border="0"
+                                      width="737"
+                                      height="578"
+                                      src="figures/hattmatting_results.png"
+                                      title=""
+                                      style="outline: red dashed 1px;"
+                                    />
+                                  </p>
+                                  <p
+                                    class="MsoNormal"
+                                    style="
                                       margin-top: 0in;
                                       margin-right: -2.9pt;
                                       margin-bottom: 0in;
@@ -395,31 +544,43 @@
                                       text-align: justify;
                                       text-justify: inter-ideograph;
                                       line-height: normal;
-                                    ">
-                                  <span style="
+                                    "
+                                  >
+                                    <span
+                                      style="
                                         font-size: 9pt;
                                         font-family: 'Times New Roman', serif;
-                                      ">Visual comparison of our results with
-                                    those of the state-of-the-art methods.
-                                    Please zoom in to see the details.
-                                  </span>
-                                </p>
-                              </td>
-                            </tr>
-                          </tbody>
-                        </table>
-                      </div>
-                      <p class="MsoNormal" style="
+                                      "
+                                      >Visual comparison of our results with
+                                      those of the state-of-the-art methods.
+                                      Please zoom in to see the details.
+                                    </span>
+                                  </p>
+                                </td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </div>
+                        <p
+                          class="MsoNormal"
+                          style="
                             margin-bottom: 0in;
                             margin-bottom: 0.0001pt;
                             line-height: normal;
                             text-autospace: none;
-                          "></p>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td width="100%" valign="top" style="width: 100%; padding: 0in 5.4pt 0in 5.4pt;">
-                      <p class="MsoNormal" style="
+                          "
+                        ></p>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td
+                        width="100%"
+                        valign="top"
+                        style="width: 100%; padding: 0in 5.4pt 0in 5.4pt;"
+                      >
+                        <p
+                          class="MsoNormal"
+                          style="
                             margin-top: 6pt;
                             margin-right: 0in;
                             margin-bottom: 6pt;
@@ -428,14 +589,22 @@
                             text-justify: inter-ideograph;
                             line-height: normal;
                             text-autospace: none;
-                          ">
-                        <b><span style="font-family: 'Times New Roman', serif;">Input-Output:
-                          </span></b><span style="font-family: 'Times New Roman', serif;">Given an input RGB image, our
-                          network directly
-                          produces an Alpha Matte without any auxilary
-                          information.</span>
-                      </p>
-                      <p class="MsoNormal" style="
+                          "
+                        >
+                          <b
+                            ><span
+                              style="font-family: 'Times New Roman', serif;"
+                              >Input-Output:
+                            </span></b
+                          ><span style="font-family: 'Times New Roman', serif;"
+                            >Given an input RGB image, our network directly
+                            produces an Alpha Matte without any auxilary
+                            information.</span
+                          >
+                        </p>
+                        <p
+                          class="MsoNormal"
+                          style="
                             margin-top: 6pt;
                             margin-right: 0in;
                             margin-bottom: 6pt;
@@ -444,131 +613,213 @@
                             text-justify: inter-ideograph;
                             line-height: normal;
                             text-autospace: none;
-                          ">
-                        <b><span style="font-family: 'Times New Roman', serif;">Abstract.</span></b><span
-                          style="font-family: 'Times New Roman', serif;">
-                          Existing deep learning based matting algorithms
-                          primarily resort to high-level semantic features to
-                          improve the overall structure of alpha mattes.
-                          However, we argue that advanced semantics extracted
-                          from CNNs contribute unequally for alpha perception
-                          and we are supposed to reconcile advanced semantic
-                          information with low-level appearance cues to refine
-                          the foreground details. In this paper, we propose an
-                          end-to-end Hierarchical Attention Matting Network
-                          (HAttMatting), which can predict the better
-                          structure of alpha mattes from single RGB images
-                          without additional input. Specifically, we employ
-                          spatial and channel-wise attention to integrate
-                          appearance cues and pyramidal features in a novel
-                          fashion. This blended attention mechanism can
-                          perceive alpha mattes from refined boundaries and
-                          adaptive semantics. We also introduce a hybrid loss
-                          function fusing Structural SIMilarity (SSIM), Mean
-                          Square Error (MSE) and Adversarial loss to guide the
-                          network to further improve the overall foreground
-                          structure. Besides, we construct a large-scale image
-                          matting dataset comprised of 59,600 training images
-                          and $1000$ test images (total $646$ distinct
-                          foreground alpha mattes), which can further improve
-                          the robustness of our hierarchical structure
-                          aggregation model. Extensive experiments demonstrate
-                          that the proposed HAttMatting can capture
-                          sophisticated foreground structure and achieve
-                          state-of-the-art performance with single RGB images
-                          as input.</span>
-                      </p>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-              <p class="MsoNormal" style="
+                          "
+                        >
+                          <b
+                            ><span
+                              style="font-family: 'Times New Roman', serif;"
+                              >Abstract.</span
+                            ></b
+                          ><span style="font-family: 'Times New Roman', serif;">
+                            Existing deep learning based matting algorithms
+                            primarily resort to high-level semantic features to
+                            improve the overall structure of alpha mattes.
+                            However, we argue that advanced semantics extracted
+                            from CNNs contribute unequally for alpha perception
+                            and we are supposed to reconcile advanced semantic
+                            information with low-level appearance cues to refine
+                            the foreground details. In this paper, we propose an
+                            end-to-end Hierarchical Attention Matting Network
+                            (HAttMatting), which can predict the better
+                            structure of alpha mattes from single RGB images
+                            without additional input. Specifically, we employ
+                            spatial and channel-wise attention to integrate
+                            appearance cues and pyramidal features in a novel
+                            fashion. This blended attention mechanism can
+                            perceive alpha mattes from refined boundaries and
+                            adaptive semantics. We also introduce a hybrid loss
+                            function fusing Structural SIMilarity (SSIM), Mean
+                            Square Error (MSE) and Adversarial loss to guide the
+                            network to further improve the overall foreground
+                            structure. Besides, we construct a large-scale image
+                            matting dataset comprised of 59,600 training images
+                            and $1000$ test images (total $646$ distinct
+                            foreground alpha mattes), which can further improve
+                            the robustness of our hierarchical structure
+                            aggregation model. Extensive experiments demonstrate
+                            that the proposed HAttMatting can capture
+                            sophisticated foreground structure and achieve
+                            state-of-the-art performance with single RGB images
+                            as input.</span
+                          >
+                        </p>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+                <p
+                  class="MsoNormal"
+                  style="
                     margin-bottom: 0in;
                     margin-bottom: 0.0001pt;
                     line-height: normal;
-                  "></p>
-            </td>
-          </tr>
-          <!-- another paper -->
-          <tr>
-            <td width="100%" valign="top" style="
+                  "
+                ></p>
+              </td>
+            </tr>
+            <!-- another paper -->
+            <tr>
+              <td
+                width="100%"
+                valign="top"
+                style="
                   width: 100%;
                   border: none;
                   border-bottom: solid windowtext 1.5pt;
                   padding: 0in 5.4pt 0in 5.4pt;
-                ">
-              <table class="MsoTableGrid" border="0" cellspacing="0" cellpadding="0" width="100%"
-                style="width: 100%; border-collapse: collapse; border: none;">
-                <tbody>
-                  <tr>
-                    <td width="100%" valign="top" style="width: 100%; padding: 0in 5.4pt 0in 5.4pt;">
-                      <p class="MsoNormal" style="
+                "
+              >
+                <table
+                  class="MsoTableGrid"
+                  border="0"
+                  cellspacing="0"
+                  cellpadding="0"
+                  width="100%"
+                  style="width: 100%; border-collapse: collapse; border: none;"
+                >
+                  <tbody>
+                    <tr>
+                      <td
+                        width="100%"
+                        valign="top"
+                        style="width: 100%; padding: 0in 5.4pt 0in 5.4pt;"
+                      >
+                        <p
+                          class="MsoNormal"
+                          style="
                             margin-top: 6pt;
                             margin-right: 0in;
                             margin-bottom: 0in;
                             margin-left: 0in;
                             margin-bottom: 0.0001pt;
                             line-height: normal;
-                          ">
-                        <b><span style="font-family: 'Times New Roman', serif;">Smart Scribbles for Image
-                            Matting</span></b><span style="font-family: 'Times New Roman', serif;">
-                        </span><span style="
+                          "
+                        >
+                          <b
+                            ><span
+                              style="font-family: 'Times New Roman', serif;"
+                              >Smart Scribbles for Image Matting</span
+                            ></b
+                          ><span style="font-family: 'Times New Roman', serif;">
+                          </span
+                          ><span
+                            style="
                               font-size: 10pt;
                               font-family: 'Times New Roman', serif;
-                            ">[</span><a href=""><span style="
+                            "
+                            >[</span
+                          ><a href=""
+                            ><span
+                              style="
                                 font-size: 10pt;
                                 font-family: 'Times New Roman', serif;
-                              ">paper</span></a><span style="
+                              "
+                              >paper</span
+                            ></a
+                          ><span
+                            style="
                               font-size: 10pt;
                               font-family: 'Times New Roman', serif;
-                            ">] [<a href="">suppl</a>][<a href="">code</a>]
-                        </span>
-                      </p>
-                      <p class="MsoNormal" style="
+                            "
+                            >] [<a href="">suppl</a>][<a href="">code</a>]
+                          </span>
+                        </p>
+                        <p
+                          class="MsoNormal"
+                          style="
                             margin-bottom: 0in;
                             margin-bottom: 0.0001pt;
                             line-height: normal;
-                          ">
-                        <span style="
+                          "
+                        >
+                          <span
+                            style="
                               font-size: 10pt;
                               font-family: 'Times New Roman', serif;
-                            ">Xin Yang<sup>*</sup>, Yu Qiao<sup>*</sup>, Shaozhe
-                          Chen, Shengfeng He, Baocai Yin, Qiang Zhang,
-                          Xiaopeng Wei, Rynson W.H. Lau
-                        </span>
-                      </p>
-                      <p class="MsoNormal" style="margin-bottom: 6pt; line-height: normal;">
-                        <b><i><span style="
+                            "
+                            >Xin Yang<sup>*</sup>, Yu Qiao<sup>*</sup>, Shaozhe
+                            Chen, Shengfeng He, Baocai Yin, Qiang Zhang,
+                            Xiaopeng Wei, Rynson W.H. Lau
+                          </span>
+                        </p>
+                        <p
+                          class="MsoNormal"
+                          style="margin-bottom: 6pt; line-height: normal;"
+                        >
+                          <b
+                            ><i
+                              ><span
+                                style="
                                   font-family: 'Times New Roman', serif;
                                   color: #c00000;
-                                ">ACM Transactions on Multimedia Computing,
-                              Communications, and Applications (TOMM)</span></i></b><span
-                          style="font-family: 'Times New Roman', serif;">, June 2020</span>
-                      </p>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td width="100%" valign="top" style="width: 100%; padding: 0in 5.4pt 0in 5.4pt;">
-                      <div align="center">
-                        <table class="MsoTableGrid" border="0" cellspacing="0" cellpadding="0"
-                          style="border-collapse: collapse; border: none;">
-                          <tbody>
-                            <tr style="height: 142.8pt;">
-                              <td width="751" valign="top" style="
+                                "
+                                >ACM Transactions on Multimedia Computing,
+                                Communications, and Applications (TOMM)</span
+                              ></i
+                            ></b
+                          ><span style="font-family: 'Times New Roman', serif;"
+                            >, June 2020</span
+                          >
+                        </p>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td
+                        width="100%"
+                        valign="top"
+                        style="width: 100%; padding: 0in 5.4pt 0in 5.4pt;"
+                      >
+                        <div align="center">
+                          <table
+                            class="MsoTableGrid"
+                            border="0"
+                            cellspacing="0"
+                            cellpadding="0"
+                            style="border-collapse: collapse; border: none;"
+                          >
+                            <tbody>
+                              <tr style="height: 142.8pt;">
+                                <td
+                                  width="751"
+                                  valign="top"
+                                  style="
                                     width: 513.45pt;
                                     padding: 0in 5.4pt 0in 5.4pt;
                                     height: 142.8pt;
-                                  ">
-                                <p class="MsoNormal" align="center" style="
+                                  "
+                                >
+                                  <p
+                                    class="MsoNormal"
+                                    align="center"
+                                    style="
                                       margin-bottom: 0in;
                                       margin-bottom: 0.0001pt;
                                       text-align: center;
                                       line-height: normal;
-                                    ">
-                                  <img border="0" width="737" height="578" src="figures/TOMM_pipeline.png" title=""
-                                    style="outline: red dashed 1px;" />
-                                </p>
-                                <p class="MsoNormal" style="
+                                    "
+                                  >
+                                    <img
+                                      border="0"
+                                      width="737"
+                                      height="578"
+                                      src="figures/TOMM_pipeline.png"
+                                      title=""
+                                      style="outline: red dashed 1px;"
+                                    />
+                                  </p>
+                                  <p
+                                    class="MsoNormal"
+                                    style="
                                       margin-top: 0in;
                                       margin-right: -2.9pt;
                                       margin-bottom: 0in;
@@ -578,32 +829,52 @@
                                       text-justify: inter-ideograph;
                                       line-height: normal;
                                       padding-left: 40%;
-                                    ">
-                                  <span style="
+                                    "
+                                  >
+                                    <span
+                                      style="
                                         font-size: 9pt;
                                         font-family: 'Times New Roman', serif;
-                                      ">Overview of proposed framework.</span>
-                                </p>
-                                <br />
-                              </td>
-                            </tr>
+                                      "
+                                      >Overview of proposed framework.</span
+                                    >
+                                  </p>
+                                  <br />
+                                </td>
+                              </tr>
 
-                            <tr style="height: 142.8pt;">
-                              <td width="751" valign="top" style="
+                              <tr style="height: 142.8pt;">
+                                <td
+                                  width="751"
+                                  valign="top"
+                                  style="
                                     width: 513.45pt;
                                     padding: 0in 5.4pt 0in 5.4pt;
                                     height: 142.8pt;
-                                  ">
-                                <p class="MsoNormal" align="center" style="
+                                  "
+                                >
+                                  <p
+                                    class="MsoNormal"
+                                    align="center"
+                                    style="
                                       margin-bottom: 0in;
                                       margin-bottom: 0.0001pt;
                                       text-align: center;
                                       line-height: normal;
-                                    ">
-                                  <img border="0" width="737" height="578" src="figures/TOMM_results.png" title=""
-                                    style="outline: red dashed 1px;" />
-                                </p>
-                                <p class="MsoNormal" style="
+                                    "
+                                  >
+                                    <img
+                                      border="0"
+                                      width="737"
+                                      height="578"
+                                      src="figures/TOMM_results.png"
+                                      title=""
+                                      style="outline: red dashed 1px;"
+                                    />
+                                  </p>
+                                  <p
+                                    class="MsoNormal"
+                                    style="
                                       margin-top: 0in;
                                       margin-right: -2.9pt;
                                       margin-bottom: 0in;
@@ -612,31 +883,43 @@
                                       text-align: justify;
                                       text-justify: inter-ideograph;
                                       line-height: normal;
-                                    ">
-                                  <span style="
+                                    "
+                                  >
+                                    <span
+                                      style="
                                         font-size: 9pt;
                                         font-family: 'Times New Roman', serif;
-                                      ">Visual comparison of our results with
-                                    those of the state-of-the-art methods.
-                                    Please zoom in to see the details.
-                                  </span>
-                                </p>
-                              </td>
-                            </tr>
-                          </tbody>
-                        </table>
-                      </div>
-                      <p class="MsoNormal" style="
+                                      "
+                                      >Visual comparison of our results with
+                                      those of the state-of-the-art methods.
+                                      Please zoom in to see the details.
+                                    </span>
+                                  </p>
+                                </td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </div>
+                        <p
+                          class="MsoNormal"
+                          style="
                             margin-bottom: 0in;
                             margin-bottom: 0.0001pt;
                             line-height: normal;
                             text-autospace: none;
-                          "></p>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td width="100%" valign="top" style="width: 100%; padding: 0in 5.4pt 0in 5.4pt;">
-                      <p class="MsoNormal" style="
+                          "
+                        ></p>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td
+                        width="100%"
+                        valign="top"
+                        style="width: 100%; padding: 0in 5.4pt 0in 5.4pt;"
+                      >
+                        <p
+                          class="MsoNormal"
+                          style="
                             margin-top: 6pt;
                             margin-right: 0in;
                             margin-bottom: 6pt;
@@ -645,14 +928,22 @@
                             text-justify: inter-ideograph;
                             line-height: normal;
                             text-autospace: none;
-                          ">
-                        <b><span style="font-family: 'Times New Roman', serif;">Input-Output:
-                          </span></b><span style="font-family: 'Times New Roman', serif;">Given an input RGB image, our
-                          network directly
-                          produces an Alpha Matte with only a few
-                          scribbles.</span>
-                      </p>
-                      <p class="MsoNormal" style="
+                          "
+                        >
+                          <b
+                            ><span
+                              style="font-family: 'Times New Roman', serif;"
+                              >Input-Output:
+                            </span></b
+                          ><span style="font-family: 'Times New Roman', serif;"
+                            >Given an input RGB image, our network directly
+                            produces an Alpha Matte with only a few
+                            scribbles.</span
+                          >
+                        </p>
+                        <p
+                          class="MsoNormal"
+                          style="
                             margin-top: 6pt;
                             margin-right: 0in;
                             margin-bottom: 6pt;
@@ -661,135 +952,222 @@
                             text-justify: inter-ideograph;
                             line-height: normal;
                             text-autospace: none;
-                          ">
-                        <b><span style="font-family: 'Times New Roman', serif;">Abstract.</span></b><span
-                          style="font-family: 'Times New Roman', serif;">
-                          Image matting is an ill-posed problem that usually
-                          requires additional user input, such as trimaps or
-                          scribbles. Drawing a fine trimap requires a large
-                          amount of user effort, while using scribbles can
-                          hardly obtain satisfactory alpha mattes for
-                          non-professional users. Some recent deep learning
-                          based matting networks rely on large-scale composite
-                          datasets for training to improve performance,
-                          resulting in the occasional appearance of obvious
-                          artifacts when processing natural images. In this
-                          paper, we explore the intrinsic relationship between
-                          user input and alpha mattes, and strike a balance
-                          between user effort and the quality of alpha mattes.
-                          In particular, we propose an interactive framework,
-                          referred to as smart scribbles, to guide users to
-                          draw few scribbles on the input images to produce
-                          high-quality alpha mattes. It first infers the most
-                          informative regions of an image for drawing
-                          scribbles to indicate different categories
-                          (foreground, background or unknown), then spreads
-                          these scribbles (i.e., the category labels) to the
-                          rest of the image via our well-designed two-phase
-                          propagation. Both neighboring low-level affinities
-                          and high-level semantic features are considered
-                          during the propagation process. Our method can be
-                          optimized without large-scale matting datasets, and
-                          exhibits more universality in real situations.
-                          Extensive experiments demonstrate that smart
-                          scribbles can produce more accurate alpha mattes
-                          with reduced additional input, compared to the
-                          state-of-the-art matting methods.</span>
-                      </p>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-              <p class="MsoNormal" style="
+                          "
+                        >
+                          <b
+                            ><span
+                              style="font-family: 'Times New Roman', serif;"
+                              >Abstract.</span
+                            ></b
+                          ><span style="font-family: 'Times New Roman', serif;">
+                            Image matting is an ill-posed problem that usually
+                            requires additional user input, such as trimaps or
+                            scribbles. Drawing a fine trimap requires a large
+                            amount of user effort, while using scribbles can
+                            hardly obtain satisfactory alpha mattes for
+                            non-professional users. Some recent deep learning
+                            based matting networks rely on large-scale composite
+                            datasets for training to improve performance,
+                            resulting in the occasional appearance of obvious
+                            artifacts when processing natural images. In this
+                            paper, we explore the intrinsic relationship between
+                            user input and alpha mattes, and strike a balance
+                            between user effort and the quality of alpha mattes.
+                            In particular, we propose an interactive framework,
+                            referred to as smart scribbles, to guide users to
+                            draw few scribbles on the input images to produce
+                            high-quality alpha mattes. It first infers the most
+                            informative regions of an image for drawing
+                            scribbles to indicate different categories
+                            (foreground, background or unknown), then spreads
+                            these scribbles (i.e., the category labels) to the
+                            rest of the image via our well-designed two-phase
+                            propagation. Both neighboring low-level affinities
+                            and high-level semantic features are considered
+                            during the propagation process. Our method can be
+                            optimized without large-scale matting datasets, and
+                            exhibits more universality in real situations.
+                            Extensive experiments demonstrate that smart
+                            scribbles can produce more accurate alpha mattes
+                            with reduced additional input, compared to the
+                            state-of-the-art matting methods.</span
+                          >
+                        </p>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+                <p
+                  class="MsoNormal"
+                  style="
                     margin-bottom: 0in;
                     margin-bottom: 0.0001pt;
                     line-height: normal;
-                  "></p>
-            </td>
-          </tr>
-          <!-- another paper -->
-          <tr>
-            <td width="100%" valign="top" style="
+                  "
+                ></p>
+              </td>
+            </tr>
+            <!-- another paper -->
+            <tr>
+              <td
+                width="100%"
+                valign="top"
+                style="
                   width: 100%;
                   border: none;
                   border-bottom: solid windowtext 1.5pt;
                   padding: 0in 5.4pt 0in 5.4pt;
-                ">
-              <table class="MsoTableGrid" border="0" cellspacing="0" cellpadding="0" width="100%"
-                style="width: 100%; border-collapse: collapse; border: none;">
-                <tbody>
-                  <tr>
-                    <td width="100%" valign="top" style="width: 100%; padding: 0in 5.4pt 0in 5.4pt;">
-                      <p class="MsoNormal" style="
+                "
+              >
+                <table
+                  class="MsoTableGrid"
+                  border="0"
+                  cellspacing="0"
+                  cellpadding="0"
+                  width="100%"
+                  style="width: 100%; border-collapse: collapse; border: none;"
+                >
+                  <tbody>
+                    <tr>
+                      <td
+                        width="100%"
+                        valign="top"
+                        style="width: 100%; padding: 0in 5.4pt 0in 5.4pt;"
+                      >
+                        <p
+                          class="MsoNormal"
+                          style="
                             margin-top: 6pt;
                             margin-right: 0in;
                             margin-bottom: 0in;
                             margin-left: 0in;
                             margin-bottom: 0.0001pt;
                             line-height: normal;
-                          ">
-                        <b><span style="font-family: 'Times New Roman', serif;">Active Matting</span></b><span
-                          style="font-family: 'Times New Roman', serif;">
-                        </span><span style="
+                          "
+                        >
+                          <b
+                            ><span
+                              style="font-family: 'Times New Roman', serif;"
+                              >Active Matting</span
+                            ></b
+                          ><span style="font-family: 'Times New Roman', serif;">
+                          </span
+                          ><span
+                            style="
                               font-size: 10pt;
                               font-family: 'Times New Roman', serif;
-                            ">[</span><a href="http://papers.neurips.cc/paper/7710-active-matting.pdf"><span style="
+                            "
+                            >[</span
+                          ><a
+                            href="http://papers.neurips.cc/paper/7710-active-matting.pdf"
+                            ><span
+                              style="
                                 font-size: 10pt;
                                 font-family: 'Times New Roman', serif;
-                              ">paper</span></a><span style="
+                              "
+                              >paper</span
+                            ></a
+                          ><span
+                            style="
                               font-size: 10pt;
                               font-family: 'Times New Roman', serif;
-                            ">] [<a
-                            href="https://papers.nips.cc/paper/7710-active-matting-supplemental.zip">suppl</a>][<a
-                            href="">code</a>][<a
-                            href="http://www.cs.cityu.edu.hk/~rynson/papers/demos/rendered-100.zip">dataset</a>][<a
-                            href="http://www.cs.cityu.edu.hk/~rynson/papers/demos/nips18poster.pdf">Poster</a>][<a
-                            href="https://youtu.be/QcCBvS79fNE">Video</a>]
-                        </span>
-                      </p>
-                      <p class="MsoNormal" style="
+                            "
+                            >] [<a
+                              href="https://papers.nips.cc/paper/7710-active-matting-supplemental.zip"
+                              >suppl</a
+                            >][<a href="">code</a>][<a
+                              href="http://www.cs.cityu.edu.hk/~rynson/papers/demos/rendered-100.zip"
+                              >dataset</a
+                            >][<a
+                              href="http://www.cs.cityu.edu.hk/~rynson/papers/demos/nips18poster.pdf"
+                              >Poster</a
+                            >][<a href="https://youtu.be/QcCBvS79fNE">Video</a>]
+                          </span>
+                        </p>
+                        <p
+                          class="MsoNormal"
+                          style="
                             margin-bottom: 0in;
                             margin-bottom: 0.0001pt;
                             line-height: normal;
-                          ">
-                        <span style="
+                          "
+                        >
+                          <span
+                            style="
                               font-size: 10pt;
                               font-family: 'Times New Roman', serif;
-                            ">Xin Yang, Ke Xu, Shaozhe Chen, Shengfeng He, Baocai
-                          Yin, Rynson W.H. Lau
-                        </span>
-                      </p>
-                      <p class="MsoNormal" style="margin-bottom: 6pt; line-height: normal;">
-                        <b><i><span style="
+                            "
+                            >Xin Yang, Ke Xu, Shaozhe Chen, Shengfeng He, Baocai
+                            Yin, Rynson W.H. Lau
+                          </span>
+                        </p>
+                        <p
+                          class="MsoNormal"
+                          style="margin-bottom: 6pt; line-height: normal;"
+                        >
+                          <b
+                            ><i
+                              ><span
+                                style="
                                   font-family: 'Times New Roman', serif;
                                   color: #c00000;
-                                ">Proc. NeurIPS (CCF A)</span></i></b><span
-                          style="font-family: 'Times New Roman', serif;">, November 2018</span>
-                      </p>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td width="100%" valign="top" style="width: 100%; padding: 0in 5.4pt 0in 5.4pt;">
-                      <div align="center">
-                        <table class="MsoTableGrid" border="0" cellspacing="0" cellpadding="0"
-                          style="border-collapse: collapse; border: none;">
-                          <tbody>
-                            <tr style="height: 142.8pt;">
-                              <td width="751" valign="top" style="
+                                "
+                                >Proc. NeurIPS (CCF A)</span
+                              ></i
+                            ></b
+                          ><span style="font-family: 'Times New Roman', serif;"
+                            >, November 2018</span
+                          >
+                        </p>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td
+                        width="100%"
+                        valign="top"
+                        style="width: 100%; padding: 0in 5.4pt 0in 5.4pt;"
+                      >
+                        <div align="center">
+                          <table
+                            class="MsoTableGrid"
+                            border="0"
+                            cellspacing="0"
+                            cellpadding="0"
+                            style="border-collapse: collapse; border: none;"
+                          >
+                            <tbody>
+                              <tr style="height: 142.8pt;">
+                                <td
+                                  width="751"
+                                  valign="top"
+                                  style="
                                     width: 513.45pt;
                                     padding: 0in 5.4pt 0in 5.4pt;
                                     height: 142.8pt;
-                                  ">
-                                <p class="MsoNormal" align="center" style="
+                                  "
+                                >
+                                  <p
+                                    class="MsoNormal"
+                                    align="center"
+                                    style="
                                       margin-bottom: 0in;
                                       margin-bottom: 0.0001pt;
                                       text-align: center;
                                       line-height: normal;
-                                    ">
-                                  <img border="0" width="737" height="578" src="figures/NIPS_pipeline.png" title=""
-                                    style="outline: red dashed 1px;" />
-                                </p>
-                                <p class="MsoNormal" style="
+                                    "
+                                  >
+                                    <img
+                                      border="0"
+                                      width="737"
+                                      height="578"
+                                      src="figures/NIPS_pipeline.png"
+                                      title=""
+                                      style="outline: red dashed 1px;"
+                                    />
+                                  </p>
+                                  <p
+                                    class="MsoNormal"
+                                    style="
                                       margin-top: 0in;
                                       margin-right: -2.9pt;
                                       margin-bottom: 0in;
@@ -799,32 +1177,52 @@
                                       text-justify: inter-ideograph;
                                       line-height: normal;
                                       padding-left: 40%;
-                                    ">
-                                  <span style="
+                                    "
+                                  >
+                                    <span
+                                      style="
                                         font-size: 9pt;
                                         font-family: 'Times New Roman', serif;
-                                      ">Overview of proposed framework.</span>
-                                </p>
-                                <br />
-                              </td>
-                            </tr>
+                                      "
+                                      >Overview of proposed framework.</span
+                                    >
+                                  </p>
+                                  <br />
+                                </td>
+                              </tr>
 
-                            <tr style="height: 142.8pt;">
-                              <td width="751" valign="top" style="
+                              <tr style="height: 142.8pt;">
+                                <td
+                                  width="751"
+                                  valign="top"
+                                  style="
                                     width: 513.45pt;
                                     padding: 0in 5.4pt 0in 5.4pt;
                                     height: 142.8pt;
-                                  ">
-                                <p class="MsoNormal" align="center" style="
+                                  "
+                                >
+                                  <p
+                                    class="MsoNormal"
+                                    align="center"
+                                    style="
                                       margin-bottom: 0in;
                                       margin-bottom: 0.0001pt;
                                       text-align: center;
                                       line-height: normal;
-                                    ">
-                                  <img border="0" width="737" height="578" src="figures/NIPS_results.png" title=""
-                                    style="outline: red dashed 1px;" />
-                                </p>
-                                <p class="MsoNormal" style="
+                                    "
+                                  >
+                                    <img
+                                      border="0"
+                                      width="737"
+                                      height="578"
+                                      src="figures/NIPS_results.png"
+                                      title=""
+                                      style="outline: red dashed 1px;"
+                                    />
+                                  </p>
+                                  <p
+                                    class="MsoNormal"
+                                    style="
                                       margin-top: 0in;
                                       margin-right: -2.9pt;
                                       margin-bottom: 0in;
@@ -833,31 +1231,43 @@
                                       text-align: justify;
                                       text-justify: inter-ideograph;
                                       line-height: normal;
-                                    ">
-                                  <span style="
+                                    "
+                                  >
+                                    <span
+                                      style="
                                         font-size: 9pt;
                                         font-family: 'Times New Roman', serif;
-                                      ">Visual comparison of our results with
-                                    those of the state-of-the-art methods.
-                                    Please zoom in to see the details.
-                                  </span>
-                                </p>
-                              </td>
-                            </tr>
-                          </tbody>
-                        </table>
-                      </div>
-                      <p class="MsoNormal" style="
+                                      "
+                                      >Visual comparison of our results with
+                                      those of the state-of-the-art methods.
+                                      Please zoom in to see the details.
+                                    </span>
+                                  </p>
+                                </td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </div>
+                        <p
+                          class="MsoNormal"
+                          style="
                             margin-bottom: 0in;
                             margin-bottom: 0.0001pt;
                             line-height: normal;
                             text-autospace: none;
-                          "></p>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td width="100%" valign="top" style="width: 100%; padding: 0in 5.4pt 0in 5.4pt;">
-                      <p class="MsoNormal" style="
+                          "
+                        ></p>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td
+                        width="100%"
+                        valign="top"
+                        style="width: 100%; padding: 0in 5.4pt 0in 5.4pt;"
+                      >
+                        <p
+                          class="MsoNormal"
+                          style="
                             margin-top: 6pt;
                             margin-right: 0in;
                             margin-bottom: 6pt;
@@ -866,14 +1276,22 @@
                             text-justify: inter-ideograph;
                             line-height: normal;
                             text-autospace: none;
-                          ">
-                        <b><span style="font-family: 'Times New Roman', serif;">Input-Output:
-                          </span></b><span style="font-family: 'Times New Roman', serif;">Given an input RGB image, our
-                          network directly
-                          produces an Alpha Matte with only a few
-                          points.</span>
-                      </p>
-                      <p class="MsoNormal" style="
+                          "
+                        >
+                          <b
+                            ><span
+                              style="font-family: 'Times New Roman', serif;"
+                              >Input-Output:
+                            </span></b
+                          ><span style="font-family: 'Times New Roman', serif;"
+                            >Given an input RGB image, our network directly
+                            produces an Alpha Matte with only a few
+                            points.</span
+                          >
+                        </p>
+                        <p
+                          class="MsoNormal"
+                          style="
                             margin-top: 6pt;
                             margin-right: 0in;
                             margin-bottom: 6pt;
@@ -882,74 +1300,90 @@
                             text-justify: inter-ideograph;
                             line-height: normal;
                             text-autospace: none;
-                          ">
-                        <b><span style="font-family: 'Times New Roman', serif;">Abstract.</span></b><span
-                          style="font-family: 'Times New Roman', serif;">
-                          Image matting is an ill-posed problem. It requires a
-                          user input trimap or some strokes to obtain an alpha
-                          matte of the foreground object. A fine user input is
-                          essential to obtain a good result, which is either
-                          time consuming or suitable for experienced users who
-                          know where to place the strokes. In this paper, we
-                          explore the intrinsic relationship between the user
-                          input and the matting algorithm to address the
-                          problem of where and when the user should provide
-                          the input. Our aim is to discover the most
-                          informative sequence of regions for user input in
-                          order to produce a good alpha matte with minimum
-                          labeling efforts. To this end, we propose an active
-                          matting method with recurrent reinforcement
-                          learning. The proposed framework involves human in
-                          the loop by sequentially detecting informative
-                          regions for trivial human judgement. Comparing to
-                          traditional matting algorithms, the proposed
-                          framework requires much less efforts, and can
-                          produce satisfactory results with just 10 regions.
-                          Through extensive experiments, we show that the
-                          proposed model reduces user efforts significantly
-                          and achieves comparable performance to dense trimaps
-                          in a user-friendly manner. We further show that the
-                          learned informative knowledge can be generalized
-                          across different matting algorithms.</span>
-                      </p>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-              <p class="MsoNormal" style="
+                          "
+                        >
+                          <b
+                            ><span
+                              style="font-family: 'Times New Roman', serif;"
+                              >Abstract.</span
+                            ></b
+                          ><span style="font-family: 'Times New Roman', serif;">
+                            Image matting is an ill-posed problem. It requires a
+                            user input trimap or some strokes to obtain an alpha
+                            matte of the foreground object. A fine user input is
+                            essential to obtain a good result, which is either
+                            time consuming or suitable for experienced users who
+                            know where to place the strokes. In this paper, we
+                            explore the intrinsic relationship between the user
+                            input and the matting algorithm to address the
+                            problem of where and when the user should provide
+                            the input. Our aim is to discover the most
+                            informative sequence of regions for user input in
+                            order to produce a good alpha matte with minimum
+                            labeling efforts. To this end, we propose an active
+                            matting method with recurrent reinforcement
+                            learning. The proposed framework involves human in
+                            the loop by sequentially detecting informative
+                            regions for trivial human judgement. Comparing to
+                            traditional matting algorithms, the proposed
+                            framework requires much less efforts, and can
+                            produce satisfactory results with just 10 regions.
+                            Through extensive experiments, we show that the
+                            proposed model reduces user efforts significantly
+                            and achieves comparable performance to dense trimaps
+                            in a user-friendly manner. We further show that the
+                            learned informative knowledge can be generalized
+                            across different matting algorithms.</span
+                          >
+                        </p>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+                <p
+                  class="MsoNormal"
+                  style="
                     margin-bottom: 0in;
                     margin-bottom: 0.0001pt;
                     line-height: normal;
-                  "></p>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-    <p class="MsoNormal" style="
+                  "
+                ></p>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <p
+        class="MsoNormal"
+        style="
           margin-top: 6pt;
           margin-right: 0in;
           margin-bottom: 0in;
           margin-left: 0in;
           margin-bottom: 0.0001pt;
-        ">
-      <i><span style="
+        "
+      >
+        <i
+          ><span
+            style="
               font-size: 9pt;
               line-height: 115%;
               font-family: 'Times New Roman', serif;
-            ">Last updated in June 2020</span></i>
-    </p>
-  </div>
-</body>
-<script>
-  new Vue({
-    el: "#app",
-    methods: {
-      goBack() {
-        window.location.href = "../index.html#Research Projects";
+            "
+            >Last updated in June 2020</span
+          ></i
+        >
+      </p>
+    </div>
+  </body>
+  <script>
+    new Vue({
+      el: "#app",
+      methods: {
+        goBack() {
+          window.location.href = "../index.html#Research Projects";
+        },
       },
-    },
-  });
-</script>
-
+    });
+  </script>
 </html>

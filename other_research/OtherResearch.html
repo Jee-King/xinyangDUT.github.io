@@ -1,264 +1,301 @@
 <!DOCTYPE html>
 <html>
-<title>Other Research</title>
+  <title>Other Research</title>
 
-<head>
-  <meta charset="UTF-8" />
-  <link rel="shortcut icon" href="../favicon.ico" type="image/x-icon" />
-  <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css" />
-  <script src="https://unpkg.com/vue/dist/vue.js"></script>
-  <script src="https://unpkg.com/element-ui/lib/index.js"></script>
-  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-</head>
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="shortcut icon" href="../favicon.ico" type="image/x-icon" />
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/element-ui/lib/theme-chalk/index.css"
+    />
+    <script src="https://unpkg.com/vue/dist/vue.js"></script>
+    <script src="https://unpkg.com/element-ui/lib/index.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+  </head>
 
-<body>
-  <div id="app">
-    <el-page-header @back="goBack" title="Back"> </el-page-header>
-    <!-- Other Research -->
-    <div>
-      <h1>
-        Other Research
-      </h1>
-      <el-divider></el-divider>
-      <div v-for="project,index in projects">
-        <p style="background-color: rgb(242, 244, 225);">
-          <span v-html="textBold(project.authors)" style="font-size: 14px;"></span>
-          <b style="font-size: 18px;">{{project.title}}</b>
-          <b style="color: #006699; font-size: 16px;">{{project.tag[0]}}</b><span
-            style="font-size: 14px;">{{project.tag[1]}}</span>
-          <b style="color: #006699; font-size: 16px;">{{project.tag[2]}}</b>
-          <span v-for="link in project.links">[<b><a style="color: #006699; font-size: 18px;"
-                :href="link.link">{{link.name}}</a></b><span>]&nbsp;</span></span>
-        </p>
-        <div v-for="img in project.imgs" style="text-align: center;">
-          <img :src="'figures/'+img" :alt="img" class="figure_img" />
+  <body>
+    <div id="app">
+      <el-page-header @back="goBack" title="Back"> </el-page-header>
+      <!-- Other Research -->
+      <div>
+        <h1>
+          Other Research
+        </h1>
+        <el-divider></el-divider>
+        <div v-for="project,index in projects">
+          <p style="background-color: rgb(242, 244, 225);">
+            <span
+              v-html="textBold(project.authors)"
+              style="font-size: 14px;"
+            ></span>
+            <b style="font-size: 18px;">{{project.title}}</b>
+            <b style="color: #006699; font-size: 16px;">{{project.tag[0]}}</b
+            ><span style="font-size: 14px;">{{project.tag[1]}}</span>
+            <b style="color: #006699; font-size: 16px;">{{project.tag[2]}}</b>
+            <span v-for="link in project.links"
+              >[<b
+                ><a style="color: #006699; font-size: 18px;" :href="link.link"
+                  >{{link.name}}</a
+                ></b
+              ><span>]&nbsp;</span></span
+            >
+          </p>
+          <div v-for="img in project.imgs" style="text-align: center;">
+            <img :src="'figures/'+img" :alt="img" class="figure_img" />
+          </div>
         </div>
       </div>
     </div>
-  </div>
-</body>
-<script>
-  new Vue({
-    el: "#app",
-    data: function () {
-      return {
-        ks: ["Xin Yang", "Yang Xin", "杨鑫"],
-        projects: [
-        {
-            authors:
-              "Sucheng Ren, Chu Han, Xin Yang, Guoqiang Han, Shengfeng He.",
-            title: "TENet: Triple Excitation Network for Video Salient Object Detection.",
-            tag: ["ECCV 2020", ", Glasgow, UK.", "(Spotlight)"],
-            links: [
-              
-            ],
-            imgs: ["Triple Excitation Network for Video Salient Object Detection.png"],
-          },
-          {
-            authors:
-              "Xiaoheng Jiang, Li Zhang, Mingliang Xu, Tianzhu Zhang, Pei Lv, Bing Zhou, Xin Yang, Yanwei Pang.",
-            title: "Attention Scaling for Crowd Counting.",
-            tag: ["CVPR 2020", ", Seattle, USA.", "(CCF A)"],
-            links: [
-              {
-                name: "paper",
-                link:
-                  "http://openaccess.thecvf.com/content_CVPR_2020/papers/Jiang_Attention_Scaling_for_Crowd_Counting_CVPR_2020_paper.pdf",
-              },
-              { name: "code", link: "https://github.com/laridzhang/ASNet" },
-            ],
-            imgs: ["Attention Scaling for Crowd Counting.png"],
-          },
-          {
-            authors:
-              "Xinglin Piao, Yongli Hu, Junbin Gao, Yanfeng Sun, Xin Yang, Baocai Yin, Wenwu Zhu and Ge Li.",
-            title:
-              "Kernel Clustering on Symmetric Positive Definite Manifolds via Double Approximated Low Rank Representation.",
-            tag: ["ICME 2020", ", London, UK.", "(CCF B)"],
-            links: [
-              {
-                name: "paper",
-                link: "https://ieeexplore.ieee.org/document/9102821",
-              },
-            ],
-            imgs: [
-              "Kernel Clustering on Symmetric Positive Definite Manifolds via Double Approximated Low Rank Representation.png",
-            ],
-          },
-          {
-            authors:
-              "Tianyu Wang*, Xin Yang*, Ke Xu, Shaozhe Chen, Qiang Zhang, and Rynson Lau.",
-            title:
-              "Spatial Attentive Single-Image Deraining with a High Quality Real Rain Dataset.",
-            tag: ["CVPR 2019", ", Long Beach, USA.", "(CCF A)"],
-            links: [
-              {
-                name: "paper",
-                link: "https://arxiv.org/abs/1904.01538",
-              },
-              {
-                name: "suppl",
-                link:
-                  "http://www.cs.cityu.edu.hk/~rynson/papers/demos/cvpr19c-supp.pdf",
-              },
-              {
-                name: "code",
-                link: "https://github.com/stevewongv/SPANet",
-              },
-              {
-                name: "training-set (key:4fwo)",
-                link: "https://pan.baidu.com/s/1lPn3MWckHxh1uBYYucoWVQ",
-              },
-              {
-                name: "test-set",
-                link:
-                  "http://www.cs.cityu.edu.hk/~rynson/papers/demos/derain_testset_1000.rar",
-              },
-            ],
-            imgs: [
-              "Spatial Attentive Single-Image Deraining with a High Quality Real Rain Dataset.png",
-              "Spatial Attentive Single-Image Deraining with a High Quality Real Rain Dataset.gif",
-              "Spatial Attentive Single-Image Deraining with a High Quality Real Rain Dataset (2).gif",
-            ],
-          },
-          {
-            authors:
-              "Xin Yang, Wenbo Hu, Dawei Wang, Lijing Zhao, Baocai Yin, Qiang Zhang, Xiaopeng Wei, Hongbo Fu.",
-            title:
-              "DEMC: A Deep Dual-Encoder Network for Denoising Monte Carlo Rendering.",
-            tag: [
-              "Journal of Computer Science and Technology 2019",
-              "(Special Issue of CVM), 34(5): 1123-1135.",
-              "(CCF B)",
-            ],
-            links: [
-              {
-                name: "paper",
-                link: "https://arxiv.org/pdf/1905.03908.pdf",
-              },
-              {
-                name: "suppl",
-                link:
-                  "https://drive.google.com/file/d/1UyJYe1JoopIb-QwDqHgi6wBAmF2NT_Mi/view",
-              },
-              {
-                name: "code",
-                link: "https://github.com/wbhu/DEMC",
-              },
-              {
-                name: "dataset",
-                link: "https://sites.google.com/view/dutdemc",
-              },
-            ],
-            imgs: [
-              "A Deep Dual-Encoder Network for Denoising Monte Carlo Rendering.png",
-              "A Deep Dual-Encoder Network for Denoising Monte Carlo Rendering.gif",
-            ],
-          },
-          {
-            authors: "Wanchao Su, Dong Du, Xin Yang, Shizhe Zhou, Hongbo Fu.",
-            title:
-              "Interactive Sketch-Based Normal Map Generation with Deep Neural Networks.",
-            tag: [
-              "ACM SIGGRAPH Symposium on Interactive 3D Graphics and Games (I3D)",
-              ", 2018.",
-              "(CCF B)",
-            ],
-            links: [
-              {
-                name: "paper",
-                link:
-                  "http://sweb.cityu.edu.hk/hongbofu/doc/sketch2normal_i3D2018.pdf",
-              },
-              {
-                name: "video",
-                link: "https://youtu.be/-Fl3Yav5FFI",
-              },
-              {
-                name: "code",
-                link: "https://github.com/Ansire/sketch2normal",
-              },
-              {
-                name: "data",
-                link:
-                  "http://sweb.cityu.edu.hk/hongbofu/data/datasets.tar.gz",
-              },
-              {
-                name: "media: Seamless",
-                link: "https://shiropen.com/seamless-3dcg-interactive-sketch",
-              },
-            ],
-            imgs: [
-              "Interactive Sketch-Based Normal Map Generation with Deep Neural Networks.jpg",
-            ],
-          },
-          {
-            authors:
-              "Yang Xin, Liu Qi, Yin Baocai, Zhang Qiang, Wei Xiaopeng.",
-            title: "A K-D Tree Construction Designed for Motion Blur.",
-            tag: [
-              "28th Eurographics Symposium on Rendering (EGSR)",
-              ", Helsinki, Finland, 2017, 113-119.",
-              "(CCF B)",
-            ],
-            imgs: ["A K-D Tree Construction Designed for Motion Blur.gif"],
-          },
-          {
-            authors:
-              "Yang Xin, Liu Qi, Zhang Pengfei, Xin Lutong, Zhou Dongsheng, Wang Yuxin, Zhang Qiang, Wei Xiaopeng.",
-            title: "DKD: A Fast KD-Tree Update Design for Dynamic Scenes.",
-            tag: [
-              "Journal of Computer Animation and Virtual Worlds (Special Issue of CASA'2016, Geneva, Switzerland)",
-              ", 2016, 27(4): 340-350.",
-              "(SCI)",
-            ],
-            imgs: ["DKD A Fast KD-Tree Update Design for Dynamic Scenes.gif"],
-          },
-          {
-            authors: "杨鑫, 王大维, 王宇新, 白鑫, 葛宏伟, 夏浩.",
-            title: "互补MOOC的主动式课堂建设方法探究.",
-            tag: ["", "《现代教育技术》. 2017, 27(1)：31-37.", "(CSSCI收录)"],
-            imgs: ["互补MOOC的主动式课堂建设方法探究.png"],
-          },
-        ],
-      };
-    },
-    methods: {
-      textBold(s) {
-        for (var i = 0; i < this.ks.length; ++i) {
-          const k = this.ks[i];
-          if (s.indexOf(k) != -1) return s.replace(k, "<b>" + k + "</b>");
+  </body>
+  <script>
+    new Vue({
+      el: '#app',
+      data: function () {
+        return {
+          ks: ['Xin Yang', 'Yang Xin', '杨鑫'],
+          projects: [
+            {
+              authors:
+                'Lei Chen, Rui Liu, Dongsheng Zhou, Yang Xin, Qiang Zhang and Xiaopeng Wei.',
+              title:
+                'A Human Behavior Recognition Model based on Extended Squeeze-and-Excitation Network.',
+              tag: ['CASA 2020', ', Bournemouth, UK.', ''],
+              links: [],
+              imgs: [
+                'A Human Behavior Recognition Model based on Extended Squeeze-and-Excitation Network.png',
+              ],
+            },
+            {
+              authors:
+                'Shimin Zhao, Miaomiao Chen, Pengjie Wang, Ying Cao, Pingping Zhang and Xin Yang.',
+              title:
+                'RGB-D Salient Object Detection via Deep Fusion of Semantics and Details.',
+              tag: [
+                'Journal of Computer Animation and Virtual Worlds',
+                ', Bournemouth, UK.',
+                '(Special Issue of CASA 2020)',
+              ],
+              links: [],
+              imgs: [
+                'RGB-D Salient Object Detection via Deep Fusion of Semantics and Details.png',
+              ],
+            },
+            {
+              authors:
+                'Sucheng Ren, Chu Han, Xin Yang, Guoqiang Han, Shengfeng He.',
+              title:
+                'TENet: Triple Excitation Network for Video Salient Object Detection.',
+              tag: ['ECCV 2020', ', Glasgow, UK.', '(Spotlight)'],
+              links: [],
+              imgs: [
+                'Triple Excitation Network for Video Salient Object Detection.png',
+              ],
+            },
+            {
+              authors:
+                'Xiaoheng Jiang, Li Zhang, Mingliang Xu, Tianzhu Zhang, Pei Lv, Bing Zhou, Xin Yang, Yanwei Pang.',
+              title: 'Attention Scaling for Crowd Counting.',
+              tag: ['CVPR 2020', ', Seattle, USA.', '(CCF A)'],
+              links: [
+                {
+                  name: 'paper',
+                  link:
+                    'http://openaccess.thecvf.com/content_CVPR_2020/papers/Jiang_Attention_Scaling_for_Crowd_Counting_CVPR_2020_paper.pdf',
+                },
+                { name: 'code', link: 'https://github.com/laridzhang/ASNet' },
+              ],
+              imgs: ['Attention Scaling for Crowd Counting.png'],
+            },
+            {
+              authors:
+                'Xinglin Piao, Yongli Hu, Junbin Gao, Yanfeng Sun, Xin Yang, Baocai Yin, Wenwu Zhu and Ge Li.',
+              title:
+                'Kernel Clustering on Symmetric Positive Definite Manifolds via Double Approximated Low Rank Representation.',
+              tag: ['ICME 2020', ', London, UK.', '(CCF B)'],
+              links: [
+                {
+                  name: 'paper',
+                  link: 'https://ieeexplore.ieee.org/document/9102821',
+                },
+              ],
+              imgs: [
+                'Kernel Clustering on Symmetric Positive Definite Manifolds via Double Approximated Low Rank Representation.png',
+              ],
+            },
+            {
+              authors:
+                'Tianyu Wang*, Xin Yang*, Ke Xu, Shaozhe Chen, Qiang Zhang, and Rynson Lau.',
+              title:
+                'Spatial Attentive Single-Image Deraining with a High Quality Real Rain Dataset.',
+              tag: ['CVPR 2019', ', Long Beach, USA.', '(CCF A)'],
+              links: [
+                {
+                  name: 'paper',
+                  link: 'https://arxiv.org/abs/1904.01538',
+                },
+                {
+                  name: 'suppl',
+                  link:
+                    'http://www.cs.cityu.edu.hk/~rynson/papers/demos/cvpr19c-supp.pdf',
+                },
+                {
+                  name: 'code',
+                  link: 'https://github.com/stevewongv/SPANet',
+                },
+                {
+                  name: 'training-set (key:4fwo)',
+                  link: 'https://pan.baidu.com/s/1lPn3MWckHxh1uBYYucoWVQ',
+                },
+                {
+                  name: 'test-set',
+                  link:
+                    'http://www.cs.cityu.edu.hk/~rynson/papers/demos/derain_testset_1000.rar',
+                },
+              ],
+              imgs: [
+                'Spatial Attentive Single-Image Deraining with a High Quality Real Rain Dataset.png',
+                'Spatial Attentive Single-Image Deraining with a High Quality Real Rain Dataset.gif',
+                'Spatial Attentive Single-Image Deraining with a High Quality Real Rain Dataset (2).gif',
+              ],
+            },
+            {
+              authors:
+                'Xin Yang, Wenbo Hu, Dawei Wang, Lijing Zhao, Baocai Yin, Qiang Zhang, Xiaopeng Wei, Hongbo Fu.',
+              title:
+                'DEMC: A Deep Dual-Encoder Network for Denoising Monte Carlo Rendering.',
+              tag: [
+                'Journal of Computer Science and Technology 2019',
+                '(Special Issue of CVM), 34(5): 1123-1135.',
+                '(CCF B)',
+              ],
+              links: [
+                {
+                  name: 'paper',
+                  link: 'https://arxiv.org/pdf/1905.03908.pdf',
+                },
+                {
+                  name: 'suppl',
+                  link:
+                    'https://drive.google.com/file/d/1UyJYe1JoopIb-QwDqHgi6wBAmF2NT_Mi/view',
+                },
+                {
+                  name: 'code',
+                  link: 'https://github.com/wbhu/DEMC',
+                },
+                {
+                  name: 'dataset',
+                  link: 'https://sites.google.com/view/dutdemc',
+                },
+              ],
+              imgs: [
+                'A Deep Dual-Encoder Network for Denoising Monte Carlo Rendering.png',
+                'A Deep Dual-Encoder Network for Denoising Monte Carlo Rendering.gif',
+              ],
+            },
+            {
+              authors: 'Wanchao Su, Dong Du, Xin Yang, Shizhe Zhou, Hongbo Fu.',
+              title:
+                'Interactive Sketch-Based Normal Map Generation with Deep Neural Networks.',
+              tag: [
+                'ACM SIGGRAPH Symposium on Interactive 3D Graphics and Games (I3D)',
+                ', 2018.',
+                '(CCF B)',
+              ],
+              links: [
+                {
+                  name: 'paper',
+                  link:
+                    'http://sweb.cityu.edu.hk/hongbofu/doc/sketch2normal_i3D2018.pdf',
+                },
+                {
+                  name: 'video',
+                  link: 'https://youtu.be/-Fl3Yav5FFI',
+                },
+                {
+                  name: 'code',
+                  link: 'https://github.com/Ansire/sketch2normal',
+                },
+                {
+                  name: 'data',
+                  link:
+                    'http://sweb.cityu.edu.hk/hongbofu/data/datasets.tar.gz',
+                },
+                {
+                  name: 'media: Seamless',
+                  link: 'https://shiropen.com/seamless-3dcg-interactive-sketch',
+                },
+              ],
+              imgs: [
+                'Interactive Sketch-Based Normal Map Generation with Deep Neural Networks.jpg',
+              ],
+            },
+            {
+              authors:
+                'Yang Xin, Liu Qi, Yin Baocai, Zhang Qiang, Wei Xiaopeng.',
+              title: 'A K-D Tree Construction Designed for Motion Blur.',
+              tag: [
+                '28th Eurographics Symposium on Rendering (EGSR)',
+                ', Helsinki, Finland, 2017, 113-119.',
+                '(CCF B)',
+              ],
+              imgs: ['A K-D Tree Construction Designed for Motion Blur.gif'],
+            },
+            {
+              authors:
+                'Yang Xin, Liu Qi, Zhang Pengfei, Xin Lutong, Zhou Dongsheng, Wang Yuxin, Zhang Qiang, Wei Xiaopeng.',
+              title: 'DKD: A Fast KD-Tree Update Design for Dynamic Scenes.',
+              tag: [
+                "Journal of Computer Animation and Virtual Worlds (Special Issue of CASA'2016, Geneva, Switzerland)",
+                ', 2016, 27(4): 340-350.',
+                '(SCI)',
+              ],
+              imgs: ['DKD A Fast KD-Tree Update Design for Dynamic Scenes.gif'],
+            },
+            {
+              authors: '杨鑫, 王大维, 王宇新, 白鑫, 葛宏伟, 夏浩.',
+              title: '互补MOOC的主动式课堂建设方法探究.',
+              tag: ['', '《现代教育技术》. 2017, 27(1)：31-37.', '(CSSCI收录)'],
+              imgs: ['互补MOOC的主动式课堂建设方法探究.png'],
+            },
+          ],
         }
-        return s;
       },
-      goBack() {
-        window.location.href = "../index.html#Research Projects";
+      methods: {
+        textBold(s) {
+          for (var i = 0; i < this.ks.length; ++i) {
+            const k = this.ks[i]
+            if (s.indexOf(k) != -1) return s.replace(k, '<b>' + k + '</b>')
+          }
+          return s
+        },
+        goBack() {
+          window.location.href = '../index.html#Research Projects'
+        },
       },
-    },
-  });
-</script>
-<style>
-  body {
-    margin: 0;
-    padding: 10px 40px 10px 40px;
-  }
+    })
+  </script>
+  <style>
+    body {
+      margin: 0;
+      padding: 10px 40px 10px 40px;
+    }
 
-  p {
-    line-height: 30px;
-  }
+    p {
+      line-height: 30px;
+    }
 
-  h1 {
-    text-align: center;
-  }
+    h1 {
+      text-align: center;
+    }
 
-  i {
-    font-size: 14px;
-    clear: left;
-  }
+    i {
+      font-size: 14px;
+      clear: left;
+    }
 
-  .figure_img {
-    max-width: 80%;
-  }
-</style>
-
+    .figure_img {
+      max-width: 80%;
+    }
+  </style>
 </html>
