@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html>
+  <title>Photorealistic Rendering</title>
+
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="shortcut icon" href="../favicon.ico" type="image/x-icon" />
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/element-ui/lib/theme-chalk/index.css"
+    />
+    <script src="https://unpkg.com/vue/dist/vue.js"></script>
+    <script src="https://unpkg.com/element-ui/lib/index.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+  </head>
+
+  <body>
+    <div id="app">
+      <el-page-header @back="goBack" title="Back"> </el-page-header>
+      <!-- Photorealistic Rendering -->
+      <div class="content">
+        <h1>
+          Photorealistic Rendering
+        </h1>
+        <!-- <el-divider></el-divider>
+        <p></p> -->
+        <el-divider></el-divider>
+        <div v-for="project,index in projects">
+          <p style="background-color: rgb(242, 244, 225);">
+            <span
+              v-html="textBold(project.authors)"
+              style="font-size: 14px;"
+            ></span>
+            <b style="font-size: 18px;">{{project.title}}</b>
+            <b style="color: #006699; font-size: 16px;">{{project.tag[0]}}</b
+            ><span style="font-size: 14px;">{{project.tag[1]}}</span>
+            <b style="color: #006699; font-size: 16px;">{{project.tag[2]}}</b>
+            <span v-for="link in project.links"
+              >[<b
+                ><a style="color: #006699; font-size: 18px;" :href="link.link"
+                  >{{link.name}}</a
+                ></b
+              ><span>]&nbsp;</span></span
+            >
+          </p>
+          <div v-for="img in project.imgs" style="text-align: center;">
+            <img :src="'figures/'+img" :alt="img" class="figure_img" />
+          </div>
+          <div v-if="project.abstract">
+            <p><b>Abstract.&nbsp;</b>{{project.abstract}}<span></span></p>
+          </div>
+          <div v-if="project.io">
+            <p><b>Input-Output:&nbsp;</b>{{project.abstract}}<span></span></p>
+          </div>
+          <el-divider content-position="right">{{index+1}}</el-divider>
+        </div>
+      </div>
+    </div>
+  </body>
+  <script>
+    new Vue({
+      el: '#app',
+      data: function () {
+        return {
+          ks: ['Xin Yang', 'Yang Xin', '杨鑫'],
+          projects: [
+            {
+              authors:
+                'Xin Yang, Wenbo Hu, Dawei Wang, Lijing Zhao, Baocai Yin, Qiang Zhang, Xiaopeng Wei, Hongbo Fu.',
+              title:
+                'DEMC: A Deep Dual-Encoder Network for Denoising Monte Carlo Rendering.',
+              tag: [
+                'Journal of Computer Science and Technology 2019',
+                '(Special Issue of CVM), 34(5): 1123-1135.',
+                '(CCF B)',
+              ],
+              links: [
+                {
+                  name: 'paper',
+                  link: 'https://arxiv.org/pdf/1905.03908.pdf',
+                },
+                {
+                  name: 'suppl',
+                  link:
+                    'https://drive.google.com/file/d/1UyJYe1JoopIb-QwDqHgi6wBAmF2NT_Mi/view',
+                },
+                {
+                  name: 'code',
+                  link: 'https://github.com/wbhu/DEMC',
+                },
+                {
+                  name: 'dataset',
+                  link: 'https://sites.google.com/view/dutdemc',
+                },
+              ],
+              imgs: [
+                'A Deep Dual-Encoder Network for Denoising Monte Carlo Rendering.png',
+                'A Deep Dual-Encoder Network for Denoising Monte Carlo Rendering.gif',
+              ],
+            },
+            {
+              authors: 'Wanchao Su, Dong Du, Xin Yang, Shizhe Zhou, Hongbo Fu.',
+              title:
+                'Interactive Sketch-Based Normal Map Generation with Deep Neural Networks.',
+              tag: [
+                'ACM SIGGRAPH Symposium on Interactive 3D Graphics and Games (I3D)',
+                ', 2018.',
+                '(CCF B)',
+              ],
+              links: [
+                {
+                  name: 'paper',
+                  link:
+                    'http://sweb.cityu.edu.hk/hongbofu/doc/sketch2normal_i3D2018.pdf',
+                },
+                {
+                  name: 'video',
+                  link: 'https://youtu.be/-Fl3Yav5FFI',
+                },
+                {
+                  name: 'code',
+                  link: 'https://github.com/Ansire/sketch2normal',
+                },
+                {
+                  name: 'data',
+                  link:
+                    'http://sweb.cityu.edu.hk/hongbofu/data/datasets.tar.gz',
+                },
+                {
+                  name: 'media: Seamless',
+                  link: 'https://shiropen.com/seamless-3dcg-interactive-sketch',
+                },
+              ],
+              imgs: [
+                'Interactive Sketch-Based Normal Map Generation with Deep Neural Networks.jpg',
+              ],
+            },
+            {
+              authors:
+                'Yang Xin, Liu Qi, Yin Baocai, Zhang Qiang, Wei Xiaopeng.',
+              title: 'A K-D Tree Construction Designed for Motion Blur.',
+              tag: [
+                '28th Eurographics Symposium on Rendering (EGSR)',
+                ', Helsinki, Finland, 2017, 113-119.',
+                '(CCF B)',
+              ],
+              imgs: ['A K-D Tree Construction Designed for Motion Blur.gif'],
+            },
+            {
+              authors:
+                'Yang Xin, Liu Qi, Zhang Pengfei, Xin Lutong, Zhou Dongsheng, Wang Yuxin, Zhang Qiang, Wei Xiaopeng.',
+              title: 'DKD: A Fast KD-Tree Update Design for Dynamic Scenes.',
+              tag: [
+                "Journal of Computer Animation and Virtual Worlds (Special Issue of CASA'2016, Geneva, Switzerland)",
+                ', 2016, 27(4): 340-350.',
+                '(SCI)',
+              ],
+              imgs: ['DKD A Fast KD-Tree Update Design for Dynamic Scenes.gif'],
+            },
+          ],
+        }
+      },
+      methods: {
+        textBold(s) {
+          for (var i = 0; i < this.ks.length; ++i) {
+            const k = this.ks[i]
+            if (s.indexOf(k) != -1) return s.replace(k, '<b>' + k + '</b>')
+          }
+          return s
+        },
+        goBack() {
+          window.location.href = '../index.html#Research Projects'
+        },
+      },
+    })
+  </script>
+  <style>
+    body {
+      margin: 0;
+      padding: 10px 40px 10px 40px;
+      font-family: Times New Roman;
+    }
+
+    p {
+      line-height: 30px;
+    }
+
+    h1 {
+      text-align: center;
+    }
+
+    i {
+      font-size: 14px;
+      clear: left;
+    }
+
+    .figure_img {
+      max-width: 80%;
+    }
+  </style>
+</html>
