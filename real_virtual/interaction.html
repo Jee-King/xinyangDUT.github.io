@@ -53,9 +53,12 @@
               style="font-size: 14px;"
             ></span>
             <b style="font-size: 18px;">{{project.title}}</b>
-            <b style="color: #006699; font-size: 16px;">{{project.tag[0]}}</b
-            ><span style="font-size: 14px;">{{project.tag[1]}}</span>
-            <b style="color: #006699; font-size: 16px;">{{project.tag[2]}}</b>
+            <span v-for="tag in project.tags">
+              <b v-if="tag[1]" style="color: #006699; font-size: 16px;"
+                >{{tag[0]}}</b
+              >
+              <span v-else style="font-size: 14px;">{{tag[0]}}</span>
+            </span>
             <span v-for="link in project.links"
               >[<b
                 ><a style="color: #006699; font-size: 18px;" :href="link.link"
@@ -83,17 +86,22 @@
               authors:
                 'Xin Yang, Yuliang Wang, Shuai Li, Xinglin Piao, Baocai Yin, Qiang Zhang, Dongsheng Zhou, Xiaopeng Wei.',
               title: 'Real-Virtual Consistent Traffic Flow Interaction.',
-              tag: ['Graphical Model.', ' 106, 2019.', '(CCF B)'],
+              tags: [
+                ['Graphical Model.', true],
+                [' 106, 2019.', false],
+                ['(CCF B)', true],
+              ],
             },
             {
               authors:
                 'Xin Yang, Shuai Li, Baocai Yin, Qiang Zhang, Guozhen Tan, Dongsheng Zhou, Xiaopeng Wei.',
               title:
                 'Vehicle Behaviors Simulation Technology Based on Neural Network.',
-              tag: [
-                '(Eds. Cai, Yiyu, Van Joolingen, Walker, Zachary) VR, Simulations and Serious Games for Education.',
-                ' Springer, 2018, pp 67-84.',
-                '(Chapter)',
+              tags: [
+                ['(Eds. Cai, Yiyu, Van Joolingen, Walker, Zachary) ', false],
+                ['VR, Simulations and Serious Games for Education.', true],
+                [' Springer, 2018, pp 67-84.', false],
+                ['(Chapter)', true],
               ],
             },
             {
@@ -101,19 +109,19 @@
                 'Xin Yang, Shuai Li, Yong Zhang, Wanchao Su, Mingyue Zhang, Guozhen Tan, Qiang Zhang, Dongsheng Zhou, Xiaopeng Wei.',
               title:
                 'Interactive Traffic Simulation Model with Learned Local Parameters.',
-              tag: [
-                'Multimedia Tools and Applications',
-                ', 2017, 76(7): 9503-9516.',
-                '(SCI)',
+              tags: [
+                ['Multimedia Tools and Applications', true],
+                [', 2017, 76(7): 9503-9516.', false],
+                ['(SCI)', true],
               ],
             },
             {
               authors: 'Yang Xin, Su Wanchao, Deng Jian, Pan Zhigeng.',
               title: 'Real Traffic Data-Driven Animation Simulation.',
-              tag: [
-                'ACM SIGGRAPH VRCAI',
-                ', Kobe, Japan, 93-99, 2015.',
-                '(Best Paper)',
+              tags: [
+                ['ACM SIGGRAPH VRCAI', true],
+                [', Kobe, Japan, 93-99, 2015.', false],
+                ['(Best Paper)', true],
               ],
             },
           ],
