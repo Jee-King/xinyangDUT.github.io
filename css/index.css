@@ -19,13 +19,15 @@ i {
 
 .figure_img {
   max-width: 800px;
-
 }
 .figure_div{
   text-align: center;
-  font-size: 12px;
 }
-
+.figure_label{
+  font-size: 12px;
+  margin:0 auto;
+  max-width: 800px;
+}
 .project_p{
   font-size: 14px;
   background-color: rgb(242, 244, 225);

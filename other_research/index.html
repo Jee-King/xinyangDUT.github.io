@@ -32,7 +32,7 @@
         <div v-for="img in project.imgs" class="figure_div">
           <img :src="'figures/'+img.src" :alt="img" class="figure_img" />
           <div v-if="img.label">
-            <div>{{img.label}}</div>
+            <div class="figure_label">{{img.label}}</div>
             <br>
           </div>
         </div>

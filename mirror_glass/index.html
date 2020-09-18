@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html>
+<title>Mirror and Glass Detection/Segmentation</title>
+
+<head>
+  <meta charset="UTF-8" />
+  <link rel="shortcut icon" href="../favicon.ico" type="image/x-icon" />
+  <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css" />
+  <link rel="stylesheet" href="../css/index.css" />
+  <script src="https://unpkg.com/vue/dist/vue.js"></script>
+  <script src="https://unpkg.com/element-ui/lib/index.js"></script>
+  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+</head>
+
+<body>
+  <div id="app">
+    <el-page-header @back="goBack" title="Back"> </el-page-header>
+    <!-- Mirror and Glass Detection/Segmentation -->
+    <div>
+      <h1>
+        Mirror and Glass Detection/Segmentation
+      </h1>
+      <el-divider></el-divider>
+      <p>
+        In this project, we are developing techniques for mirror or
+        glass detection and segmentation. Here, we refer to mirrors
+        as reflective surfaces, and glass as transparent surfaces.
+        In general, both mirrors and glass do not have their own
+        appearances. They only convey the appearances of their
+        surrounding. While mirrors reflect the appearances of the
+        front side of them, glass transmits the appearances of the
+        back side of it and often also reflects the appearances of
+        the front side of it.
+      </p>
+      <p>
+        As both mirrors and glass do not have their own
+        appearances, it is very difficult to detect and segment
+        them. However, as they appear everywhere in our daily life,
+        it can be problematic if we are not able to detect them
+        reliably. For example, a depth sensor may falsely estimate
+        the depth of a piece of mirror/glass, an autonomous car may
+        not be aware of the existence of a glass building, and a
+        drone may collide into a high rise (noted that most high
+        rises are covered by glass these days).
+      </p>
+      <p>
+        As far as we know, my team is the first to develop
+        computational methods for automatic detection and
+        segmentation of mirrors and transparent glass. Although
+        there have been some works that investigate the detection of
+        transparent glass, these methods mainly focus on detecting
+        wine glass and small glass objects, which have some special
+        properties that can be used for detection. Unlike these
+        works, we are more interested on detecting general glass
+        regions that may not possess any special properties of their
+        own.
+      </p>
+      <p>
+        We are particularly interested in exploring the application
+        of our mirror/glass detection methods in autonomous
+        navigation.
+      </p>
+      <el-divider></el-divider>
+      <div v-for="project,index in projects">
+        <p class="project_p">
+          <span v-html="textBold(project.authors)"></span>
+          <b class="project_title">{{project.title}}</b>
+          <span v-for="tag in project.tags" :style="styles[tag[1]]">{{tag[0]}}</span>
+          <span v-for="link in project.links">[<b><a class="project_links"
+                :href="link.link">{{link.name}}</a></b><span>]&nbsp;</span></span>
+        </p>
+        <div v-for="img in project.imgs" class="figure_div">
+          <img :src="'figures/'+img.src" :alt="img" class="figure_img" />
+          <div v-if="img.label">
+            <div class="figure_label">{{img.label}}</div>
+            <br>
+          </div>
+        </div>
+        <div v-if="project.io">
+          <p><b>Input-Output:&nbsp;</b>{{project.io}}<span></span></p>
+        </div>
+        <div v-if="project.abstract">
+          <p><b>Abstract.&nbsp;</b>{{project.abstract}}<span></span></p>
+        </div>
+        <el-divider content-position="right">{{index+1}}</el-divider>
+      </div>
+    </div>
+  </div>
+</body>
+<script src="../js/index.js"></script>
+<script>
+  new Vue({
+    el: '#app',
+    data: function () {
+      return {
+        styles,
+        projects: [
+          {
+            authors: 'Haiyang Mei, Xin Yang*, Yang Wang, Yuanyuan Liu, Shengfeng He, Qiang Zhang, Xiaopeng Wei, and Rynson Lau.',
+            title: 'Don\'t Hit Me! Glass Detection in Real-world Scenes.',
+            tags: [
+              ['Proc. IEEE CVPR', 1],
+              [', June, 2020. ', 0],
+              ['(CCF A)', 2]
+            ],
+            io: 'Given an input image, our network outputs a binary mask that indicate where transparent glass regions are.',
+            abstract: 'Transparent glass is very common in our daily life. Existing computer vision systems neglect it and thus may have severe consequences, e.g., a robot may crash into a glass wall. However, sensing the presence of glass is not straightforward. The key challenge is that arbitrary objects/scenes can appear behind the glass, and the content within the glass region is typically similar to those behind it. In this paper, we propose an important problem of detecting glass from a single RGB image. To address this problem, we construct a large-scale glass detection dataset (GDD) and design a glass detection network, called GDNet, which explores abundant contextual cues for robust glass detection with a novel large-field contextual feature integration (LCFI) module. Extensive experiments demonstrate that the proposed method achieves more superior glass detection results on our GDD test set than state-of-the-art methods fine-tuned for glass detection.',
+            links: [
+              { name: 'paper', link: 'http://www.cs.cityu.edu.hk/~rynson/papers/cvpr20d.pdf' },
+              { name: 'suppl', link: 'http://www.cs.cityu.edu.hk/~rynson/papers/demos/cvpr20d-supp.pdf' },
+              { name: 'dataset', link: '../data_application/DataApplication.html' },
+            ],
+            imgs: [
+              { src: '20200621135331.gif', label: 'Overview of proposed framework.' },
+              { src: 'cvpr_2020_results.jpg', label: 'Problems with glass in existing vision tasks. In depth prediction, existing method [16] wrongly predicts the depth of the scene behind the glass, instead of the depth to the glass (1st row of (b)). For instance segmentation, Mask RCNN [9] only segments the instances behind the glass, not aware that they are actually behind the glass (2nd row of (b)). Besides, if we directly apply an existing singe-image reflection removal (SIRR) method [36] to an image that is only partially covered by glass, the non-glass region can be corrupted (3rd row of (b)). GDNet can detect the glass (c) and then correct these failure cases (d).' }
+            ],
+          },
+          {
+            authors: 'Xin Yang*, Haiyang Mei*, Ke Xu, Xiaopeng Wei, Baocai Yin, and Rynson Lau (* joint first authors).',
+            title: 'Where is My Mirror?',
+            tags: [
+              ['Proc. IEEE ICCV', 1],
+              [', Oct. 2019. ', 0],
+              ['(CCF A)', 2]
+            ],
+            io: 'Given an input image, our network outputs a binary mask that indicate where mirrors are.',
+            abstract: 'Mirrors are everywhere in our daily lives. Existing computer vision systems do not consider mirrors, and hence may get confused by the reflected content inside a mirror, resulting in a severe performance degradation. However, separating the real content outside a mirror from the reflected content inside it is non-trivial. The key challenge is that mirrors typically reflect contents similar to their surroundings, making it very difficult to differentiate the two. In this paper, we present a novel method to segment mirrors from an input image. To the best of our knowledge, this is the first work to address the mirror segmentation problem with a computational approach. We make the following contributions. First, we construct a large-scale mirror dataset that contains mirror images with corresponding manually annotated masks. This dataset covers a variety of daily life scenes, and will be made publicly available for future research. Second, we propose a novel network, called MirrorNet, for mirror segmentation, by modeling both semantical and low-level color/texture discontinuities between the contents inside and outside of the mirrors. Third, we conduct extensive experiments to evaluate the proposed method, and show that it outperforms the carefully chosen baselines from the state-of-the-art detection and segmentation methods.',
+            links: [
+              { name: 'paper', link: 'http://www.cs.cityu.edu.hk/~rynson/papers/iccv19a.pdf' },
+              { name: 'suppl', link: 'http://www.cs.cityu.edu.hk/~rynson/papers/demos/iccv19a-supp.pdf' },
+              { name: 'code and updated results', link: 'https://github.com/Mhaiyang/ICCV2019_MirrorNet' },
+              { name: 'dataset', link: 'https://drive.google.com/file/d/1Znw92fO6lCKfXejjSSyMyL1qtFepgjPI/view?usp=sharing' },
+              { name: 'media', link: 'https://www.qbitai.com/2019/09/7314.html' }
+            ],
+            imgs: [
+              { src: '20200621135331(3).gif' },
+              { src: 'iccv_2019_results.jpg', label: 'Problems with mirrors in existing vision tasks. In depth prediction, NYU-v2 dataset [32] uses a Kinect to capture depth as ground truth. It wrongly predicts the depths of the reflected contents, instead of the mirror depths (b). In instance semantic segmentation, Mask RCNN [12] wrongly detects objects inside the mirrors (c). With MirrorNet, we first detect and mask out the mirrors (d). We then obtain the correct depths (e), by interpolating the depths from surrounding pixels of the mirrors, and segmentation maps (f).' }
+            ],
+          }
+        ],
+      }
+    },
+    methods: {
+      textBold(s) {
+        return textBold(s)
+      },
+      goBack() {
+        goBack()
+      },
+    },
+  })
+</script>
+
+</html>
