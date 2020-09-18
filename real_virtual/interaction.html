@@ -9,6 +9,7 @@
       rel="stylesheet"
       href="https://unpkg.com/element-ui/lib/theme-chalk/index.css"
     />
+    <link rel="stylesheet" href="../css/index.css" />
     <script src="https://unpkg.com/vue/dist/vue.js"></script>
     <script src="https://unpkg.com/element-ui/lib/index.js"></script>
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
@@ -53,12 +54,9 @@
               style="font-size: 14px;"
             ></span>
             <b style="font-size: 18px;">{{project.title}}</b>
-            <span v-for="tag in project.tags">
-              <b v-if="tag[1]" style="color: #006699; font-size: 16px;"
-                >{{tag[0]}}</b
-              >
-              <span v-else style="font-size: 14px;">{{tag[0]}}</span>
-            </span>
+            <span v-for="tag in project.tags" :style="styles[tag[1]]"
+              >{{tag[0]}}</span
+            >
             <span v-for="link in project.links"
               >[<b
                 ><a style="color: #006699; font-size: 18px;" :href="link.link"
@@ -71,12 +69,13 @@
       </div>
     </div>
   </body>
+  <script src="../js/index.js"></script>
   <script>
     new Vue({
       el: '#app',
       data: function () {
         return {
-          ks: ['Xin Yang', 'Yang Xin', '杨鑫'],
+          styles,
           imgs: [
             'The real-virtual interaction framework',
             'Interactive simulation traffic flow',
@@ -87,9 +86,9 @@
                 'Xin Yang, Yuliang Wang, Shuai Li, Xinglin Piao, Baocai Yin, Qiang Zhang, Dongsheng Zhou, Xiaopeng Wei.',
               title: 'Real-Virtual Consistent Traffic Flow Interaction.',
               tags: [
-                ['Graphical Model.', true],
-                [' 106, 2019.', false],
-                ['(CCF B)', true],
+                ['Graphical Model', 1],
+                ['. 106, 2019. ', 0],
+                ['(CCF B)', 2],
               ],
             },
             {
@@ -98,10 +97,10 @@
               title:
                 'Vehicle Behaviors Simulation Technology Based on Neural Network.',
               tags: [
-                ['(Eds. Cai, Yiyu, Van Joolingen, Walker, Zachary) ', false],
-                ['VR, Simulations and Serious Games for Education.', true],
-                [' Springer, 2018, pp 67-84.', false],
-                ['(Chapter)', true],
+                ['(Eds. Cai, Yiyu, Van Joolingen, Walker, Zachary) ', 0],
+                ['VR, Simulations and Serious Games for Education', 1],
+                ['. Springer, 2018, pp 67-84. ', 0],
+                ['(Chapter)', 2],
               ],
             },
             {
@@ -110,18 +109,18 @@
               title:
                 'Interactive Traffic Simulation Model with Learned Local Parameters.',
               tags: [
-                ['Multimedia Tools and Applications', true],
-                [', 2017, 76(7): 9503-9516.', false],
-                ['(SCI)', true],
+                ['Multimedia Tools and Applications', 1],
+                [', 2017, 76(7): 9503-9516. ', 0],
+                ['(SCI)', 2],
               ],
             },
             {
               authors: 'Yang Xin, Su Wanchao, Deng Jian, Pan Zhigeng.',
               title: 'Real Traffic Data-Driven Animation Simulation.',
               tags: [
-                ['ACM SIGGRAPH VRCAI', true],
-                [', Kobe, Japan, 93-99, 2015.', false],
-                ['(Best Paper)', true],
+                ['ACM SIGGRAPH VRCAI', 1],
+                [', Kobe, Japan, 93-99, 2015. ', 0],
+                ['(Best Paper)', 2],
               ],
             },
           ],
@@ -129,14 +128,10 @@
       },
       methods: {
         textBold(s) {
-          for (var i = 0; i < this.ks.length; ++i) {
-            const k = this.ks[i]
-            if (s.indexOf(k) != -1) return s.replace(k, '<b>' + k + '</b>')
-          }
-          return s
+          return textBold(s)
         },
         goBack() {
-          window.location.href = '../index.html#Research Projects'
+          goBack()
         },
       },
     })

@@ -1,194 +1,163 @@
 <!DOCTYPE html>
 <html>
-  <title>Scene Understanding and Representation Learning</title>
+<title>Scene Understanding and Representation Learning</title>
 
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="shortcut icon" href="../favicon.ico" type="image/x-icon" />
-    <link
-      rel="stylesheet"
-      href="https://unpkg.com/element-ui/lib/theme-chalk/index.css"
-    />
-    <script src="https://unpkg.com/vue/dist/vue.js"></script>
-    <script src="https://unpkg.com/element-ui/lib/index.js"></script>
-    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-  </head>
+<head>
+  <meta charset="UTF-8" />
+  <link rel="shortcut icon" href="../favicon.ico" type="image/x-icon" />
+  <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css" />
+  <link rel="stylesheet" href="../css/index.css" />
+  <script src="https://unpkg.com/vue/dist/vue.js"></script>
+  <script src="https://unpkg.com/element-ui/lib/index.js"></script>
+  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+</head>
 
-  <body>
-    <div id="app">
-      <el-page-header @back="goBack" title="Back"> </el-page-header>
-      <!-- Scene Understanding and Representation Learning -->
-      <div class="content">
-        <h1>Scene Understanding and Representation Learning</h1>
-        <!-- <el-divider></el-divider>
-        <p></p> -->
-        <el-divider></el-divider>
-        <div v-for="project,index in projects">
-          <p style="background-color: rgb(242, 244, 225);">
-            <span
-              v-html="textBold(project.authors)"
-              style="font-size: 14px;"
-            ></span>
-            <b style="font-size: 18px;">{{project.title}}</b>
-            <b style="color: #006699; font-size: 16px;">{{project.tag[0]}}</b
-            ><span style="font-size: 14px;">{{project.tag[1]}}</span>
-            <b style="color: #006699; font-size: 16px;">{{project.tag[2]}}</b>
-            <span v-for="link in project.links"
-              >[<b
-                ><a style="color: #006699; font-size: 18px;" :href="link.link"
-                  >{{link.name}}</a
-                ></b
-              ><span>]&nbsp;</span></span
-            >
-          </p>
-          <div v-for="img in project.imgs" style="text-align: center;">
-            <img :src="'figures/'+img" :alt="img" class="figure_img" />
-          </div>
-          <div v-if="project.abstract">
-            <p><b>Abstract.&nbsp;</b>{{project.abstract}}<span></span></p>
-          </div>
-          <div v-if="project.io">
-            <p><b>Input-Output:&nbsp;</b>{{project.abstract}}<span></span></p>
-          </div>
-          <el-divider content-position="right">{{index+1}}</el-divider>
+<body>
+  <div id="app">
+    <el-page-header @back="goBack" title="Back"> </el-page-header>
+    <!-- Scene Understanding and Representation Learning -->
+    <div>
+      <h1>Scene Understanding and Representation Learning</h1>
+      <el-divider></el-divider>
+      <div v-for="project,index in projects">
+        <p class="project_p">
+          <span v-html="textBold(project.authors)"></span>
+          <b class="project_title">{{project.title}}</b>
+          <span v-for="tag in project.tags" :style="styles[tag[1]]">{{tag[0]}}</span>
+          <span v-for="link in project.links">[<b><a class="project_links"
+                :href="link.link">{{link.name}}</a></b><span>]&nbsp;</span></span>
+        </p>
+        <div v-for="img in project.imgs" class="figure_div">
+          <img :src="'figures/'+img" :alt="img" class="figure_img" />
         </div>
+        <div v-if="project.abstract">
+          <p><b>Abstract.&nbsp;</b>{{project.abstract}}<span></span></p>
+        </div>
+        <div v-if="project.io">
+          <p><b>Input-Output:&nbsp;</b>{{project.abstract}}<span></span></p>
+        </div>
+        <el-divider content-position="right">{{index+1}}</el-divider>
       </div>
     </div>
-  </body>
-  <script>
-    new Vue({
-      el: '#app',
-      data: function () {
-        return {
-          ks: ['Xin Yang', 'Yang Xin', '杨鑫'],
-          projects: [
-            {
-              authors: 'Ke Xu, Xin Tian, Xin Yang, Baocai Yin, Rynson Lau.',
-              title:
-                'Intensity-Aware Single-Image Deraining with Semantic and Color Regularization.',
-              tag: ['IEEE Transactions on Image Processing', '.', '(CCF A)'],
-              abstract:
-                'Rain degrades image visual quality and disrupts object structures, obscuring their details and erasing their colors. Existing deraining methods are primarily based on modeling either visual appearances of rain or its physical characteristics (e.g., rain direction and density), and thus suffer from two common problems. First, due to the stochastic nature of rain, they tend to fail in recognizing rain streaks correctly, and wrongly remove image structures and details. Second, they fail to recover the image colors erased by heavy rain. In this paper, we address these two problems with the following three contributions. First, we propose a novel PHP block to aggregate comprehensive spatial and hierarchical information for removing rain streaks of different sizes. Second, we propose a novel network to first remove rain streaks, then recover objects structures/colors, and finally enhance details. Third, to train the network, we prepare a new dataset, and propose a novel loss function to introduce semantic and color regularization for deraining. Extensive experiments demonstrate the superiority of the proposed method over state-of-the-art deraining methods on both synthesized and real-world data, in terms of visual quality, quantitative accuracy, and running speed.',
-              imgs: [
-                'Intensity-Aware Single-Image Deraining with Semantic and Color Regularization.png',
-              ],
-            },
-            {
-              authors:
-                'Lei Chen, Rui Liu, Dongsheng Zhou, Yang Xin, Qiang Zhang and Xiaopeng Wei.',
-              title:
-                'A Human Behavior Recognition Model based on Extended Squeeze-and-Excitation Network.',
-              tag: ['CASA 2020', ', Bournemouth, UK.', ''],
-              imgs: [
-                'A Human Behavior Recognition Model based on Extended Squeeze-and-Excitation Network.png',
-              ],
-            },
-            {
-              authors:
-                'Xiaoheng Jiang, Li Zhang, Mingliang Xu, Tianzhu Zhang, Pei Lv, Bing Zhou, Xin Yang, Yanwei Pang.',
-              title: 'Attention Scaling for Crowd Counting.',
-              tag: ['CVPR 2020', ', Seattle, USA.', '(CCF A)'],
-              links: [
-                {
-                  name: 'paper',
-                  link:
-                    'http://openaccess.thecvf.com/content_CVPR_2020/papers/Jiang_Attention_Scaling_for_Crowd_Counting_CVPR_2020_paper.pdf',
-                },
-                { name: 'code', link: 'https://github.com/laridzhang/ASNet' },
-              ],
-              imgs: ['Attention Scaling for Crowd Counting.png'],
-            },
-            {
-              authors:
-                'Xinglin Piao, Yongli Hu, Junbin Gao, Yanfeng Sun, Xin Yang, Baocai Yin, Wenwu Zhu and Ge Li.',
-              title:
-                'Kernel Clustering on Symmetric Positive Definite Manifolds via Double Approximated Low Rank Representation.',
-              tag: ['ICME 2020', ', London, UK.', '(CCF B)'],
-              links: [
-                {
-                  name: 'paper',
-                  link: 'https://ieeexplore.ieee.org/document/9102821',
-                },
-              ],
-              imgs: [
-                'Kernel Clustering on Symmetric Positive Definite Manifolds via Double Approximated Low Rank Representation.png',
-              ],
-            },
-            {
-              authors:
-                'Tianyu Wang*, Xin Yang*, Ke Xu, Shaozhe Chen, Qiang Zhang, and Rynson Lau.',
-              title:
-                'Spatial Attentive Single-Image Deraining with a High Quality Real Rain Dataset.',
-              tag: ['CVPR 2019', ', Long Beach, USA.', '(CCF A)'],
-              links: [
-                {
-                  name: 'paper',
-                  link: 'https://arxiv.org/abs/1904.01538',
-                },
-                {
-                  name: 'suppl',
-                  link:
-                    'http://www.cs.cityu.edu.hk/~rynson/papers/demos/cvpr19c-supp.pdf',
-                },
-                {
-                  name: 'code',
-                  link: 'https://github.com/stevewongv/SPANet',
-                },
-                {
-                  name: 'training-set (key:4fwo)',
-                  link: 'https://pan.baidu.com/s/1lPn3MWckHxh1uBYYucoWVQ',
-                },
-                {
-                  name: 'test-set',
-                  link:
-                    'http://www.cs.cityu.edu.hk/~rynson/papers/demos/derain_testset_1000.rar',
-                },
-              ],
-              imgs: [
-                'Spatial Attentive Single-Image Deraining with a High Quality Real Rain Dataset.png',
-                'Spatial Attentive Single-Image Deraining with a High Quality Real Rain Dataset.gif',
-                'Spatial Attentive Single-Image Deraining with a High Quality Real Rain Dataset (2).gif',
-              ],
-            },
-          ],
-        }
+  </div>
+</body>
+<script src="../js/index.js"></script>
+<script>
+  new Vue({
+    el: '#app',
+    data: function () {
+      return {
+        styles,
+        projects: [
+          {
+            authors: 'Hengfeng Zha, Dongsheng Zhou, Xin Yang,Qiang Zhang,Xiaopeng Wei.',
+            title:
+              'Reweighted Non-convex Non-smooth Rank Minimization based Spectral Clustering on Grassmann Manifold.',
+            tags: [['The 12th Asian Conference on Machine Learning (ACML) 2020', 1], ['.', 0]],
+            imgs: [
+              'Reweighted Non-convex Non-smooth Rank Minimization based Spectral Clustering on Grassmann Manifold.png',
+            ],
+          },
+          {
+            authors: 'Ke Xu, Xin Tian, Xin Yang, Baocai Yin, Rynson Lau.',
+            title:
+              'Intensity-Aware Single-Image Deraining with Semantic and Color Regularization.',
+            tags: [['IEEE Transactions on Image Processing', 1], ['. ', 0], ['(CCF A)', 2]],
+            abstract:
+              'Rain degrades image visual quality and disrupts object structures, obscuring their details and erasing their colors. Existing deraining methods are primarily based on modeling either visual appearances of rain or its physical characteristics (e.g., rain direction and density), and thus suffer from two common problems. First, due to the stochastic nature of rain, they tend to fail in recognizing rain streaks correctly, and wrongly remove image structures and details. Second, they fail to recover the image colors erased by heavy rain. In this paper, we address these two problems with the following three contributions. First, we propose a novel PHP block to aggregate comprehensive spatial and hierarchical information for removing rain streaks of different sizes. Second, we propose a novel network to first remove rain streaks, then recover objects structures/colors, and finally enhance details. Third, to train the network, we prepare a new dataset, and propose a novel loss function to introduce semantic and color regularization for deraining. Extensive experiments demonstrate the superiority of the proposed method over state-of-the-art deraining methods on both synthesized and real-world data, in terms of visual quality, quantitative accuracy, and running speed.',
+            imgs: [
+              'Intensity-Aware Single-Image Deraining with Semantic and Color Regularization.png',
+            ],
+          },
+          {
+            authors:
+              'Lei Chen, Rui Liu, Dongsheng Zhou, Yang Xin, Qiang Zhang and Xiaopeng Wei.',
+            title:
+              'A Human Behavior Recognition Model based on Extended Squeeze-and-Excitation Network.',
+            tags: [['CASA 2020', 1], [', Bournemouth, UK. ', 0]],
+            imgs: [
+              'A Human Behavior Recognition Model based on Extended Squeeze-and-Excitation Network.png',
+            ],
+          },
+          {
+            authors:
+              'Xiaoheng Jiang, Li Zhang, Mingliang Xu, Tianzhu Zhang, Pei Lv, Bing Zhou, Xin Yang, Yanwei Pang.',
+            title: 'Attention Scaling for Crowd Counting.',
+            tags: [['CVPR 2020', 1], [', Seattle, USA. ', 0], ['(CCF A)', 2]],
+            links: [
+              {
+                name: 'paper',
+                link:
+                  'http://openaccess.thecvf.com/content_CVPR_2020/papers/Jiang_Attention_Scaling_for_Crowd_Counting_CVPR_2020_paper.pdf',
+              },
+              { name: 'code', link: 'https://github.com/laridzhang/ASNet' },
+            ],
+            imgs: ['Attention Scaling for Crowd Counting.png'],
+          },
+          {
+            authors:
+              'Xinglin Piao, Yongli Hu, Junbin Gao, Yanfeng Sun, Xin Yang, Baocai Yin, Wenwu Zhu and Ge Li.',
+            title:
+              'Kernel Clustering on Symmetric Positive Definite Manifolds via Double Approximated Low Rank Representation.',
+            tags: [['ICME 2020', 1], [', London, UK. ', 0], ['(CCF B)', 2]],
+            links: [
+              {
+                name: 'paper',
+                link: 'https://ieeexplore.ieee.org/document/9102821',
+              },
+            ],
+            imgs: [
+              'Kernel Clustering on Symmetric Positive Definite Manifolds via Double Approximated Low Rank Representation.png',
+            ],
+          },
+          {
+            authors:
+              'Tianyu Wang*, Xin Yang*, Ke Xu, Shaozhe Chen, Qiang Zhang, and Rynson Lau.',
+            title:
+              'Spatial Attentive Single-Image Deraining with a High Quality Real Rain Dataset.',
+            tags: [['CVPR 2019', 1], [', Long Beach, USA. ', 0], ['(CCF A)', 2]],
+            links: [
+              {
+                name: 'paper',
+                link: 'https://arxiv.org/abs/1904.01538',
+              },
+              {
+                name: 'suppl',
+                link:
+                  'http://www.cs.cityu.edu.hk/~rynson/papers/demos/cvpr19c-supp.pdf',
+              },
+              {
+                name: 'code',
+                link: 'https://github.com/stevewongv/SPANet',
+              },
+              {
+                name: 'training-set (key:4fwo)',
+                link: 'https://pan.baidu.com/s/1lPn3MWckHxh1uBYYucoWVQ',
+              },
+              {
+                name: 'test-set',
+                link:
+                  'http://www.cs.cityu.edu.hk/~rynson/papers/demos/derain_testset_1000.rar',
+              },
+            ],
+            imgs: [
+              'Spatial Attentive Single-Image Deraining with a High Quality Real Rain Dataset.png',
+              'Spatial Attentive Single-Image Deraining with a High Quality Real Rain Dataset.gif',
+              'Spatial Attentive Single-Image Deraining with a High Quality Real Rain Dataset (2).gif',
+            ],
+          },
+        ],
+      }
+    },
+    methods: {
+      textBold(s) {
+        return textBold(s)
       },
-      methods: {
-        textBold(s) {
-          for (var i = 0; i < this.ks.length; ++i) {
-            const k = this.ks[i]
-            if (s.indexOf(k) != -1) return s.replace(k, '<b>' + k + '</b>')
-          }
-          return s
-        },
-        goBack() {
-          window.location.href = '../index.html#Research Projects'
-        },
+      goBack() {
+        goBack()
       },
-    })
-  </script>
-  <style>
-    body {
-      margin: 0;
-      padding: 10px 40px 10px 40px;
-      font-family: Times New Roman;
-    }
+    },
+  })
+</script>
 
-    p {
-      line-height: 30px;
-    }
-
-    h1 {
-      text-align: center;
-    }
-
-    i {
-      font-size: 14px;
-      clear: left;
-    }
-
-    .figure_img {
-      max-width: 70%;
-    }
-  </style>
 </html>

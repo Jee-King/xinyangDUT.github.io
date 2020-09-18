@@ -19,4 +19,20 @@ i {
 
 .figure_img {
   max-width: 800px;
+
+}
+.figure_div{
+  text-align: center;
+  font-size: 12px;
+}
+
+.project_p{
+  font-size: 14px;
+  background-color: rgb(242, 244, 225);
+}
+.project_links{
+  color: #006699; font-size: 14px;
+}
+.project_title{
+  font-size: 18px;
 }
