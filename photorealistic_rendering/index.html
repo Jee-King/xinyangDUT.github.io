@@ -22,21 +22,25 @@
       </h1>
       <el-divider></el-divider>
       <div v-for="project,index in projects">
-        <p style="background-color: rgb(242, 244, 225);">
-          <span v-html="textBold(project.authors)" style="font-size: 14px;"></span>
-          <b style="font-size: 18px;">{{project.title}}</b>
+        <p class="project_p">
+          <span v-html="textBold(project.authors)"></span>
+          <b class="project_title">{{project.title}}</b>
           <span v-for="tag in project.tags" :style="styles[tag[1]]">{{tag[0]}}</span>
-          <span v-for="link in project.links">[<b><a style="color: #006699; font-size: 18px;"
+          <span v-for="link in project.links">[<b><a class="project_links"
                 :href="link.link">{{link.name}}</a></b><span>]&nbsp;</span></span>
         </p>
-        <div v-for="img in project.imgs" style="text-align: center;">
-          <img :src="'figures/'+img" :alt="img" class="figure_img" />
+        <div v-for="img in project.imgs" class="figure_div">
+          <img :src="'figures/'+img.src" :alt="img" class="figure_img" />
+          <div v-if="img.label">
+            <div>{{img.label}}</div>
+            <br>
+          </div>
+        </div>
+        <div v-if="project.io">
+          <p><b>Input-Output:&nbsp;</b>{{project.io}}<span></span></p>
         </div>
         <div v-if="project.abstract">
           <p><b>Abstract.&nbsp;</b>{{project.abstract}}<span></span></p>
-        </div>
-        <div v-if="project.io">
-          <p><b>Input-Output:&nbsp;</b>{{project.abstract}}<span></span></p>
         </div>
         <el-divider content-position="right">{{index+1}}</el-divider>
       </div>
@@ -81,8 +85,8 @@
               },
             ],
             imgs: [
-              'A Deep Dual-Encoder Network for Denoising Monte Carlo Rendering.png',
-              'A Deep Dual-Encoder Network for Denoising Monte Carlo Rendering.gif',
+              { src: 'A Deep Dual-Encoder Network for Denoising Monte Carlo Rendering.png' },
+              { src: 'A Deep Dual-Encoder Network for Denoising Monte Carlo Rendering.gif' }
             ],
           },
           {
@@ -119,7 +123,7 @@
               },
             ],
             imgs: [
-              'Interactive Sketch-Based Normal Map Generation with Deep Neural Networks.jpg',
+              { src: 'Interactive Sketch-Based Normal Map Generation with Deep Neural Networks.jpg' }
             ],
           },
           {
@@ -131,7 +135,9 @@
               [', Helsinki, Finland, 2017, 113-119. ', 0],
               ['(CCF B)', 2]
             ],
-            imgs: ['A K-D Tree Construction Designed for Motion Blur.gif'],
+            imgs: [
+              { src: 'A K-D Tree Construction Designed for Motion Blur.gif' }
+            ],
           },
           {
             authors:
@@ -142,7 +148,9 @@
               [', 2016, 27(4): 340-350. ', 0],
               ['(SCI)', 2],
             ],
-            imgs: ['DKD A Fast KD-Tree Update Design for Dynamic Scenes.gif'],
+            imgs: [
+              { src: 'DKD A Fast KD-Tree Update Design for Dynamic Scenes.gif' }
+            ],
           },
         ],
       }

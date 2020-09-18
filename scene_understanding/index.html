@@ -28,13 +28,17 @@
                 :href="link.link">{{link.name}}</a></b><span>]&nbsp;</span></span>
         </p>
         <div v-for="img in project.imgs" class="figure_div">
-          <img :src="'figures/'+img" :alt="img" class="figure_img" />
+          <img :src="'figures/'+img.src" :alt="img" class="figure_img" />
+          <div v-if="img.label">
+            <div>{{img.label}}</div>
+            <br>
+          </div>
+        </div>
+        <div v-if="project.io">
+          <p><b>Input-Output:&nbsp;</b>{{project.io}}<span></span></p>
         </div>
         <div v-if="project.abstract">
           <p><b>Abstract.&nbsp;</b>{{project.abstract}}<span></span></p>
-        </div>
-        <div v-if="project.io">
-          <p><b>Input-Output:&nbsp;</b>{{project.abstract}}<span></span></p>
         </div>
         <el-divider content-position="right">{{index+1}}</el-divider>
       </div>
@@ -51,48 +55,52 @@
         projects: [
           {
             authors: 'Hengfeng Zha, Dongsheng Zhou, Xin Yang,Qiang Zhang,Xiaopeng Wei.',
-            title:
-              'Reweighted Non-convex Non-smooth Rank Minimization based Spectral Clustering on Grassmann Manifold.',
-            tags: [['The 12th Asian Conference on Machine Learning (ACML) 2020', 1], ['.', 0]],
+            title: 'Reweighted Non-convex Non-smooth Rank Minimization based Spectral Clustering on Grassmann Manifold.',
+            tags: [
+              ['The 12th Asian Conference on Machine Learning (ACML) 2020', 1],
+              ['.', 0]
+            ],
             imgs: [
-              'Reweighted Non-convex Non-smooth Rank Minimization based Spectral Clustering on Grassmann Manifold.png',
+              { src: 'Reweighted Non-convex Non-smooth Rank Minimization based Spectral Clustering on Grassmann Manifold.png' }
             ],
           },
           {
             authors: 'Ke Xu, Xin Tian, Xin Yang, Baocai Yin, Rynson Lau.',
-            title:
-              'Intensity-Aware Single-Image Deraining with Semantic and Color Regularization.',
-            tags: [['IEEE Transactions on Image Processing', 1], ['. ', 0], ['(CCF A)', 2]],
-            abstract:
-              'Rain degrades image visual quality and disrupts object structures, obscuring their details and erasing their colors. Existing deraining methods are primarily based on modeling either visual appearances of rain or its physical characteristics (e.g., rain direction and density), and thus suffer from two common problems. First, due to the stochastic nature of rain, they tend to fail in recognizing rain streaks correctly, and wrongly remove image structures and details. Second, they fail to recover the image colors erased by heavy rain. In this paper, we address these two problems with the following three contributions. First, we propose a novel PHP block to aggregate comprehensive spatial and hierarchical information for removing rain streaks of different sizes. Second, we propose a novel network to first remove rain streaks, then recover objects structures/colors, and finally enhance details. Third, to train the network, we prepare a new dataset, and propose a novel loss function to introduce semantic and color regularization for deraining. Extensive experiments demonstrate the superiority of the proposed method over state-of-the-art deraining methods on both synthesized and real-world data, in terms of visual quality, quantitative accuracy, and running speed.',
+            title: 'Intensity-Aware Single-Image Deraining with Semantic and Color Regularization.',
+            tags: [
+              ['IEEE Transactions on Image Processing', 1],
+              ['. ', 0],
+              ['(CCF A)', 2]
+            ],
+            abstract: 'Rain degrades image visual quality and disrupts object structures, obscuring their details and erasing their colors. Existing deraining methods are primarily based on modeling either visual appearances of rain or its physical characteristics (e.g., rain direction and density), and thus suffer from two common problems. First, due to the stochastic nature of rain, they tend to fail in recognizing rain streaks correctly, and wrongly remove image structures and details. Second, they fail to recover the image colors erased by heavy rain. In this paper, we address these two problems with the following three contributions. First, we propose a novel PHP block to aggregate comprehensive spatial and hierarchical information for removing rain streaks of different sizes. Second, we propose a novel network to first remove rain streaks, then recover objects structures/colors, and finally enhance details. Third, to train the network, we prepare a new dataset, and propose a novel loss function to introduce semantic and color regularization for deraining. Extensive experiments demonstrate the superiority of the proposed method over state-of-the-art deraining methods on both synthesized and real-world data, in terms of visual quality, quantitative accuracy, and running speed.',
             imgs: [
-              'Intensity-Aware Single-Image Deraining with Semantic and Color Regularization.png',
+              { src: 'Intensity-Aware Single-Image Deraining with Semantic and Color Regularization.png' }
             ],
           },
           {
-            authors:
-              'Lei Chen, Rui Liu, Dongsheng Zhou, Yang Xin, Qiang Zhang and Xiaopeng Wei.',
-            title:
-              'A Human Behavior Recognition Model based on Extended Squeeze-and-Excitation Network.',
+            authors: 'Lei Chen, Rui Liu, Dongsheng Zhou, Yang Xin, Qiang Zhang and Xiaopeng Wei.',
+            title: 'A Human Behavior Recognition Model based on Extended Squeeze-and-Excitation Network.',
             tags: [['CASA 2020', 1], [', Bournemouth, UK. ', 0]],
             imgs: [
-              'A Human Behavior Recognition Model based on Extended Squeeze-and-Excitation Network.png',
+              { src: 'A Human Behavior Recognition Model based on Extended Squeeze-and-Excitation Network.png' }
             ],
           },
           {
             authors:
               'Xiaoheng Jiang, Li Zhang, Mingliang Xu, Tianzhu Zhang, Pei Lv, Bing Zhou, Xin Yang, Yanwei Pang.',
             title: 'Attention Scaling for Crowd Counting.',
-            tags: [['CVPR 2020', 1], [', Seattle, USA. ', 0], ['(CCF A)', 2]],
+            tags: [
+              ['CVPR 2020', 1],
+              [', Seattle, USA. ', 0],
+              ['(CCF A)', 2]
+            ],
             links: [
-              {
-                name: 'paper',
-                link:
-                  'http://openaccess.thecvf.com/content_CVPR_2020/papers/Jiang_Attention_Scaling_for_Crowd_Counting_CVPR_2020_paper.pdf',
-              },
+              { name: 'paper', link: 'http://openaccess.thecvf.com/content_CVPR_2020/papers/Jiang_Attention_Scaling_for_Crowd_Counting_CVPR_2020_paper.pdf', },
               { name: 'code', link: 'https://github.com/laridzhang/ASNet' },
             ],
-            imgs: ['Attention Scaling for Crowd Counting.png'],
+            imgs: [
+              { src: 'Attention Scaling for Crowd Counting.png' }
+            ],
           },
           {
             authors:
@@ -107,7 +115,7 @@
               },
             ],
             imgs: [
-              'Kernel Clustering on Symmetric Positive Definite Manifolds via Double Approximated Low Rank Representation.png',
+              { src: 'Kernel Clustering on Symmetric Positive Definite Manifolds via Double Approximated Low Rank Representation.png' }
             ],
           },
           {
@@ -141,9 +149,9 @@
               },
             ],
             imgs: [
-              'Spatial Attentive Single-Image Deraining with a High Quality Real Rain Dataset.png',
-              'Spatial Attentive Single-Image Deraining with a High Quality Real Rain Dataset.gif',
-              'Spatial Attentive Single-Image Deraining with a High Quality Real Rain Dataset (2).gif',
+              { src: 'Spatial Attentive Single-Image Deraining with a High Quality Real Rain Dataset.png' },
+              { src: 'Spatial Attentive Single-Image Deraining with a High Quality Real Rain Dataset.gif' },
+              { src: 'Spatial Attentive Single-Image Deraining with a High Quality Real Rain Dataset (2).gif' }
             ],
           },
         ],
