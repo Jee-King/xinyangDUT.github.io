@@ -54,16 +54,48 @@
         styles,
         projects: [
           {
+            authors: 'Ke Xu, Xin Tian, Xin Yang, Baocai Yin, Rynson Lau.',
+            title: 'Intensity-Aware Single-Image Deraining with Semantic and Color Regularization.',
+            tags: [
+              ['IEEE Transactions on Image Processing 2021', 1],
+              ['. ', 0],
+              ['(CCF A)', 2]
+            ],
+            abstract: 'Rain degrades image visual quality and disrupts object structures, obscuring their details and erasing their colors. Existing deraining methods are primarily based on modeling either visual appearances of rain or its physical characteristics (e.g., rain direction and density), and thus suffer from two common problems. First, due to the stochastic nature of rain, they tend to fail in recognizing rain streaks correctly, and wrongly remove image structures and details. Second, they fail to recover the image colors erased by heavy rain. In this paper, we address these two problems with the following three contributions. First, we propose a novel PHP block to aggregate comprehensive spatial and hierarchical information for removing rain streaks of different sizes. Second, we propose a novel network to first remove rain streaks, then recover objects structures/colors, and finally enhance details. Third, to train the network, we prepare a new dataset, and propose a novel loss function to introduce semantic and color regularization for deraining. Extensive experiments demonstrate the superiority of the proposed method over state-of-the-art deraining methods on both synthesized and real-world data, in terms of visual quality, quantitative accuracy, and running speed.',
+            imgs: [
+              { src: 'Intensity-Aware1.png' },
+              { src: 'Intensity-Aware2.png' },
+              { src: 'Intensity-Aware3.png' }
+            ],
+          },
+          {
             authors:
               'Xin Yang, Zongliang Ma, Letian Yu, Ying Cao, Baocai Yin, Xiaopeng Wei, Qiang Zhang and Rynson Lau.',
             title: 'Automatic Comic Generation with Stylistic Multi-page Layouts and Emotion-driven Text Balloon Generation.',
             tags: [
-              ['ACM Transactions on Multimedia Computing, Communications, and Applications (TOMM)', 1],
+              ['ACM Transactions on Multimedia Computing, Communications, and Applications (TOMM) 2020', 1],
               ['. ', 0],
               ['(CCF B)', 2]
             ],
             imgs: [
-              { src: 'Automatic Comic Generation with Stylistic Multi-page Layouts and Emotion-driven Text Balloon Generation.jpg' }
+              { src: 'Automatic Comic1.jpg' },
+              { src: 'Automatic Comic2.gif' }
+            ],
+            links: [
+              {
+                name: 'paper',
+                link: 'https://arxiv.org/abs/2101.11111',
+              },
+              {
+                name: 'video',
+                link:
+                  'figures/9327261e3f0ae6209d1302a5a1afa96a.mp4',
+              },
+              {
+                name: 'media',
+                link:
+                  'https://mp.weixin.qq.com/s/z_QorcyPDOfw0PDYX-UgTg',
+              },
             ],
             abstract: "In this paper, we propose a fully automatic system for generating comic books from videos without any human intervention. Given an input video along with its subtitles, our approach first extracts informative keyframes by analyzing the subtitles, and stylizes keyframes into comic-style images. Then, we propose a novel automatic multi-page layout framework, which can allocate the images across multiple pages and synthesize visually interesting layouts based on the rich semantics of the images (e.g., importance and inter-image relation). Finally, as opposed to using the same type of balloon as in previous works, we propose an emotion-aware balloon generation method to create different types of word balloons by analyzing the emotion of subtitles and audios. Our method is able to vary balloon shapes and word sizes in balloons in response to different emotions, leading to more enriched reading experience. Once the balloons are generated, they are placed adjacent to their corresponding speakers via speaker detection. Our results show that our method, without requiring any user inputs, can generate high-quality comic pages with visually rich layouts and balloons. Our user studies also demonstrate that users prefer our generated results over those by state-of-the-art comic generation systems."
           },
@@ -71,7 +103,7 @@
             authors: 'Xinglin Piao, Yongli Hu, Junbin Gao, Yanfeng Sun, Xin Yang, Baocai Yin.',
             title: 'Reweighted Non-convex Non-smooth Rank Minimization based Spectral Clustering on Grassmann Manifold.',
             tags: [
-              ['ACCV 2020 (the 15th Asian Conference on Computer Vision)', 1],
+              ['The 15th Asian Conference on Computer Vision (ACCV) 2020', 1],
               [', Kyoto, Japan.', 0]
             ],
             imgs: [
@@ -91,19 +123,7 @@
             ],
             abstract: 'In recent years, the attention mechanism has been widely used in computer vision. Semantic segmentation, as one of the fundamental tasks of computer vision, has been subject to tremendous development as a result. But because of its huge computing overhead, attention-based approaches are difficult to use for real-time applications such as self-driving. In this paper, we propose a self-calibration method baesd on self-attentiion that successfully applies the attention mechanism to real-time semantic segmentation. Specifically, a spatial attention module to adjust the edges of the coarse segmentation results which gained from the real-time semantic segmentation backbone network, and obtain more granular segmentation results. We refer to this method as the Efficient Attentional Calibration Network (EACNet). Experiments on the Cityscapes dataset validate the efficiency and performance of the method. With the high-resolution input and without any post-processing, EACNet achieved 72.4% mIoU of accuracy while running at 116.9 FPS. Compared to other state-of-the-art methods for real-time semantic segmentation, our network gained a better balance between performance and speed.'
           },
-          {
-            authors: 'Ke Xu, Xin Tian, Xin Yang, Baocai Yin, Rynson Lau.',
-            title: 'Intensity-Aware Single-Image Deraining with Semantic and Color Regularization.',
-            tags: [
-              ['IEEE Transactions on Image Processing', 1],
-              ['. ', 0],
-              ['(CCF A)', 2]
-            ],
-            abstract: 'Rain degrades image visual quality and disrupts object structures, obscuring their details and erasing their colors. Existing deraining methods are primarily based on modeling either visual appearances of rain or its physical characteristics (e.g., rain direction and density), and thus suffer from two common problems. First, due to the stochastic nature of rain, they tend to fail in recognizing rain streaks correctly, and wrongly remove image structures and details. Second, they fail to recover the image colors erased by heavy rain. In this paper, we address these two problems with the following three contributions. First, we propose a novel PHP block to aggregate comprehensive spatial and hierarchical information for removing rain streaks of different sizes. Second, we propose a novel network to first remove rain streaks, then recover objects structures/colors, and finally enhance details. Third, to train the network, we prepare a new dataset, and propose a novel loss function to introduce semantic and color regularization for deraining. Extensive experiments demonstrate the superiority of the proposed method over state-of-the-art deraining methods on both synthesized and real-world data, in terms of visual quality, quantitative accuracy, and running speed.',
-            imgs: [
-              { src: 'Intensity-Aware Single-Image Deraining with Semantic and Color Regularization.png' }
-            ],
-          },
+
           {
             authors: 'Lei Chen, Rui Liu, Dongsheng Zhou, Yang Xin, Qiang Zhang and Xiaopeng Wei.',
             title: 'A Human Behavior Recognition Model based on Extended Squeeze-and-Excitation Network.',
