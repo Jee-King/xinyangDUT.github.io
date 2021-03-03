@@ -57,6 +57,20 @@
         projects: [
           {
             authors:
+              'Haiyin Piao, Pengyuan Du, Qi Liu, Letian Yu, Yang Sun, Yuxin Wang, Xin Yang*.',
+            title:
+              'MBKD: Acceleration Structure Designed for Moving Primitives.',
+            tags: [
+              ['Computers & Graphics 2021', 1],
+              ['. ', 0],
+            ],
+            imgs: [
+              { src: 'MBKD.png' }
+            ],
+            abstract: 'We present a k-d tree construction algorithm designed to accelerate rendering of scenes with motion blur, in application scenarios where a k-d tree is either required or desired. Our associated data structure focuses on capturing incoherent motion within the nodes of a k-d tree and improves both data structure quality and efficiency over previous methods. At building time, we track primitives with motion that is significantly distinct from other primitives within the node, guarantee valid node references and the correctness of the data structure via primitive duplication heuristic and propagation rules. Then, we incorporate filtering heuristics to limit the propagation of primitives, and eliminate some incorrect duplicated references that may invalidate node references. We also demonstrate a strategy for updating existing MBKD for animated scenes. Our experiments with this hierarchy show artifact-free motion-blur rendering using a k-d tree, and demonstrate improvements against a traditional BVH with interpolation and a MSBVH structure designed to handle moving primitives, particularly in render time.'
+          },
+          {
+            authors:
               'Xin Yang, Wenbo Hu, Dawei Wang, Lijing Zhao, Baocai Yin, Qiang Zhang, Xiaopeng Wei, Hongbo Fu.',
             title:
               'DEMC: A Deep Dual-Encoder Network for Denoising Monte Carlo Rendering.',
