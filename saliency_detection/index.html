@@ -60,6 +60,20 @@
       return {
         styles,
         projects: [
+        {
+            authors: "Haiyang Mei, Yuanyuan Liu, Dongsheng Zhou, Xin Yang*, Qiang Zhang, Xiaopeng Wei.",
+            title: "Exploring Dense Context for Salient Object Detection.",
+            tags: [
+              ["IEEE Transactions on Circuits and Systems for Video Technology 2021", 1],
+              [". ", 0],
+              ["(CCF B)", 2],
+            ],
+            abstract:
+              "Contexts play an important role in salient object detection (SOD). High-level contexts describe the relations between different parts/objects and thus are helpful for discovering the specific locations of salient objects while low-level contexts could provide the fine detail information for delineating the boundary of the salient objects. However, the way of perceiving/leveraging rich contexts has not been fully investigated by existing SOD works. The common context extraction strategies (e.g., leveraging convolutions with large kernels or atrous convolutions with large dilation rates) do not consider the effectiveness and efficiency simultaneously and may cause sub-optimal solutions. In this paper, we devote to exploring an effective and efficient way to learn rich contexts for accurate SOD. Specifically, we first build a dense context exploration (DCE) module to capture dense multi-scale contexts and further leverage the learned contexts to enhance the features discriminability. Then, we embed multiple DCE modules in an encoder-decoder architecture to harvest dense contexts of different levels. Furthermore, we propose an attentive skip-connection to transmit useful features from the encoder part to the decoder part for better dense context exploration. Finally, extensive experiments demonstrate that the proposed method achieves more superior detection results on the six benchmark datasets than 18 state-of-the-art SOD methods.",
+            imgs: [
+              { src: "Exploring Dense1.png" },{ src: "Exploring Dense2.png" }
+            ],
+          },
           {
             authors: "Xin Tian, Ke Xu, Xin Yang, Baocai Yin, Rynson Lau.",
             title: "Weakly-supervised Salient Instance Detection.",
@@ -69,7 +83,7 @@
               ["(Oral, 5%, Best Student Paper)", 2],
             ],
             abstract:
-              "Existing salient instance detection (SID) methods typically learn from pixel-level annotated datasets. In this paper, we present the first weakly-supervised approach to the SID problem. Although weak supervision has been considered in general saliency detection, it is mainly based on using class labels for object localization. However, it is non-trivial to use only class labels to learn instance-aware saliency information, as salient instances with high semantic affinities may not be easily separated by the labels. We note that subitizing information provides an instant judgement on the number of salient items, which naturally relates to detecting salient instances and may help separate instances of the same class while grouping different parts of the same instance. Inspired by this insight, we propose to use class and subitizing labels as weak supervision for the SID problem. We propose a novel weakly-supervised network with three branches: a Saliency Detection Branch leveraging class consistency information to locate candidate objects; a Boundary Detection Branch exploiting class discrepancy information to delineate object boundaries; and a Centroid Detection Branch using subitizing information to detect salient instance centroids. This complementary information is further fused to produce salient instance maps. We conduct extensive experiments to demonstrate that the proposed method plays favorably against carefully designed baseline methods adapted from related tasks. ",
+              "Existing salient instance detection (SID) methods typically learn from pixel-level annotated datasets. In this paper, we present the first weakly-supervised approach to the SID problem. Although weak supervision has been considered in general saliency detection, it is mainly based on using class labels for object localization. However, it is non-trivial to use only class labels to learn instance-aware saliency information, as salient instances with high semantic affinities may not be easily separated by the labels. We note that subitizing information provides an instant judgement on the number of salient items, which naturally relates to detecting salient instances and may help separate instances of the same class while grouping different parts of the same instance. Inspired by this insight, we propose to use class and subitizing labels as weak supervision for the SID problem. We propose a novel weakly-supervised network with three branches: a Saliency Detection Branch leveraging class consistency information to locate candidate objects; a Boundary Detection Branch exploiting class discrepancy information to delineate object boundaries; and a Centroid Detection Branch using subitizing information to detect salient instance centroids. This complementary information is further fused to produce salient instance maps. We conduct extensive experiments to demonstrate that the proposed method plays favorably against carefully designed baseline methods adapted from related tasks.",
             imgs: [
               { src: "Weakly-supervised Salient Instance Detection.png" },
             ],
