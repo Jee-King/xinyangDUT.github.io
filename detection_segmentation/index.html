@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html>
+<title>Salient/Camouflaged/Special Scene Object Detection/Segmentation</title>
+
+<head>
+  <meta charset="UTF-8" />
+  <link rel="shortcut icon" href="../favicon.ico" type="image/x-icon" />
+  <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css" />
+  <link rel="stylesheet" href="../css/index.css" />
+  <script src="https://unpkg.com/vue/dist/vue.js"></script>
+  <script src="https://unpkg.com/element-ui/lib/index.js"></script>
+  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+</head>
+
+<body>
+  <div id="app">
+    <el-page-header @back="goBack" title="Back"> </el-page-header>
+    <!-- Salient/Camouflaged/Special Scene Object Detection/Segmentation -->
+    <div class="content">
+      <h1>Salient/Camouflaged/Special Scene Object Detection/Segmentation</h1>
+      <el-divider></el-divider>
+      <p>
+        In this project, we are developing techniques for salient, camouflaged, or special scene object detection and
+        segmentation.
+      </p>
+      <p>
+        Benefiting from the capability of modeling the mechanism of visual saliency in the human vision system and
+        finding out the camouflaged objects that are “seamlessly” embedded in their surroundings, salient object
+        detection (SOD) and camouflaged object segmentation (COS) have a wide range of computer vision, graphics and
+        multimedia applications, including image classification, object recognition, visual tracking, content-aware
+        image editing, and robot navigation. We are developing techniques to automatically detect salient/camouflaged
+        objects from the input images and video.
+      </p>
+      <p>
+        The special scene objects we focus on include mirror and glass. Here, we refer to mirrors as reflective
+        surfaces, and glass as transparent surfaces. In general, both mirrors and glass do not have their own
+        appearances. They only convey the appearances of their surroundings. While mirrors reflect the appearances of
+        the front side of them, glass transmits the appearances of the back side of it and often also reflects the
+        appearances of the front side of it. As both mirrors and glass do not have their own appearances, it is very
+        difficult to detect and segment them. However, as they appear everywhere in our daily life, it can be
+        problematic if we are not able to detect them reliably. For example, a depth sensor may falsely estimate the
+        depth of a piece of mirror/glass, an autonomous car may not be aware of the existence of a glass building, and a
+        drone may collide into a high rise (noted that most high rises are covered by glass these days). As far as we
+        know, my team is the first to develop computational methods for automatic detection and segmentation of mirrors
+        and transparent glass. Although there have been some works that investigate the detection of transparent glass,
+        these methods mainly focus on detecting wine glass and small glass objects, which have some special properties
+        that can be used for detection. Unlike these works, we are more interested on detecting general glass regions
+        that may not possess any special properties of their own. We are particularly interested in exploring the
+        application of our mirror/glass detection methods in autonomous navigation.
+      </p>
+      <el-divider></el-divider>
+      <div v-for="project,index in projects">
+        <p class="project_p">
+          <span v-html="textBold(project.authors)"></span>
+          <b class="project_title">{{project.title}}</b>
+          <span v-for="tag in project.tags" :style="styles[tag[1]]">{{tag[0]}}</span>
+          <span v-for="link in project.links">[<b><a class="project_links"
+                :href="link.link">{{link.name}}</a></b><span>]&nbsp;</span></span>
+        </p>
+        <div v-for="img in project.imgs" class="figure_div">
+          <img :src="'figures/'+img.src" :alt="img" class="figure_img" />
+          <div v-if="img.label">
+            <div class="figure_label">{{img.label}}</div>
+            <br />
+          </div>
+        </div>
+        <div v-if="project.io">
+          <p><b>Input-Output:&nbsp;</b>{{project.io}}<span></span></p>
+        </div>
+        <div v-if="project.abstract">
+          <p><b>Abstract.&nbsp;</b>{{project.abstract}}<span></span></p>
+        </div>
+        <el-divider content-position="right">{{index+1}}</el-divider>
+      </div>
+    </div>
+  </div>
+</body>
+<script src="../js/index.js"></script>
+<script>
+  new Vue({
+    el: "#app",
+    data: function () {
+      return {
+        styles,
+        projects: [
+          {
+            authors: 'Haiyang Mei, Bo Dong, Wen Dong, Pieter Peers, Qiang Zhang, Xin Yang*, Xiaopeng Wei.',
+            title: 'Depth-Aware Mirror Segmentation.',
+            tags: [
+              ['CVPR 2021', 1],
+              ['. ', 0],
+              ['(CCF A, Oral)', 2]
+            ],
+            abstract: 'We present a novel mirror segmentation method that leverages depth estimates from ToF-based cameras as an additional cue to disambiguate challenging cases where the contrast or relation in RGB colors between the mirror reflection and the surrounding scene is subtle. A key observation is that ToF depth estimates do not report the true depth of the mirror surface, but instead return the total length of the reflected light paths, thereby creating obvious depth discontinuities at the mirror boundaries. To exploit depth information in mirror segmentation, we first construct a large-scale RGB-D mirror segmentation dataset, which we subsequently employ to train a novel depth-aware mirror segmentation framework. Our mirror segmentation framework first locates the mirrors based on color and depth discontinuities and correlations. Next, our model further refines the mirror boundaries through contextual contrast taking into account both color and depth information. We extensively validate our depth-aware mirror segmentation method and demonstrate that our model outperforms state-of-the-art RGB and RGB-D based methods for mirror segmentation. Experimental results also show that depth is a powerful cue for mirror segmentation.',
+            imgs: [
+              { src: 'Depth-Aware.gif' }
+            ],
+          },
+          {
+            authors: 'Haiyang Mei, Gepeng Ji, Ziqi Wei, Xin Yang*, Xiaopeng Wei, Dengping Fan.',
+            title: 'Camouflaged Object Segmentation with Distraction Mining.',
+            tags: [
+              ['CVPR 2021', 1],
+              ['. ', 0],
+              ['(CCF A)', 2]
+            ],
+            abstract: 'Camouflaged object segmentation (COS) aims to identify objects that are \'\'perfectly\'\' assimilate into their surroundings, which has a wide range of valuable applications. The key challenge of COS is that there exist high intrinsic similarities between the candidate objects and noise background. In this paper, we strive to embrace challenges towards effective and efficient COS. To this end, we develop a bio-inspired framework, termed Positioning and Focus Network (PFNet), which mimics the process of predation in nature. Specifically, our PFNet contains two key modules, i.e., the positioning module (PM) and the focus module (FM). The PM is designed to mimic the detection process in predation for positioning the potential target objects from a global perspective and the FM is then used to perform the identification process in predation for progressively refining the coarse prediction via focusing on the ambiguous regions. Notably, in the FM, we develop a novel distraction mining strategy for the distraction region discovery and removal, to benefit the performance of estimation. Extensive experiments demonstrate that our PFNet runs in real-time (72 FPS) and significantly outperforms 18 cutting-edge models on three challenging benchmark datasets under four standard metrics. The code will be made publicly available.',
+            imgs: [
+              { src: 'Camouflaged Object.gif' }
+            ],
+          },
+          {
+            authors: 'Haiyang Mei, Xin Yang*, Yang Wang, Yuanyuan Liu, Shengfeng He, Qiang Zhang, Xiaopeng Wei, and Rynson Lau.',
+            title: 'Don\'t Hit Me! Glass Detection in Real-world Scenes.',
+            tags: [
+              ['CVPR 2020', 1],
+              ['. ', 0],
+              ['(CCF A)', 2]
+            ],
+            io: 'Given an input image, our network outputs a binary mask that indicate where transparent glass regions are.',
+            abstract: 'Transparent glass is very common in our daily life. Existing computer vision systems neglect it and thus may have severe consequences, e.g., a robot may crash into a glass wall. However, sensing the presence of glass is not straightforward. The key challenge is that arbitrary objects/scenes can appear behind the glass, and the content within the glass region is typically similar to those behind it. In this paper, we propose an important problem of detecting glass from a single RGB image. To address this problem, we construct a large-scale glass detection dataset (GDD) and design a glass detection network, called GDNet, which explores abundant contextual cues for robust glass detection with a novel large-field contextual feature integration (LCFI) module. Extensive experiments demonstrate that the proposed method achieves more superior glass detection results on our GDD test set than state-of-the-art methods fine-tuned for glass detection.',
+            links: [
+              { name: 'paper', link: 'http://www.cs.cityu.edu.hk/~rynson/papers/cvpr20d.pdf' },
+              { name: 'suppl', link: 'http://www.cs.cityu.edu.hk/~rynson/papers/demos/cvpr20d-supp.pdf' },
+              { name: 'dataset', link: '../data_application/DataApplication.html' },
+              { name: 'media', link: 'https://www.sohu.com/a/408629893_610300?_trans_=000014_bdss_bddk' }
+            ],
+            imgs: [
+              { src: '20200621135331.gif', label: 'Overview of proposed framework.' },
+              { src: 'cvpr_2020_results.jpg', label: 'Problems with glass in existing vision tasks. In depth prediction, existing method [16] wrongly predicts the depth of the scene behind the glass, instead of the depth to the glass (1st row of (b)). For instance segmentation, Mask RCNN [9] only segments the instances behind the glass, not aware that they are actually behind the glass (2nd row of (b)). Besides, if we directly apply an existing singe-image reflection removal (SIRR) method [36] to an image that is only partially covered by glass, the non-glass region can be corrupted (3rd row of (b)). GDNet can detect the glass (c) and then correct these failure cases (d).' }
+            ],
+          },
+          {
+            authors: "Haiyang Mei, Yuanyuan Liu, Dongsheng Zhou, Xin Yang*, Qiang Zhang, Xiaopeng Wei.",
+            title: "Exploring Dense Context for Salient Object Detection.",
+            tags: [
+              ["IEEE Transactions on Circuits and Systems for Video Technology 2021", 1],
+              [". ", 0],
+              ["(CCF B)", 2],
+            ],
+            abstract:
+              "Contexts play an important role in salient object detection (SOD). High-level contexts describe the relations between different parts/objects and thus are helpful for discovering the specific locations of salient objects while low-level contexts could provide the fine detail information for delineating the boundary of the salient objects. However, the way of perceiving/leveraging rich contexts has not been fully investigated by existing SOD works. The common context extraction strategies (e.g., leveraging convolutions with large kernels or atrous convolutions with large dilation rates) do not consider the effectiveness and efficiency simultaneously and may cause sub-optimal solutions. In this paper, we devote to exploring an effective and efficient way to learn rich contexts for accurate SOD. Specifically, we first build a dense context exploration (DCE) module to capture dense multi-scale contexts and further leverage the learned contexts to enhance the features discriminability. Then, we embed multiple DCE modules in an encoder-decoder architecture to harvest dense contexts of different levels. Furthermore, we propose an attentive skip-connection to transmit useful features from the encoder part to the decoder part for better dense context exploration. Finally, extensive experiments demonstrate that the proposed method achieves more superior detection results on the six benchmark datasets than 18 state-of-the-art SOD methods.",
+            imgs: [
+              { src: "Exploring Dense1.png" }, { src: "Exploring Dense2.png" }
+            ],
+          },
+          {
+            authors: "Xin Tian, Ke Xu, Xin Yang, Baocai Yin, Rynson Lau.",
+            title: "Weakly-supervised Salient Instance Detection.",
+            tags: [
+              ["BMVC 2020", 1],
+              [". ", 0],
+              ["(Oral, 5%, Best Student Paper)", 2],
+            ],
+            abstract:
+              "Existing salient instance detection (SID) methods typically learn from pixel-level annotated datasets. In this paper, we present the first weakly-supervised approach to the SID problem. Although weak supervision has been considered in general saliency detection, it is mainly based on using class labels for object localization. However, it is non-trivial to use only class labels to learn instance-aware saliency information, as salient instances with high semantic affinities may not be easily separated by the labels. We note that subitizing information provides an instant judgement on the number of salient items, which naturally relates to detecting salient instances and may help separate instances of the same class while grouping different parts of the same instance. Inspired by this insight, we propose to use class and subitizing labels as weak supervision for the SID problem. We propose a novel weakly-supervised network with three branches: a Saliency Detection Branch leveraging class consistency information to locate candidate objects; a Boundary Detection Branch exploiting class discrepancy information to delineate object boundaries; and a Centroid Detection Branch using subitizing information to detect salient instance centroids. This complementary information is further fused to produce salient instance maps. We conduct extensive experiments to demonstrate that the proposed method plays favorably against carefully designed baseline methods adapted from related tasks.",
+            imgs: [
+              { src: "Weakly-supervised Salient Instance Detection.png" },
+            ],
+          },
+          {
+            authors:
+              "Shimin Zhao, Miaomiao Chen, Pengjie Wang, Ying Cao, Pingping Zhang and Xin Yang.",
+            title:
+              "RGB-D Salient Object Detection via Deep Fusion of Semantics and Details.",
+            tags: [
+              ["Journal of Computer Animation and Virtual Worlds", 1],
+              [", Bournemouth, UK. ", 0],
+              ["(Special Issue of CASA 2020)", 2],
+            ],
+            imgs: [
+              {
+                src:
+                  "RGB-D Salient Object Detection via Deep Fusion of Semantics and Details.png",
+              },
+            ],
+            abstract:
+              "In this paper, we address RGB‐D salient object detection task by jointly leveraging semantics and contour details of salient objects. We propose a novel semantics‐and‐details complementary fusion network to adaptively integrate cross‐model and multilevel features. Specifically, we employ two kinds of fusion modules in our model, which are designed for fusing high‐level semantic features and integrating contour detail features of the scene components, respectively. The semantics fusion module aggregates high‐level interdependent semantic relationships by a nonlinear weighted summation of small and medium receptive fields. Meanwhile, the details module integrates multi‐level contour detail features to leverage expressive details of salient objects. We achieve new state‐of‐the‐art salient object detection results on seven RGB‐D datasets, that is, STERE, NJU2000, LFSD, NLPR, SSD, DES, and SIP2019 dataset. Experimental results demonstrate that our method outperforms eleven state‐of‐the‐art salient object detection methods. In this paper, we propose a novel semantics‐and‐details complementary fusion network to adaptively integrate cross‐model and multi‐level features. Specifically, we employ two kinds of fusion modules in our model, which are designed for fusing high‐level semantic features and integrating contour detail features of the scene components respectively. The semantics fusion module aggregates high‐level interdependent semantic relationships by a nonlinear weighted summation of small and medium receptive fields. Meanwhile, the details module integrates multi‐level contour detail features to leverage expressive details of salient objects.",
+          },
+          {
+            authors:
+              "Sucheng Ren, Chu Han, Xin Yang, Guoqiang Han, Shengfeng He.",
+            title:
+              "TENet: Triple Excitation Network for Video Salient Object Detection.",
+            tags: [
+              ["ECCV 2020", 1],
+              [", Glasgow, UK. ", 0],
+              ["(Spotlight)", 2],
+            ],
+            imgs: [
+              {
+                src:
+                  "Triple Excitation Network for Video Salient Object Detection.png",
+              },
+            ],
+            abstract: 'In this paper, we propose a simple yet effective approach, named Triple Excitation Network, to reinforce the training of video salient object detection (VSOD) from three aspects, spatial, temporal, and online excitations. These excitation mechanisms are designed following the spirit of curriculum learning and aim to reduce learning ambiguities at the beginning of training by selectively exciting feature activations using ground truth. Then we gradually reduce the weight of ground truth excitations by a curriculum rate and replace it by a curriculum complementary map for better and faster convergence. In particular, the spatial excitation strengthens feature activations for clear object boundaries, while the temporal excitation imposes motions to emphasize spatio-temporal salient regions. Spatial and temporal excitations can combat the saliency shifting problem and conflict between spatial and temporal features of VSOD. Furthermore, our semi-curriculum learning design enables the first online refinement strategy for VSOD, which allows exciting and boosting saliency responses during testing without re-training. The proposed triple excitations can easily plug in different VSOD methods. Extensive experiments show the effectiveness of all three excitation methods and the proposed method outperforms state-of-the-art image and video salient object detection methods.'
+          },
+          {
+            authors: 'Xin Yang*, Haiyang Mei*, Ke Xu, Xiaopeng Wei, Baocai Yin, and Rynson Lau (* joint first authors).',
+            title: 'Where is My Mirror?',
+            tags: [
+              ['ICCV 2019', 1],
+              ['. ', 0],
+              ['(CCF A)', 2]
+            ],
+            io: 'Given an input image, our network outputs a binary mask that indicate where mirrors are.',
+            abstract: 'Mirrors are everywhere in our daily lives. Existing computer vision systems do not consider mirrors, and hence may get confused by the reflected content inside a mirror, resulting in a severe performance degradation. However, separating the real content outside a mirror from the reflected content inside it is non-trivial. The key challenge is that mirrors typically reflect contents similar to their surroundings, making it very difficult to differentiate the two. In this paper, we present a novel method to segment mirrors from an input image. To the best of our knowledge, this is the first work to address the mirror segmentation problem with a computational approach. We make the following contributions. First, we construct a large-scale mirror dataset that contains mirror images with corresponding manually annotated masks. This dataset covers a variety of daily life scenes, and will be made publicly available for future research. Second, we propose a novel network, called MirrorNet, for mirror segmentation, by modeling both semantical and low-level color/texture discontinuities between the contents inside and outside of the mirrors. Third, we conduct extensive experiments to evaluate the proposed method, and show that it outperforms the carefully chosen baselines from the state-of-the-art detection and segmentation methods.',
+            links: [
+              { name: 'paper', link: 'http://www.cs.cityu.edu.hk/~rynson/papers/iccv19a.pdf' },
+              { name: 'suppl', link: 'http://www.cs.cityu.edu.hk/~rynson/papers/demos/iccv19a-supp.pdf' },
+              { name: 'code and updated results', link: 'https://github.com/Mhaiyang/ICCV2019_MirrorNet' },
+              { name: 'dataset', link: 'https://drive.google.com/file/d/1Znw92fO6lCKfXejjSSyMyL1qtFepgjPI/view?usp=sharing' },
+              { name: 'media', link: 'https://www.qbitai.com/2019/09/7314.html' }
+            ],
+            imgs: [
+              { src: '20200621135331(3).gif' },
+              { src: 'iccv_2019_results.jpg', label: 'Problems with mirrors in existing vision tasks. In depth prediction, NYU-v2 dataset [32] uses a Kinect to capture depth as ground truth. It wrongly predicts the depths of the reflected contents, instead of the mirror depths (b). In instance semantic segmentation, Mask RCNN [12] wrongly detects objects inside the mirrors (c). With MirrorNet, we first detect and mask out the mirrors (d). We then obtain the correct depths (e), by interpolating the depths from surrounding pixels of the mirrors, and segmentation maps (f).' }
+            ],
+          }
+        ],
+      };
+    },
+    methods: {
+      textBold(s) {
+        return textBold(s);
+      },
+      goBack() {
+        goBack();
+      },
+    },
+  });
+</script>
+
+</html>
