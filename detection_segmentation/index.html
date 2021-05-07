@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html>
-<title>Salient/Camouflaged/Special Scene Object Detection/Segmentation</title>
+<title>Uncertain Object Detection/Segmentation</title>
 
 <head>
   <meta charset="UTF-8" />
@@ -15,38 +15,19 @@
 <body>
   <div id="app">
     <el-page-header @back="goBack" title="Back"> </el-page-header>
-    <!-- Salient/Camouflaged/Special Scene Object Detection/Segmentation -->
+    <!-- Uncertain Object Detection/Segmentation -->
     <div class="content">
-      <h1>Salient/Camouflaged/Special Scene Object Detection/Segmentation</h1>
+      <h1>Uncertain Object Detection/Segmentation</h1>
       <el-divider></el-divider>
       <p>
-        In this project, we are developing techniques for salient, camouflaged, or special scene object detection and
-        segmentation.
-      </p>
-      <p>
-        Benefiting from the capability of modeling the mechanism of visual saliency in the human vision system and
-        finding out the camouflaged objects that are “seamlessly” embedded in their surroundings, salient object
-        detection (SOD) and camouflaged object segmentation (COS) have a wide range of computer vision, graphics and
-        multimedia applications, including image classification, object recognition, visual tracking, content-aware
-        image editing, and robot navigation. We are developing techniques to automatically detect salient/camouflaged
-        objects from the input images and video.
-      </p>
-      <p>
-        The special scene objects we focus on include mirror and glass. Here, we refer to mirrors as reflective
-        surfaces, and glass as transparent surfaces. In general, both mirrors and glass do not have their own
-        appearances. They only convey the appearances of their surroundings. While mirrors reflect the appearances of
-        the front side of them, glass transmits the appearances of the back side of it and often also reflects the
-        appearances of the front side of it. As both mirrors and glass do not have their own appearances, it is very
-        difficult to detect and segment them. However, as they appear everywhere in our daily life, it can be
-        problematic if we are not able to detect them reliably. For example, a depth sensor may falsely estimate the
-        depth of a piece of mirror/glass, an autonomous car may not be aware of the existence of a glass building, and a
-        drone may collide into a high rise (noted that most high rises are covered by glass these days). As far as we
-        know, my team is the first to develop computational methods for automatic detection and segmentation of mirrors
-        and transparent glass. Although there have been some works that investigate the detection of transparent glass,
-        these methods mainly focus on detecting wine glass and small glass objects, which have some special properties
-        that can be used for detection. Unlike these works, we are more interested on detecting general glass regions
-        that may not possess any special properties of their own. We are particularly interested in exploring the
-        application of our mirror/glass detection methods in autonomous navigation.
+        The uncertain scene object refers to the object which brings uncertainty to the scene understanding process for
+        intelligence systems. The presence of uncertain objects in the scene severely affects intelligent decisions in
+        many applications such as robotic navigation and drone tracking. In this project, we are developing techniques
+        for uncertain object detection/segmentation. Based on environmental data perception, we are committed to mining
+        the features and patterns of scene data from different perspectives such as computational statistics, behavioral
+        cognition, and semantics, combining multi-dimensional and multi-modal technical means, so as to realize
+        effective analysis, cognition, and expression of the uncertain scene object. Specifically, the uncertain objects
+        we focus on include special, camouflaged, and salient objects in the scene.
       </p>
       <el-divider></el-divider>
       <div v-for="project,index in projects">
