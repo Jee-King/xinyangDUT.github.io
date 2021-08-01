@@ -76,9 +76,25 @@
         styles,
         projects: [
           {
+            authors: 'Yuhao Liu, Jiake Xie, Xiao Shi, Yu Qiao, Yujie Huang, Yong Tang, Xin Yang†.',
+            title: 'Tripartite Information Mining and Integration for Image Matting.',
+            io:'Given an input RGB and the corresponding trimap, our method can produce a delicate alpha matte with the help of the integration of global and local information.',
+            abstract: 'With the development of deep convolutional neural networks, image matting has ushered in a new phase. Regarding the nature of image matting, most researches have focused on solutions for transition regions. However, we argue that many existing approaches are excessively focused on transition-dominant local fields and ignored the inherent coordination between global information and transition optimisation. In this paper, we propose the Tripartite Information Mining and Integration Network (TIMI-Net) to harmonize the coordination between global and local attributes formally. Specifically, we resort to a novel 3-branch encoder to accomplish comprehensive mining of the input information, which can supplement the neglected coordination between global and local fields. In order to achieve effective and complete interaction between such multi-branches information, we develop the Tripartite Information Integration (TI^2) Module to transform and integrate the interconnections between the different branches. In addition, we built a large-scale human matting dataset (Human-2K) to advance human image matting, which consists of 2100 high-precision human images (2000 images for training and 100 images for test). Finally, we conduct extensive experiments to prove the performance of our proposed TIMI-Net, which demonstrates that our method performs favourably against the SOTA approaches on the alphamatting.com (Rank First), Composition-1K (MSE-0.006, Grad-11.5), Distinctions-646 and our Human-2K. Also, we have developed an online evaluation website to perform natural image matting.',
+            tags: [
+              ['ICCV 2021', 1],
+              ['. ', 0],
+              ['(CCF A)', 2]
+            ],
+            imgs: [
+              { src: 'Tripartite-1.jpg' },
+              { src: 'Tripartite-2.jpg' },
+              { src: 'Tripartite-3.jpg' }
+            ]
+          },
+          {
             authors: 'Yuhao Liu∗, Jiake Xie∗, Yu Qiao, and Yong Tang, Xin Yang†.',
             title: 'Prior-Induced Information Alignment for Image Matting.',
-            io: 'Input-Output: Given an input RGB and the corresponding trimap, our method can produces a delicate alpha matte with the help of  the dynamic gaussian modulation mechanism (DGM).',
+            io: 'Given an input RGB and the corresponding trimap, our method can produces a delicate alpha matte with the help of  the dynamic gaussian modulation mechanism (DGM).',
             abstract: 'Image matting is an ill-posed problem that aims to estimate the opacity of foreground pixels in an image. However, most existing deep learning-based methods still suffer from the coarse-grained details. In general, these algorithms are incapable of felicitously distinguishing the degree of exploration between deterministic domains (e.g. certain FG and BG pixels) and undetermined domains (e.g. uncertain in-between pixels), or inevitably lose information in the continuous sampling process, leading to a sub-optimal result. In this paper, we propose a novel network named Prior-Induced Information Alignment Matting Network (PIIAMatting), which can efficiently model the distinction of pixel-wise response maps and the correlation of layer-wise feature maps. It mainly consists of a Dynamic Gaussian Modulation mechanism (DGM) and an Information Alignment strategy (IA). Specifically, the DGM can dynamically acquire a pixel-wise domain response map learned from the prior distribution. The response map can present the relationship between the opacity variation and the convergence process during training. On the other hand, the IA comprises an Information Match Module (IMM) and an Information Aggregation Module (IAM), jointly scheduled to match and aggregate the adjacent layer-wise features adaptively. Besides, we also develop a Multi- Scale Refinement (MSR) module to integrate multi-scale receptive field information at the refinement stage to recover the fluctu- ating appearance details. Extensive quantitative and qualitative evaluations demonstrate that the proposed PIIAMatting performs favourably against state-of-the-art image matting methods on the Alphamatting.com, Composition-1K and Distinctions-646 dataset.',
             tags: [
               ['IEEE TRANSACTIONS ON MULTIMEDIA(TMM) 2021', 1],
@@ -95,7 +111,7 @@
           {
             authors: 'Yu Qiao, Yuhao Liu, Qiang Zhu, Xin Yang*, Yuxin Wang, Qiang Zhang，Xiaopeng Wei.',
             title: 'Multi-scale Information Assembly for Image Matting.',
-            io: 'Input-Output: Given an input RGB image, our network directly produces an Alpha Matte without any auxilary information.',
+            io: 'Given an input RGB image, our network directly produces an Alpha Matte without any auxilary information.',
             abstract: 'Image matting is a long-standing problem in computer graphics and vision, which mostly identified as the accurate estimation of the foreground in input images. We argue that the foreground objects can be represented by different-levels information, the main body, large-grained boundaries, refined details, etc. Based on this observation, in this paper, we propose a multi-scale information assembly framework (MSIA-matte) to pull out high-quality alpha mattes from single RGB images. Technically speaking, given an input image, we extract advanced semantics as our subject content, and retain initial CNNs features to encode different-levels foreground expressions, then combine them by our well-designed information assembly strategy. Extensive experiments have proven the effectiveness of the proposed MSIA-matte, and we can achieve state-of-the-art performance compared to existing matting networks.',
             tags: [
               ['Computer Graphics Forum (CGF)', 1],
